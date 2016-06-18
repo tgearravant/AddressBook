@@ -1,0 +1,15 @@
+#macro(master)
+<html>
+<head>
+  <title>My Address Book</title>
+</head>
+<body>
+<header>
+  <h1>My Address Book</h1>
+</header>
+<main>
+  $!bodyContent
+</main>
+</body>
+</html>
+#end
