@@ -1,6 +1,7 @@
 package net.tullco.addressbook.contact;
 
 
+//import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.tullco.addressbook.utils.Path;
@@ -34,6 +35,26 @@ public class ContactController {
         model.put("contact", contact);
         return ViewUtil.render(request, model, Path.Template.ONE_CONTACT);
 	};
+	
+	public static Route listContacts = (Request request, Response response) -> {
+		HashMap<String, Object> model = new HashMap<>();
+        model.put("contacts",Contact.ContactsLoader("", 50, 0));
+        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+	};
+	
+	public static Route searchContacts = (Request request, Response response) -> {
+		HashMap<String, Object> model = new HashMap<>();
+		if (request.params().containsKey(":search"))
+		response.redirect(Path.Web.INDEX);
+        model.put("contacts",Contact.ContactsLoader("", 50, 0));
+        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+	};
+	
+	public static Route contactSearchPost = (Request request, Response response) -> {
+		HashMap<String, Object> model = new HashMap<>();
+        model.put("contacts",Contact.ContactsLoader("", 50, 0));
+        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+	}; 
 	
 /*	public static Route editContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();

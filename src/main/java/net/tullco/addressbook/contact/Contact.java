@@ -2,8 +2,11 @@ package net.tullco.addressbook.contact;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+//import org.apache.commons.lang.StringEscapeUtils;
 
 import net.tullco.addressbook.utils.SQLiteUtils;
 
@@ -18,6 +21,7 @@ public class Contact {
 	private String country;
 	
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE id=%d";
+	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
 
 	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
@@ -68,16 +72,33 @@ public class Contact {
 		try {
 			if(!rs.isBeforeFirst())
 				return null;
-		
-			String[] fields={"first_name","middle_name","last_name"};
-			rs.next();
-			for(String s:fields){
-				contact.put(s, rs.getString(s));
-			}
-			return new Contact(contact);
+			
+			return new Contact(convertResultSetToContactMap(rs));
 		} catch (SQLException e) {
 			return null;
 		}
+	}
+	public static List<Contact> ContactsLoader(String where,int limit,int offset){
+		String statement=String.format(MULTIPLE_CONTACT_LOADER_SQL,where,limit,offset);
+		System.out.println(statement);
+		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		try {
+			while(rs.next()){
+				contacts.add(new Contact(convertResultSetToContactMap(rs)));
+			}
+		} catch (SQLException e) {
+			System.err.println("Strange error here.");
+		}
+		return contacts;
+	}
+	private static Map<String,String> convertResultSetToContactMap(ResultSet rs) throws SQLException{
+		String[] fields={"first_name","middle_name","last_name"};
+		HashMap<String,String> contact=new HashMap<String, String>();
+		for(String s:fields){
+			contact.put(s, rs.getString(s));
+		}
+		return contact;
 	}
 	private void setValuesFromMap(Map<String,String> values){
 		for (String k: values.keySet()){

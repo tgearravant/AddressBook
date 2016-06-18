@@ -1,6 +1,6 @@
 #parse("/templates/master.vm")
 #@master()
-<h1>Test</h1>
+<h1>Details</h1>
 <div class="row row-3">
 	$contact.fullName()
 </div>
