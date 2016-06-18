@@ -22,6 +22,7 @@ public class App
         get("/hello",(req,res) -> "Hello World");
     }
     private static void initialConfiguration(){
+    	SQLiteUtils.runMigrations();
     	staticFiles.location(SystemUtils.adjustPathForOS("/public"));
     	if (SystemUtils.inProduction())
     		port(80);

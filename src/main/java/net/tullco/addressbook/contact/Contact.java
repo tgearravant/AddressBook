@@ -46,10 +46,16 @@ public class Contact {
 		return this.street;
 	}
 	public String zipCode(){
-		return this.firstName+" "+this.lastName;
+		return this.zipCode;
 	}
 	public String city(){
 		return this.city;
+	}
+	public String state(){
+		return this.state;
+	}
+	public String country(){
+		return this.country;
 	}
 	private void setValuesFromMap(Map<String,String> values){
 		for (String k: values.keySet()){

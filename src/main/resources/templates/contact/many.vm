@@ -2,6 +2,9 @@
 #@master()
 <h1>Test</h1>
 <div class="row row-3">
-	$contact.getFullName()
+	$contact.fullName()
+	#foreach($contact in $contacts)
+		$contact.fullName()
+	#end
 </div>
 #end
