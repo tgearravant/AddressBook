@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Contact {
-	public String firstName;
-	public String lastName;
-	public String middleName;
-	public String street;
-	public String zipCode;
-	public String city;
-	public String state;
-	public String country;
+	private String firstName;
+	private String lastName;
+	private String middleName;
+	private String street;
+	private String zipCode;
+	private String city;
+	private String state;
+	private String country;
 
 	public Contact (Map<String,String> values){
 		setValuesFromMap(values);
@@ -20,7 +20,7 @@ public class Contact {
 		Map<String,String> contact = new HashMap<String,String>();
 		if(id==0){
 			contact.put("first_name","Tull");
-			contact.put("first_name","Gearreald");
+			contact.put("last_name","Gearreald");
 			contact.put("middle_name", "Neal");
 			contact.put("street", "901 S. Ashland Ave.");
 			contact.put("zip_code", "60607");
@@ -29,6 +29,27 @@ public class Contact {
 			contact.put("country", "US");
 		}
 		setValuesFromMap(contact);
+	}
+	public String fullName(){
+		return this.firstName+" "+this.lastName;
+	}
+	public String firstName(){
+		return this.firstName;
+	}
+	public String lastName(){
+		return this.lastName;
+	}
+	public String middleName(){
+		return this.middleName;
+	}
+	public String street(){
+		return this.street;
+	}
+	public String zipCode(){
+		return this.firstName+" "+this.lastName;
+	}
+	public String city(){
+		return this.city;
 	}
 	private void setValuesFromMap(Map<String,String> values){
 		for (String k: values.keySet()){

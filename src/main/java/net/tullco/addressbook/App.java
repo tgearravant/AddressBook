@@ -1,7 +1,10 @@
 package net.tullco.addressbook;
 
 import static spark.Spark.*;
+
+import net.tullco.addressbook.contact.ContactController;
 import net.tullco.addressbook.utils.*;
+import static spark.debug.DebugScreen.*;
 
 /**
  * Hello world!
@@ -24,13 +27,14 @@ public class App
     		port(80);
     	else
     		port(4567);
+    		enableDebugScreen(); 
     	
     }
     private static void getRouting(){
     	//Test Page
     	get("/hello",(req,res) -> "Hello World");
     	//Index Routing
-    	get("/",(req,res) -> "Hello World");
+    	get(Path.Web.INDEX,          ContactController.displayContact);
     }
     private static void before(){
     }
