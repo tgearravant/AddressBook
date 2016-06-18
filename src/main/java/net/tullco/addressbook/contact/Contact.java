@@ -1,7 +1,11 @@
 package net.tullco.addressbook.contact;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.tullco.addressbook.utils.SQLiteUtils;
 
 public class Contact {
 	private String firstName;
@@ -12,23 +16,11 @@ public class Contact {
 	private String city;
 	private String state;
 	private String country;
+	
+	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE id=%d";
 
 	public Contact (Map<String,String> values){
 		setValuesFromMap(values);
-	}
-	public Contact(int id){
-		Map<String,String> contact = new HashMap<String,String>();
-		if(id==0){
-			contact.put("first_name","Tull");
-			contact.put("last_name","Gearreald");
-			contact.put("middle_name", "Neal");
-			contact.put("street", "901 S. Ashland Ave.");
-			contact.put("zip_code", "60607");
-			contact.put("city", "Chicago");
-			contact.put("state", "IL");
-			contact.put("country", "US");
-		}
-		setValuesFromMap(contact);
 	}
 	public String fullName(){
 		return this.firstName+" "+this.lastName;
@@ -56,6 +48,36 @@ public class Contact {
 	}
 	public String country(){
 		return this.country;
+	}
+	public static Contact ContactLoader(int id){
+		Map<String,String> contact = new HashMap<String,String>();
+		if(id==0){
+			contact.put("first_name","Tull");
+			contact.put("last_name","Gearreald");
+			contact.put("middle_name", "Neal");
+			contact.put("street", "901 S. Ashland Ave.");
+			contact.put("zip_code", "60607");
+			contact.put("city", "Chicago");
+			contact.put("state", "IL");
+			contact.put("country", "US");
+			return new Contact(contact);
+		}
+		
+		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
+		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		try {
+			if(!rs.isBeforeFirst())
+				return null;
+		
+			String[] fields={"first_name","middle_name","last_name"};
+			rs.next();
+			for(String s:fields){
+				contact.put(s, rs.getString(s));
+			}
+			return new Contact(contact);
+		} catch (SQLException e) {
+			return null;
+		}
 	}
 	private void setValuesFromMap(Map<String,String> values){
 		for (String k: values.keySet()){

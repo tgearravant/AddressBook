@@ -15,14 +15,14 @@ public class ContactController {
 	public static Route displayContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
         List<Contact> contacts= new ArrayList<Contact>();
-        Contact contact=new Contact(0);
+        Contact contact=Contact.ContactLoader(0);
         model.put("contact", contact);
-        contacts.add(new Contact(0));
+        contacts.add(Contact.ContactLoader(0));
         model.put("contacts", contacts);
         return ViewUtil.render(request, model, Path.Template.INDEX);
 	};
 	
-	public static Route editContact = (Request request, Response response) -> {
+/*	public static Route editContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
         List<Contact> contacts= new ArrayList<Contact>();
         Contact contact=new Contact(0);
@@ -48,5 +48,5 @@ public class ContactController {
         contacts.add(new Contact(0));
         model.put("contacts", contacts);
         return ViewUtil.render(request, model, Path.Template.INDEX);
-	};
+	};*/
 }
