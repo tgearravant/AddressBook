@@ -19,7 +19,7 @@ public class Contact {
 	
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE id=%d";
 
-	public Contact (Map<String,String> values){
+	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
 	}
 	public String fullName(){

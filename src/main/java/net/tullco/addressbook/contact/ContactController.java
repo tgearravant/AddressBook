@@ -1,25 +1,38 @@
 package net.tullco.addressbook.contact;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.ViewUtil;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import static spark.Spark.halt;
 
 public class ContactController {
 	public static Route displayContact = (Request request, Response response) -> {
-        HashMap<String, Object> model = new HashMap<>();
-        List<Contact> contacts= new ArrayList<Contact>();
-        Contact contact=Contact.ContactLoader(0);
+		int contact_id;
+		
+		if (request.params().containsKey(":contact_id")){
+        	try{
+        		contact_id=Integer.parseInt(request.params(":contact_id"));
+        	}catch(NumberFormatException e){
+            	halt(404,ViewUtil.renderNotFound(request));
+            	return "";
+        	}
+		}
+		else{
+			halt(404,ViewUtil.renderNotFound(request));
+			return "";
+		}
+		HashMap<String, Object> model = new HashMap<>();
+        Contact contact=Contact.ContactLoader(contact_id);
+        if (contact==null){
+        	halt(404,ViewUtil.renderNotFound(request));
+        }
         model.put("contact", contact);
-        contacts.add(Contact.ContactLoader(0));
-        model.put("contacts", contacts);
-        return ViewUtil.render(request, model, Path.Template.INDEX);
+        return ViewUtil.render(request, model, Path.Template.ONE_CONTACT);
 	};
 	
 /*	public static Route editContact = (Request request, Response response) -> {

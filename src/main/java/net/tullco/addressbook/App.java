@@ -35,7 +35,9 @@ public class App
     	//Test Page
     	get("/hello",(req,res) -> "Hello World");
     	//Index Routing
-    	get(Path.Web.INDEX,          ContactController.displayContact);
+    	get(Path.Web.INDEX,				ContactController.displayContact);
+    	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
+    	get("*",						ViewUtil.notFound);
     }
     private static void before(){
     }

@@ -1,0 +1,7 @@
+#parse("/templates/master.vm")
+#@master()
+<h1>Test</h1>
+<div class="row row-3">
+	$contact.fullName()
+</div>
+#end
