@@ -1,5 +1,7 @@
 package net.tullco.addressbook.utils;
 
+import lombok.*;
+
 public class Path {
     public static class Web {
         public static final String INDEX = "/";
@@ -8,6 +10,10 @@ public class Path {
         public static final String ONE_CONTACT = "/contacts/:contact_id/";
         public final static String SEARCH_POST = "/contacts/search/:search";
         public final static String SEARCH_RESULTS = "/contacts/search/:search";
+        public final static String STYLESHEET = "/css/style.css";
+        public static String getSTYLESHEET(){
+        	return STYLESHEET;
+        }
     }
 
     public static class Template {
