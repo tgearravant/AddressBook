@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
+//import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLiteUtils;
 
 public class Contact {
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String middleName;
@@ -19,15 +21,29 @@ public class Contact {
 	private String city;
 	private String state;
 	private String country;
+	private String imageLocation;
 	
-	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE id=%d";
-	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
+	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE id=%d";
+	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
+	private static final String SAVE_CONTACT_SQL="UPDATE contacts SET first_name=%s, middle_name=%s, last_name=%s WHERE id=%d";
 
 	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
 	}
+	public boolean save(){
+		String statement=String.format(SAVE_CONTACT_SQL, this.firstName,this.middleName,this.lastName,this.id);
+		return SQLiteUtils.executeUpdate(statement);
+	}
+	public int getId(){
+		return id;
+	}
 	public String fullName(){
 		return this.firstName+" "+this.lastName;
+	}
+	public String getImageLocation(){
+		if (this.imageLocation==null)
+			return "missing_picture.jpg";
+		return this.imageLocation;
 	}
 	public String firstName(){
 		return this.firstName;
@@ -56,6 +72,7 @@ public class Contact {
 	public static Contact ContactLoader(int id){
 		Map<String,String> contact = new HashMap<String,String>();
 		if(id==0){
+			contact.put("id", "0");
 			contact.put("first_name","Tull");
 			contact.put("last_name","Gearreald");
 			contact.put("middle_name", "Neal");
@@ -98,6 +115,7 @@ public class Contact {
 		for(String s:fields){
 			contact.put(s, rs.getString(s));
 		}
+		contact.put("id", Integer.toString(rs.getInt("id")));
 		return contact;
 	}
 	private void setValuesFromMap(Map<String,String> values){
@@ -118,6 +136,8 @@ public class Contact {
 				this.state = values.get(k);
 			if(k.equals("country"))
 				this.country = values.get(k);
+			if(k.equals("id"))
+				this.id=Integer.parseInt(values.get(k));
 		}
 	}
 }

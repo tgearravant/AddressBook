@@ -1,9 +1,15 @@
 #parse("/templates/master.vm")
 #@master()
-<h1>List</h1>
-<div class="row row-3">
-	#foreach($contact in $contacts)
-		$contact.fullName()
+	#foreach($contact in $contacts) 
+    <div class="contact_container_div">
+      <div class="contact_picture_div">
+        <a href="$WebPath.getONE_CONTACT()$contact.getId()/">
+          <img class="contact_picture" src="$WebPath.getIMAGE_DIRECTORY()$contact.getImageLocation()">
+        </a>
+      </div>
+      <div class="contact_name_div">
+		    <span class="contact_text">$contact.fullName()</span>
+      </div>
+    </div>   
 	#end
-</div>
 #end
