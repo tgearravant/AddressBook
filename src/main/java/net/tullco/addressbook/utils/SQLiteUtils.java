@@ -26,19 +26,24 @@ public class SQLiteUtils {
 		
 	}
 	private static Connection getConnection(){
-		if (SQLiteUtils.conn==null){
-			Connection c=null;
-			try{
-				Class.forName("org.sqlite.JDBC");
-				c=DriverManager.getConnection("jdbc:sqlite:contacts.db");
-			}catch(SQLException e){
-				System.err.println("Could not connect to database for some reason...");
-				e.printStackTrace();
-			}catch(ClassNotFoundException e){
-				System.err.println("No JDBC Driver");
-				e.printStackTrace();
+		try {
+			if (SQLiteUtils.conn==null || SQLiteUtils.conn.isClosed()){
+				Connection c=null;
+				try{
+					Class.forName("org.sqlite.JDBC");
+					c=DriverManager.getConnection("jdbc:sqlite:contacts.db");
+				}catch(SQLException e){
+					System.err.println("Could not connect to database for some reason...");
+					e.printStackTrace();
+				}catch(ClassNotFoundException e){
+					System.err.println("No JDBC Driver");
+					e.printStackTrace();
+				}
+				SQLiteUtils.conn=c;
 			}
-			SQLiteUtils.conn=c;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return SQLiteUtils.conn;
 	}
