@@ -12,9 +12,9 @@
       </div>
       #if ($contact.hasAddress())                                      
         <div class="contact_address_div">
-          <span class="contact_text">$contact.currentAddress().street()</span>
+          <span class="contact_text">$contact.currentAddress().street()</span><br>
           #if ("$contact.currentAddress().apartment()" != "")
-            <span class="contact_text">$contact.currentAddress().apartment()</span>
+            <span class="contact_text">$contact.currentAddress().apartment()</span><br>
           #end
           <span class="contact_text">$contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()
         </div>
