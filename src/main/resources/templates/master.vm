@@ -1,12 +1,14 @@
 #macro(master)
 <html>
 <head>
-  <title>My Address Book</title>
+  <title>$title</title>
+  <link rel="stylesheet" type="text/css" href="$WebPath.getSTYLESHEET()">
 </head>
 <body>
 <header>
-  <h1>My Address Book</h1>
+  <h1 class="masterHeader">My Address Book</h1>
 </header>
+<hr>
 <main>
   $!bodyContent
 </main>

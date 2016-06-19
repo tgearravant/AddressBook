@@ -19,11 +19,18 @@ public class SQLiteUtils {
 			e.printStackTrace();
 		}
 		return null;
-		
-		
 	}
-	public static void executeUpdate(){
-		
+	public static boolean executeUpdate(String statement){
+		Connection c= getConnection();
+		try{
+			Statement s = c.createStatement();
+			s.executeUpdate(statement);
+			return true;
+		}catch(SQLException e){
+			System.err.println("SQL Problem of some description. Most likely a syntax error.");
+			e.printStackTrace();
+			return false;
+		}
 	}
 	private static Connection getConnection(){
 		try {
