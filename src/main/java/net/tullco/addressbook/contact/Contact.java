@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
+import net.tullco.addressbook.address.Address;
 //import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLiteUtils;
 
@@ -16,12 +17,8 @@ public class Contact {
 	private String firstName;
 	private String lastName;
 	private String middleName;
-	private String street;
-	private String zipCode;
-	private String city;
-	private String state;
-	private String country;
 	private String imageLocation;
+	private Address address;
 	
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
@@ -37,7 +34,10 @@ public class Contact {
 	public int getId(){
 		return id;
 	}
-	public String fullName(){
+	public Address address(){
+		return this.address;
+	}
+ 	public String fullName(){
 		return this.firstName+" "+this.lastName;
 	}
 	public String getImageLocation(){
@@ -53,21 +53,6 @@ public class Contact {
 	}
 	public String middleName(){
 		return this.middleName;
-	}
-	public String street(){
-		return this.street;
-	}
-	public String zipCode(){
-		return this.zipCode;
-	}
-	public String city(){
-		return this.city;
-	}
-	public String state(){
-		return this.state;
-	}
-	public String country(){
-		return this.country;
 	}
 	public static Contact ContactLoader(int id){
 		Map<String,String> contact = new HashMap<String,String>();
@@ -126,16 +111,6 @@ public class Contact {
 				this.lastName = values.get(k);
 			if(k.equals("middle_name"))
 				this.middleName = values.get(k);
-			if(k.equals("street"))
-				this.street = values.get(k);
-			if(k.equals("zip_code"))
-				this.zipCode = values.get(k);
-			if(k.equals("city"))
-				this.city = values.get(k);
-			if(k.equals("state"))
-				this.state = values.get(k);
-			if(k.equals("country"))
-				this.country = values.get(k);
 			if(k.equals("id"))
 				this.id=Integer.parseInt(values.get(k));
 		}
