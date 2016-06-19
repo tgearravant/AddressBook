@@ -17,6 +17,7 @@ public class App
     	initialConfiguration();
     	before();
     	getRouting();
+    	postRouting();
     	//after();
         System.out.println(System.getProperty("os.name"));
         get("/hello",(req,res) -> "Hello World");
@@ -32,12 +33,17 @@ public class App
     	
     }
     private static void getRouting(){
-    	//Test Page
-    	get("/hello",(req,res) -> "Hello World");
     	//Index Routing
-    	get(Path.Web.INDEX,				ContactController.displayContact);
+    	get(Path.Web.INDEX,				ContactController.listContacts);
+    	
     	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
+    	
+    	//404 Routing
     	get("*",						ViewUtil.notFound);
+    }
+    private static void postRouting(){
+    	post(Path.Web.SEARCH_POST,		ContactController.searchContacts);
+    	post("*",						ViewUtil.notFound);
     }
     private static void before(){
     }
