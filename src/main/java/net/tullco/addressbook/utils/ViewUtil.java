@@ -19,7 +19,6 @@ public class ViewUtil {
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
         model.put("title", "Tull & Beverly's Address Book");
         model.put("header", "Tull & Beverly's Address Book");
-        
         return strictVelocityEngine().render(new ModelAndView(model, templatePath));
     }
     private static VelocityTemplateEngine strictVelocityEngine() {

@@ -10,6 +10,15 @@
       <div class="contact_name_div">
 		    <span class="contact_text">$contact.fullName()</span>
       </div>
+      #if ($contact.hasAddress())                                      
+        <div class="contact_address_div">
+          <span class="contact_text">$contact.currentAddress().street()</span>
+          #if ("$contact.currentAddress().apartment()" != "")
+            <span class="contact_text">$contact.currentAddress().apartment()</span>
+          #end
+          <span class="contact_text">$contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()
+        </div>
+      #end
     </div>   
 	#end
 #end

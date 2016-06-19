@@ -26,6 +26,7 @@ public class Contact {
 
 	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
+		this.address=Address.activeAddressLoader(this.id);
 	}
 	public boolean save(){
 		String statement=String.format(SAVE_CONTACT_SQL, this.firstName,this.middleName,this.lastName,this.id);
@@ -34,8 +35,14 @@ public class Contact {
 	public int getId(){
 		return id;
 	}
-	public Address address(){
+	public boolean hasAddress(){
+		return this.address != null;
+	}
+	public Address currentAddress(){
 		return this.address;
+	}
+	public List<Address> addresses(){
+		return Address.AddressesLoader(this.id);
 	}
  	public String fullName(){
 		return this.firstName+" "+this.lastName;
@@ -82,7 +89,7 @@ public class Contact {
 	}
 	public static List<Contact> ContactsLoader(String where,int limit,int offset){
 		String statement=String.format(MULTIPLE_CONTACT_LOADER_SQL,where,limit,offset);
-		System.out.println(statement);
+		//System.out.println(statement);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		try {

@@ -51,7 +51,7 @@ public class Address {
 	public boolean active(){
 		return this.active;
 	}
-	public Address addressLoader(int address_id){
+	public static Address addressLoader(int address_id){
 		String statement = String.format(ADDRESS_LOADER_SQL, address_id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		try {
@@ -62,18 +62,23 @@ public class Address {
 			return null;
 		}
 	}
-	public Address activeAddressLoader(int contact_id){
+	public static Address activeAddressLoader(int contact_id){
 		String statement = String.format(ACTIVE_ADDRESS_LOADER_SQL, contact_id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		try {
-			if(!rs.isBeforeFirst())
-				return null;
+			if(!rs.isBeforeFirst()){
+				List<Address> addresses=AddressesLoader(contact_id);
+				if (addresses.size()==0)
+					return null;
+				else
+					return AddressesLoader(contact_id).get(0);
+			}
 			return new Address(convertResultSetToAddressMap(rs));
 		} catch (SQLException e) {
 			return null;
 		}
 	}
-	public List<Address> AddressesLoader(int contact_id){
+	public static List<Address> AddressesLoader(int contact_id){
 		String statement = String.format(ADDRESSES_LOADER_SQL, contact_id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		ArrayList<Address> addresses = new ArrayList<Address>();
