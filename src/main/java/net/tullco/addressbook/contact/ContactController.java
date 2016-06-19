@@ -33,6 +33,7 @@ public class ContactController {
         	halt(404,ViewUtil.renderNotFound(request));
         }
         model.put("contact", contact);
+        model.put("main_header", contact.fullName());
         return ViewUtil.render(request, model, Path.Template.ONE_CONTACT);
 	};
 	

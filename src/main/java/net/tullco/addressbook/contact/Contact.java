@@ -9,6 +9,7 @@ import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
 import net.tullco.addressbook.address.Address;
+import net.tullco.addressbook.phone_number.PhoneNumber;
 //import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLiteUtils;
 
@@ -18,7 +19,8 @@ public class Contact {
 	private String lastName;
 	private String middleName;
 	private String imageLocation;
-	private Address address;
+	private List<Address> addresses;
+	private List<PhoneNumber> phoneNumbers;
 	
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
@@ -26,7 +28,8 @@ public class Contact {
 
 	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
-		this.address=Address.activeAddressLoader(this.id);
+		this.addresses = Address.addressesLoader(this.id);
+		this.phoneNumbers = PhoneNumber.phoneNumbersLoader(this.id);
 	}
 	public boolean save(){
 		String statement=String.format(SAVE_CONTACT_SQL, this.firstName,this.middleName,this.lastName,this.id);
@@ -36,13 +39,13 @@ public class Contact {
 		return id;
 	}
 	public boolean hasAddress(){
-		return this.address != null;
+		return !this.addresses.isEmpty();
 	}
 	public Address currentAddress(){
-		return this.address;
+		return Address.getCurrentAddress(this.addresses);
 	}
 	public List<Address> addresses(){
-		return Address.AddressesLoader(this.id);
+		return this.addresses;
 	}
  	public String fullName(){
 		return this.firstName+" "+this.lastName;
@@ -62,26 +65,12 @@ public class Contact {
 		return this.middleName;
 	}
 	public static Contact ContactLoader(int id){
-		Map<String,String> contact = new HashMap<String,String>();
-		if(id==0){
-			contact.put("id", "0");
-			contact.put("first_name","Tull");
-			contact.put("last_name","Gearreald");
-			contact.put("middle_name", "Neal");
-			contact.put("street", "901 S. Ashland Ave.");
-			contact.put("zip_code", "60607");
-			contact.put("city", "Chicago");
-			contact.put("state", "IL");
-			contact.put("country", "US");
-			return new Contact(contact);
-		}
-		
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		try {
 			if(!rs.isBeforeFirst())
 				return null;
-			
+			rs.next();
 			return new Contact(convertResultSetToContactMap(rs));
 		} catch (SQLException e) {
 			return null;

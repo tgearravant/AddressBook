@@ -9,15 +9,22 @@ h1{
 hr{
   color: #005031;
 }
-
-.contact_container_div{
+.master_header{
+	font-size: 3em;
+	margin: auto;
+}
+.contact_container_div,.details_container_div{
    float: left;
    margin: 10px;
    padding: 10px;
-   width: 200px;
-   height: 300px;
+   width: 250px;
+   height: 125px;
    border: 1px solid #005031;
    background: white;
+}
+.details_container_div{
+	width: 275px;
+	height: 150px;
 }
 .contact_container_div:hover{
   background: #DDDDDD;
@@ -27,16 +34,21 @@ hr{
   margin: auto;
   height: 200;
 }
+.contact_address_div{
+	margin-left: 20px;
+}
 .contact_picture{
   width: 100%;
   height: 100%;
 }
 .contact_text,.address_text{
-  font-size: 1.3em;
+  font-size: 1.4em;
   font-weight: bold;
   color: #005031;
 }
 .address_text{
   font-weight: bold;
   font-size: 1.1em;
+  color: #005031;
  }
+ 

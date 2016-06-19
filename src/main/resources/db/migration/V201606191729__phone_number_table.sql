@@ -1,0 +1,8 @@
+CREATE TABLE phone_numbers(
+	id INTEGER PRIMARY KEY NOT NULL,
+	contact_id INTEGER NOT NULL,
+	preferred BOOLEAN NOT NULL,
+	type VARCHAR(255) NOT NULL,
+	number VARCHAR(255) NOT NULL,
+	locale VARCHAR(255) NOT NULL
+)

@@ -29,7 +29,7 @@ public class App
     		port(80);
     	else
     		port(4567);
-    		enableDebugScreen(); 
+    		enableDebugScreen();
     	
     }
     private static void getRouting(){
