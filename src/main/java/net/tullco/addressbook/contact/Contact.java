@@ -39,10 +39,19 @@ public class Contact {
 		return id;
 	}
 	public boolean hasAddress(){
-		return !this.addresses.isEmpty();
+		return (this.currentAddress()!=null);
 	}
 	public Address currentAddress(){
 		return Address.getCurrentAddress(this.addresses);
+	}
+	public boolean hasPhoneNumber(){
+		return !this.phoneNumbers.isEmpty();
+	}
+	public PhoneNumber getPreferredNumberOfType(String type){
+		return PhoneNumber.getPreferredNumber(this.phoneNumbers, type);
+	}
+	public List<PhoneNumber> getNumbersOfType(String type){
+		return PhoneNumber.getNumbersOfType(this.phoneNumbers, type);
 	}
 	public List<Address> addresses(){
 		return this.addresses;

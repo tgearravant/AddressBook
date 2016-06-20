@@ -15,9 +15,9 @@
   <span class="contact_text">Preferred Phone Numbers</span>    
   <div class="contact_address_div">
     <span class="phone_text">
-      Mobile:<br>
-      Home:<br>
-      Work:
+      Mobile: $contact.getPreferredNumberOfType("mobile").getNumber()<br>
+      Home: $contact.getPreferredNumberOfType("home").getNumber()<br>
+      Work: $contact.getPreferredNumberOfType("work").getNumber()
     </span>
   </div>
 </div>

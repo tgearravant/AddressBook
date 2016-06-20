@@ -20,7 +20,6 @@ public class Address {
 	private String country;
 	private boolean active;
 
-	private static final String ACTIVE_ADDRESS_LOADER_SQL="SELECT * FROM addresses WHERE contact_id=%d AND active=1 LIMIT 1";
 	private static final String ADDRESSES_LOADER_SQL="SELECT * FROM addresses WHERE contact_id=%d";
 	private static final String ADDRESS_LOADER_SQL="SELECT * FROM addresses WHERE id=%d";
 
@@ -110,7 +109,7 @@ public class Address {
 			if(k.equals("id"))
 				this.id=Integer.parseInt(values.get(k));
 			if(k.equals("active"))
-				this.active=Boolean.parseBoolean(values.get(k));
+				this.active=(values.get(k).equals("1") ? true : false);
 		}
 	}
 	public static Address getCurrentAddress(List<Address> addresses){
