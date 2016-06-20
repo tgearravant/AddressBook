@@ -1,0 +1,9 @@
+#parse("/templates/master.vm")
+#@master()
+<form method="POST" action="">
+<label class="address_label"></label><input class="address_input" value="" />
+<label class="address_label"></label><input class="address_input" value="" />
+<label class="address_label"></label><input class="address_input" value="" />
+<label class="address_label"></label><input class="address_input" value="" />
+</form>
+#end

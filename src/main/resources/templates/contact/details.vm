@@ -1,7 +1,8 @@
 #parse("/templates/master.vm")
 #@master()
+#if ($contact.hasAddress())
 <div class="details_container_div">
-	<span class="contact_text">Current Address</span>
+  <span class="contact_text">Current Address</span>
   <div class="contact_address_div">
     <span class="address_text">$contact.currentAddress().street()<br>
     #if ("$contact.currentAddress().apartment()" != "")
@@ -11,6 +12,7 @@
     $contact.currentAddress().country()</span>
   </div>
 </div>
+#end
 #if ($contact.hasPreferredPhoneNumbers())
 <div class="details_container_div">
   <span class="contact_text">Preferred Phone Numbers</span>    
