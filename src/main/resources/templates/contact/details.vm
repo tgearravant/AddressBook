@@ -12,13 +12,15 @@
   </div>
 </div>
 <div class="details_container_div">
+  #if ($contact.hasPreferredPhoneNumbers())
   <span class="contact_text">Preferred Phone Numbers</span>    
   <div class="contact_address_div">
+  #foreach ($pn in $contact.getPreferredPhoneNumbers())
     <span class="phone_text">
-      Mobile: $contact.getPreferredNumberOfType("mobile").getNumber()<br>
-      Home: $contact.getPreferredNumberOfType("home").getNumber()<br>
-      Work: $contact.getPreferredNumberOfType("work").getNumber()
+      $display_utils_class.capitalize($pn.type): $pn.number()
     </span>
+  #end
   </div>
+  #end
 </div>
 #end

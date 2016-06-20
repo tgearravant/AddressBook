@@ -110,12 +110,20 @@ public class PhoneNumber {
 	public void setLocale(String locale) {
 		this.locale = locale;
 	}
-	public static PhoneNumber getPreferredNumber(List<PhoneNumber> phoneNumbers,String type){
+	public static PhoneNumber getPreferredNumberOfType(List<PhoneNumber> phoneNumbers,String type){
 		for(PhoneNumber p: phoneNumbers){
 			if (p.getType().equals(type) && p.isPreferred())
 				return p;
 		}
 		return null;
+	}
+	public static List<PhoneNumber> getPreferredNumbers(List<PhoneNumber> phoneNumbers){
+		ArrayList<PhoneNumber> typeNumbers = new ArrayList<PhoneNumber>();
+		for(PhoneNumber p: phoneNumbers){
+			if (p.isPreferred())
+				typeNumbers.add(p);
+		}
+		return typeNumbers;
 	}
 	public static List<PhoneNumber> getNumbersOfType(List<PhoneNumber> phoneNumbers,String type){
 		ArrayList<PhoneNumber> typeNumbers = new ArrayList<PhoneNumber>();

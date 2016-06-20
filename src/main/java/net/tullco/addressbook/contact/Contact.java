@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
+
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.phone_number.PhoneNumber;
 //import net.tullco.addressbook.utils.Path;
@@ -44,13 +45,22 @@ public class Contact {
 	public Address currentAddress(){
 		return Address.getCurrentAddress(this.addresses);
 	}
-	public boolean hasPhoneNumber(){
-		return !this.phoneNumbers.isEmpty();
+	public boolean hasPhoneNumberOfType(String type){
+		return !PhoneNumber.getNumbersOfType(this.phoneNumbers,type).isEmpty();
 	}
-	public PhoneNumber getPreferredNumberOfType(String type){
-		return PhoneNumber.getPreferredNumber(this.phoneNumbers, type);
+	public boolean hasPreferredPhoneNumbers(){
+		return !PhoneNumber.getPreferredNumbers(this.phoneNumbers).isEmpty();
 	}
-	public List<PhoneNumber> getNumbersOfType(String type){
+	public boolean hasPreferredPhoneNumberOfType(String type){
+		return !(PhoneNumber.getPreferredNumberOfType(this.phoneNumbers,type)==null);
+	}
+	public PhoneNumber getPreferredPhoneNumberOfType(String type){
+		return PhoneNumber.getPreferredNumberOfType(this.phoneNumbers, type);
+	}
+	public List<PhoneNumber> getPreferredPhoneNumbers(){
+		return PhoneNumber.getPreferredNumbers(this.phoneNumbers);
+	}
+	public List<PhoneNumber> getPhoneNumbersOfType(String type){
 		return PhoneNumber.getNumbersOfType(this.phoneNumbers, type);
 	}
 	public List<Address> addresses(){
