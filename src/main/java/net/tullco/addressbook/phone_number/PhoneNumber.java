@@ -31,6 +31,7 @@ public class PhoneNumber {
 			contact.put(s, rs.getString(s));
 		}
 		contact.put("preferred", Integer.toString(rs.getInt("preferred")));
+		//System.out.println(Integer.toString(rs.getInt("preferred")));
 		contact.put("id", Integer.toString(rs.getInt("id")));
 		contact.put("contact_id", Integer.toString(rs.getInt("contact_id")));
 		return contact;
@@ -40,8 +41,6 @@ public class PhoneNumber {
 		for (String k: values.keySet()){
 			if(k.equals("contact_id"))
 				this.contact_id=Integer.parseInt(values.get(k));
-			if(k.equals("preferred"))
-				this.setPreferred(Boolean.parseBoolean(values.get(k)));
 			if(k.equals("type"))
 				this.setType(values.get(k));
 			if(k.equals("number"))
@@ -50,9 +49,12 @@ public class PhoneNumber {
 				this.locale = values.get(k);
 			if(k.equals("id"))
 				this.id = Integer.parseInt(values.get(k));
+			if(k.equals("preferred"))
+				//System.out.println("Contact ID: "+this.contact_id+ "ID: "+this.id+ "Preferred: "+(values.get(k).equals("1") ? true : false)+" or "+values.get(k));
+				this.preferred=(values.get(k).equals("1") ? true : false);
 		}
 	}
-	public static List<PhoneNumber> PhoneNumbersLoader(int contact_id){
+	public static List<PhoneNumber> phoneNumbersLoader(int contact_id){
 		String statement = String.format(PHONE_NUMBERS_LOADER_SQL, contact_id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
@@ -65,7 +67,7 @@ public class PhoneNumber {
 		}
 		return phoneNumbers;
 	}
-	public static PhoneNumber PhoneNumberLoader(int phone_number_id){
+	public static PhoneNumber phoneNumberLoader(int phone_number_id){
 		String statement = String.format(PHONE_NUMBER_LOADER_SQL, phone_number_id);
 		ResultSet rs = SQLiteUtils.executeSelect(statement);
 		try {
@@ -76,9 +78,6 @@ public class PhoneNumber {
 		} catch (SQLException e) {
 			return null;
 		}
-	}
-	public static List<PhoneNumber> phoneNumbersLoader(int contact_id){
-		return new ArrayList<PhoneNumber>();
 	}
 	public int getId() {
 		return id;

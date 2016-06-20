@@ -11,16 +11,31 @@
     $contact.currentAddress().country()</span>
   </div>
 </div>
+#if ($contact.hasPreferredPhoneNumbers())
 <div class="details_container_div">
-  #if ($contact.hasPreferredPhoneNumbers())
   <span class="contact_text">Preferred Phone Numbers</span>    
   <div class="contact_address_div">
   #foreach ($pn in $contact.getPreferredPhoneNumbers())
     <span class="phone_text">
-      $display_utils_class.capitalize($pn.type): $pn.number()
-    </span>
+      $display_utils_class.capitalize($pn.type) : $pn.getNumber()
+    </span><br>
   #end
   </div>
-  #end
 </div>
+#end
+#foreach($address in $contact.addresses())
+  #if ($address != $contact.currentAddress())
+    <div class="details_container_div">
+      <span class="contact_text">Previous Address</span>
+      <div class="contact_address_div">
+	     <span class="address_text">$address.street()<br>
+	    #if ("$address.apartment()" != "")
+	      $address.apartment()<br>
+	    #end
+	    $address.city(), $address.state() $address.zipCode()<br>
+	    $address.country()</span>
+      </div>
+    </div>
+  #end
+#end
 #end

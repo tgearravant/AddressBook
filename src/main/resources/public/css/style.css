@@ -46,7 +46,7 @@ hr{
   font-weight: bold;
   color: #005031;
 }
-.address_text{
+.address_text,.phone_text{
   font-weight: bold;
   font-size: 1.1em;
   color: #005031;
