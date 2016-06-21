@@ -14,6 +14,7 @@ public class Path {
         public final static String IMAGE_DIRECTORY = "/img/";
         public final static String EDIT_ADDRESS = "/addresses/:address_id/edit/";
         public final static String ADD_ADDRESS = "/addresses/add/:contact_id";
+        public final static String ADDRESS_POST = "/addresses/post";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
