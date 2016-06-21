@@ -41,12 +41,12 @@ public class App
     	get(Path.Web.EDIT_ADDRESS,		AddressController.editAddress);
     	
     	//404 Routing
-    	get("*",						ViewUtil.notFound);
+    	get("*",						ViewUtils.notFound);
     }
     private static void postRouting(){
     	post(Path.Web.SEARCH_POST,		ContactController.searchContacts);
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
-    	post("*",						ViewUtil.notFound);
+    	post("*",						ViewUtils.notFound);
     }
     private static void before(){
     }

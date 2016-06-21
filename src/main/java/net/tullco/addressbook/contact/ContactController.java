@@ -5,7 +5,7 @@ package net.tullco.addressbook.contact;
 import java.util.HashMap;
 
 import net.tullco.addressbook.utils.Path;
-import net.tullco.addressbook.utils.ViewUtil;
+import net.tullco.addressbook.utils.ViewUtils;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -19,28 +19,28 @@ public class ContactController {
         	try{
         		contact_id=Integer.parseInt(request.params(":contact_id"));
         	}catch(NumberFormatException e){
-            	halt(404,ViewUtil.renderNotFound(request));
+            	halt(404,ViewUtils.renderNotFound(request));
             	return "";
         	}
 		}
 		else{
-			halt(404,ViewUtil.renderNotFound(request));
+			halt(404,ViewUtils.renderNotFound(request));
 			return "";
 		}
 		HashMap<String, Object> model = new HashMap<>();
         Contact contact=Contact.ContactLoader(contact_id);
         if (contact==null){
-        	halt(404,ViewUtil.renderNotFound(request));
+        	halt(404,ViewUtils.renderNotFound(request));
         }
         model.put("contact", contact);
         model.put("main_header", contact.fullName());
-        return ViewUtil.render(request, model, Path.Template.ONE_CONTACT);
+        return ViewUtils.render(request, model, Path.Template.ONE_CONTACT);
 	};
 	
 	public static Route listContacts = (Request request, Response response) -> {
 		HashMap<String, Object> model = new HashMap<>();
         model.put("contacts",Contact.ContactsLoader("", 50, 0));
-        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+        return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	};
 	
 	public static Route searchContacts = (Request request, Response response) -> {
@@ -48,13 +48,13 @@ public class ContactController {
 		if (request.params().containsKey(":search"))
 		response.redirect(Path.Web.INDEX);
         model.put("contacts",Contact.ContactsLoader("", 50, 0));
-        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+        return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	};
 	
 	public static Route contactSearchPost = (Request request, Response response) -> {
 		HashMap<String, Object> model = new HashMap<>();
         model.put("contacts",Contact.ContactsLoader("", 50, 0));
-        return ViewUtil.render(request, model, Path.Template.LIST_CONTACTS);
+        return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	}; 
 	
 /*	public static Route editContact = (Request request, Response response) -> {

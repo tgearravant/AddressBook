@@ -13,7 +13,7 @@ hr{
 	font-size: 3em;
 	margin: auto;
 }
-.contact_container_div,.details_container_div{
+.contact_container_div,.details_container_div,.form_container_div{
    float: left;
    margin: 10px;
    padding: 10px;
@@ -25,6 +25,31 @@ hr{
 .details_container_div{
 	width: 275px;
 	height: 150px;
+}
+.form_container_div{
+	width: 350px;
+	height: 460px;
+}
+.form_label{
+	color: #005031;
+	font-size: 1.5em;
+}
+.form_input{
+	font-size: 1.1em;
+	padding: 10px;
+	width: 90%;
+	margin-left: 5%;
+	margin-right:5%;
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.submit_button{
+	border-radius: 5px;
+	margin-left: 40%;
+	margin-top: 10px;
+	padding: 5px;
+	font-size: 1.1em
 }
 .contact_container_div:hover{
   background: #DDDDDD;

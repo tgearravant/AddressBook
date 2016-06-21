@@ -1,14 +1,15 @@
 #parse("/templates/master.vm")
 #@master()
 <div class="form_container_div">
-	<form method="POST" action="">
-	<label class="address_label">Street</label><input class="address_input" value="$street_default" name="street" />
-	<label class="address_label">Apartment</label><input class="address_input" value="$apartment_default" name="apartment"/>
-	<label class="address_label">City</label><input class="address_input" value="$city_default" name="city" />
-	<label class="address_label">State</label><input class="address_input" value="$state_default" name="state" />
-	<label class="address_label">Zip Code</label><input class="address_input" value="$zip_default" name="zip_code" />
+	<form method="POST" action="$WebPath.getADDRESS_POST()">
+	<label class="form_label">Street</label><br><input class="form_input" value="$street_default" name="street" /><br>
+	<label class="form_label">Apartment</label><input class="form_input" value="$apartment_default" name="apartment"/><br>
+	<label class="form_label">City</label><br><input class="form_input" value="$city_default" name="city" /><br>
+	<label class="form_label">State</label><br><input class="form_input" value="$state_default" name="state" /><br>
+	<label class="form_label">Zip Code</label><br><input class="form_input" value="$zip_default" name="zip_code" /><br>
 	<input type="hidden" value="$contact_id" name="contact_id" />
-	<input type="hidden" value="$type" name="type >/
+	<input type="hidden" value="$mode" name="mode" />
+	<input type="submit" class="submit_button" value="Save" />
 	</form>
 </div>
 #end
