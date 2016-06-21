@@ -1,10 +1,14 @@
 #parse("/templates/master.vm")
 #@master()
-<form method="POST" action="">
-<label class="address_label">Street</label><input class="address_input" value="" name="street" />
-<label class="address_label"></label><input class="address_input" value="" />
-<label class="address_label"></label><input class="address_input" value="" />
-<label class="address_label"></label><input class="address_input" value="" />
-<input type="hidden" value="contact_id" name=
-</form>
+<div class="form_container_div">
+	<form method="POST" action="">
+	<label class="address_label">Street</label><input class="address_input" value="$street_default" name="street" />
+	<label class="address_label">Apartment</label><input class="address_input" value="$apartment_default" name="apartment"/>
+	<label class="address_label">City</label><input class="address_input" value="$city_default" name="city" />
+	<label class="address_label">State</label><input class="address_input" value="$state_default" name="state" />
+	<label class="address_label">Zip Code</label><input class="address_input" value="$zip_default" name="zip_code" />
+	<input type="hidden" value="$contact_id" name="contact_id" />
+	<input type="hidden" value="$type" name="type >/
+	</form>
+</div>
 #end

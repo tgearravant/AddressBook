@@ -1,6 +1,8 @@
 package net.tullco.addressbook.utils;
 
 
+import static spark.Spark.halt;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,5 +40,19 @@ public class ViewUtil {
     };
     public static String renderNotFound(Request request){
     	return render(request, new HashMap<>(), Path.Template.NOT_FOUND);
+    }
+    public static void haltIfNoParameter(Request request, String param,String type){
+		if (request.params().containsKey(param)){
+        	if (type=="id"){
+				try{
+	        		Integer.parseInt(request.params(param));
+	        	}catch(NumberFormatException e){
+	            	halt(404,ViewUtil.renderNotFound(request));
+	        	}
+        	}
+		}
+		else{
+			halt(404,ViewUtil.renderNotFound(request));
+		}
     }
 }
