@@ -12,9 +12,13 @@ public class Path {
         public final static String SEARCH_RESULTS = "/contacts/search/:search/";
         public final static String STYLESHEET = "/css/style.css";
         public final static String IMAGE_DIRECTORY = "/img/";
-        public final static String EDIT_ADDRESS = "/addresses/:address_id/edit/";
+        public final static String EDIT_ADDRESS = "/addresses/edit/:address_id/";
         public final static String ADD_ADDRESS = "/addresses/add/:contact_id/";
         public final static String ADDRESS_POST = "/addresses/post/";
+        public final static String DELETE_ADDRESS = "/addresses/delete/:address_id/";
+        public final static String PHONE_NUMBER_POST="/phone_numbers/post/";
+        public final static String EDIT_PHONE_NUMBER = "/phone_numbers/edit/:phone_number_id/";
+        public final static String ADD_PHONE_NUMBER = "/phone_numbers/add/:contact_id/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -29,7 +33,16 @@ public class Path {
         	return ADDRESS_POST;
         }
         public static String getADD_ADDRESS(){
-        	return ADD_ADDRESS.replace(":contact_id", "");
+        	return ADD_ADDRESS.replace(":contact_id/", "");
+        }
+        public static String getPHONE_NUMBER_POST(){
+        	return PHONE_NUMBER_POST;
+        }
+        public static String getADD_PHONE_NUMBER(){
+        	return ADD_PHONE_NUMBER.replace(":contact_id/","");
+        }
+        public static String getDELETE_ADDRESS(){
+        	return DELETE_ADDRESS.replace(":address_id/","");
         }
     }
 
@@ -40,5 +53,6 @@ public class Path {
         public static final String LIST_CONTACTS = "/templates/contact/list.vm";
         public static final String NOT_FOUND = "/templates/notFound.vm";
         public static final String EDIT_ADDRESS = "/templates/address/edit.vm";
+        public static final String EDIT_PHONE_NUMBER = "/templates/phoneNumbers/edit.vm";
     }
 }

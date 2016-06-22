@@ -90,7 +90,9 @@ public class Contact {
 			if(!rs.isBeforeFirst())
 				return null;
 			rs.next();
-			return new Contact(convertResultSetToContactMap(rs));
+			Contact c=new Contact(convertResultSetToContactMap(rs));
+			rs.close();
+			return c;
 		} catch (SQLException e) {
 			return null;
 		}
@@ -104,6 +106,7 @@ public class Contact {
 			while(rs.next()){
 				contacts.add(new Contact(convertResultSetToContactMap(rs)));
 			}
+			rs.close();
 		} catch (SQLException e) {
 			System.err.println("Strange error here.");
 		}

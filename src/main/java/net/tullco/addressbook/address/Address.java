@@ -25,8 +25,8 @@ public class Address {
 	private static final String ADDRESS_LOADER_SQL="SELECT * FROM addresses WHERE id=%d";
 	private static final String ADDRESS_DEACTIVATOR_SQL="UPDATE addresses SET active=0 WHERE contact_id = %d";
 	private static final String ADDRESS_ACTIVATOR_SQL="UPDATE addresses SET active=1 WHERE id = %d";
-	private static final String ADDRESS_UPDATE_SQL="UPDATE addresses"
-			+ "SET street=%s,apartment=%s,zip_code=%s,city=%s,state=%s,country=%s"
+	private static final String ADDRESS_UPDATE_SQL="UPDATE addresses "
+			+ "SET street=%s,apartment=%s,zip_code=%s,city=%s,state=%s,country=%s "
 			+ "WHERE id=%d";
 	private static final String ADDRESS_INSERT_SQL="INSERT INTO addresses "
 			+ "(contact_id,street,apartment,zip_code,city,state,country,active) "
@@ -138,7 +138,9 @@ public class Address {
 			if(!rs.isBeforeFirst())
 				return null;
 			rs.next();
-			return new Address(convertResultSetToAddressMap(rs));
+			Address a = new Address(convertResultSetToAddressMap(rs));
+			rs.close();
+			return a;
 		} catch (SQLException e) {
 			return null;
 		}
@@ -151,6 +153,7 @@ public class Address {
 			while(rs.next()){
 				addresses.add(new Address(convertResultSetToAddressMap(rs)));
 			}
+			rs.close();
 		} catch (SQLException e) {
 			System.err.println("Strange error here.");
 		}

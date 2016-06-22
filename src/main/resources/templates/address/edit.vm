@@ -24,8 +24,10 @@
 	<label for="active"></label>
 	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />
+	<input type="hidden" value="$address_id" name="address_id" />
 	<input type="hidden" value="$mode" name="mode" />
-	<input type="submit" class="submit_button" value="Save" />
+	<table><tr><td><input type="submit" class="submit_button" value="Save" /></td>
+	#if ($mode == "edit") <td><a href="$WebPath.getDELETE_ADDRESS()$address_id/"><input type="button" value="Delete" class="submit_button" /></a></td>#end</tr></table>
 	</form>
 </div>
 #end

@@ -46,13 +46,16 @@ public class AddressController {
         if (address==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
+        model.put("contact_id", address.contactId());
+        model.put("address_id",address.id());
         model.put("main_header", "Add Address");
         model.put("mode", "edit");
         model.put("street_default", address.street());
-        model.put("apartment_default", address.apartment());
+        model.put("apartment_default", (address.apartment()==null?"":address.apartment()));
         model.put("city_default", address.city());
         model.put("state_default", address.state());
         model.put("zip_default", address.zipCode());
+        model.put("active", address.active());
         model.put("locales", LocaleUtils.allowedLocalesList());
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
@@ -64,9 +67,23 @@ public class AddressController {
 		for (String k:options.keySet())
 			output+=k+": "+options.get(k)+"\n";
 		System.out.println(output);
-		Address newAddress=new Address(options);
-		newAddress.save();
-		response.redirect(Path.Web.ONE_CONTACT_NO_ID+newAddress.contactId()+"/",303);
+		if(options.get("mode").equals("add")){
+			Address newAddress=new Address(options);
+			newAddress.save();
+			response.redirect(Path.Web.ONE_CONTACT_NO_ID+newAddress.contactId()+"/",303);
+		}
+		else if(options.get("mode").equals("edit")){
+			options.put("id",options.get("address_id"));
+			Address address=new Address(options);
+			address.save();
+			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
+		}
+		else{
+			if (options.containsKey("contact_id"))
+				response.redirect(Path.Web.ONE_CONTACT_NO_ID+options.get("contact_id"));
+			else
+				response.redirect(Path.Web.INDEX,303);
+		}
         return "Redirecting back to contact...";
 	};
 }

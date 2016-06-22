@@ -1,0 +1,29 @@
+#parse("/templates/master.vm")
+#@master()
+<div class="form_container_div">
+	<form method="POST" action="$WebPath.getPHONE_NUMBER_POST()">
+	<label for="number" class="form_label">Number</label><br>
+	<input class="form_input" value="$number" name="number" id="number" /><br>
+	<label for = "type" class="form_label">Type</label><br>
+	<select value="mobile" name="type">
+	#foreach ($locale in $locales)
+		<option value="$locale[0]">$locale[1]</option>
+	#end
+	</select><br>
+	<label for = "country" class="form_label">Country</label><br>
+	<select value="us" name="country">
+	#foreach ($locale in $locales)
+		<option value="$locale[0]">$locale[1]</option>
+	#end
+	</select><br>
+	<label class="form_label">Preferred Number?</label>
+	<div class="form_checkbox">	
+	<input type="checkbox" value="1" id="active" name="active" #if ($active) checked #end />
+	<label for="active"></label>
+	</div>
+	<input type="hidden" value="$contact_id" name="contact_id" />
+	<input type="hidden" value="$mode" name="mode" />
+	<input type="submit" class="submit_button" value="Save" />
+	</form>
+</div>
+#end

@@ -15,6 +15,7 @@ public class SQLiteUtils {
 			s.executeUpdate(statement);
 			ResultSet rs=s.getGeneratedKeys();
 			int last_insert_id = rs.getInt(1);
+			s.close();
 			return last_insert_id;
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -41,6 +42,7 @@ public class SQLiteUtils {
 		try{
 			Statement s = c.createStatement();
 			s.executeUpdate(statement);
+			s.close();
 			return true;
 		}catch(SQLException e){
 			System.err.println("SQL Problem of some description. Most likely a syntax error.");
