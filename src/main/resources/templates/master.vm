@@ -6,7 +6,7 @@
 </head>
 <body>
 <header>
-  <h1 class="masterHeader">My Address Book</h1>
+  <h1 class="master_header">$main_header</h1>
 </header>
 <hr>
 <main>

@@ -1,6 +1,7 @@
 #parse("/templates/master.vm")
 #@master()
 	#foreach($contact in $contacts) 
+    <a href="$WebPath.getONE_CONTACT()$contact.getId()/">
     <div class="contact_container_div">
       <!--<div class="contact_picture_div">
         <a href="$WebPath.getONE_CONTACT()$contact.getId()/">
@@ -12,13 +13,15 @@
       </div>
       #if ($contact.hasAddress())                                      
         <div class="contact_address_div">
-          <span class="contact_text">$contact.currentAddress().street()</span>
-          #if ("$contact.currentAddress().apartment()" != "")
-            <span class="contact_text">$contact.currentAddress().apartment()</span>
+          <span class="address_text">$contact.currentAddress().street()<br>
+          #if ("$!contact.currentAddress().apartment()" != "")
+            $contact.currentAddress().apartment()<br>
           #end
-          <span class="contact_text">$contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()
+          $contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()<br>
+          $contact.currentAddress().country()</span>
         </div>
       #end
-    </div>   
+    </div>
+    </a>   
 	#end
 #end

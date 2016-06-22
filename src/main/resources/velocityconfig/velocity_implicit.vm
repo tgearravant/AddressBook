@@ -1,3 +1,4 @@
 #* @implicitly included *#
 #* @vtlvariable name="contact" type="net.tullco.addressbook.contact.Contact" *#
 #* @vtlvariable name="contacts" type="java.lang.Iterable<net.tullco.addressbook.contact.Contact>" *#
+#* @vtlvariable name="locales" type="java.lang.Iterable<String[]>" *#

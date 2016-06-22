@@ -1,5 +1,5 @@
 body{
-  background-color: white;
+  background-color: #EFEFEF;
 }
 
 h1{
@@ -9,15 +9,123 @@ h1{
 hr{
   color: #005031;
 }
-
-.contact_container_div{
+.master_header{
+	font-size: 3em;
+	margin: auto;
+}
+.contact_container_div,.details_container_div,.form_container_div{
    float: left;
    margin: 10px;
    padding: 10px;
-   width: 200px;
-   height: 300px;
+   width: 250px;
+   height: 125px;
    border: 1px solid #005031;
    background: white;
+}
+.details_container_div{
+	width: 275px;
+	height: 150px;
+}
+.form_container_div{
+	width: 350px;
+	height: 625px;
+}
+.form_label{
+	color: #005031;
+	font-size: 1.5em;
+}
+input[type=checkbox] {
+	visibility: hidden;
+}
+/* SLIDE THREE */
+.form_checkbox {
+	width: 80px;
+	height: 26px;
+	background: #333;
+	margin: 20px auto;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+	position: relative;
+
+	-webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	-moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+	box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+}
+.form_checkbox:after {
+	content: 'NO';
+	font: 12px/26px Arial, sans-serif;
+	color: #bf0000;
+	position: absolute;
+	right: 10px;
+	z-index: 0;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.form_checkbox:before {
+	content: 'YES';
+	font: 12px/26px Arial, sans-serif;
+	color: #00bf00;
+	position: absolute;
+	left: 10px;
+	z-index: 0;
+	font-weight: bold;
+}
+
+.form_checkbox label {
+	display: block;
+	width: 34px;
+	height: 20px;
+
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+
+	-webkit-transition: all .4s ease;
+	-moz-transition: all .4s ease;
+	-o-transition: all .4s ease;
+	-ms-transition: all .4s ease;
+	transition: all .4s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	z-index: 1;
+
+	-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+	background: #fcfff4;
+
+	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+
+.form_checkbox input[type=checkbox]:checked + label {
+	left: 43px;
+}
+.form_input{
+	font-size: 1.1em;
+	padding: 10px;
+	width: 90%;
+	margin-left: 5%;
+	margin-right:5%;
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.submit_button{
+	border-radius: 5px;
+	margin-left: 40%;
+	margin-top: 10px;
+	padding: 5px;
+	font-size: 1.1em
 }
 .contact_container_div:hover{
   background: #DDDDDD;
@@ -27,12 +135,21 @@ hr{
   margin: auto;
   height: 200;
 }
+.contact_address_div{
+	margin-left: 20px;
+}
 .contact_picture{
   width: 100%;
   height: 100%;
 }
-.contact_text{
-  font-size: 1.3em;
+.contact_text,.address_text{
+  font-size: 1.4em;
   font-weight: bold;
   color: #005031;
 }
+.address_text,.phone_text{
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #005031;
+ }
+ 

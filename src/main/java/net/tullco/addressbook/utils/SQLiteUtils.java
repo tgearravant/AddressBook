@@ -1,14 +1,29 @@
 package net.tullco.addressbook.utils;
 
 import java.sql.*;
+
+import org.apache.commons.lang.StringEscapeUtils;
 import org.flywaydb.core.*;
 
 public class SQLiteUtils {
 	private static Connection conn=null;
-	public static void executeInsert(){
-		getConnection();
+	public static int executeInsert(String statement){
+		System.out.println(statement);
+		Connection c = getConnection();
+		try{
+			Statement s = c.createStatement();
+			s.executeUpdate(statement);
+			ResultSet rs=s.getGeneratedKeys();
+			int last_insert_id = rs.getInt(1);
+			return last_insert_id;
+		} catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("Some kind of SQL Problem...");
+			return 0;
+		}
 	}
 	public static ResultSet executeSelect(String statement){
+		System.out.println(statement);
 		Connection c = getConnection();
 		try{
 			Statement s = c.createStatement();
@@ -21,6 +36,7 @@ public class SQLiteUtils {
 		return null;
 	}
 	public static boolean executeUpdate(String statement){
+		System.out.println(statement);
 		Connection c= getConnection();
 		try{
 			Statement s = c.createStatement();
@@ -53,6 +69,14 @@ public class SQLiteUtils {
 			e.printStackTrace();
 		}
 		return SQLiteUtils.conn;
+	}
+	public static String sqlSafeFormat(String s, Object... objs){
+		for (int i=0; i < objs.length; i++){
+			if (objs[i] instanceof String && objs[i] != null){
+				objs[i] = "'"+StringEscapeUtils.escapeSql((String)objs[i])+"'";
+			}
+		}
+		return String.format(s,objs);
 	}
 	
 	public static boolean runMigrations(){
