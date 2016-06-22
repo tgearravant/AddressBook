@@ -5,8 +5,21 @@ import org.flywaydb.core.*;
 
 public class SQLiteUtils {
 	private static Connection conn=null;
-	public static void executeInsert(){
-		getConnection();
+	public static int executeInsert(String statement){
+		Connection c = getConnection();
+		try{
+			Statement s = c.createStatement();
+			s.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs=s.getGeneratedKeys();
+			if (rs.next())
+				for (int i=0; i<rs.getMetaData().getColumnCount();i++){
+					System.out.println(rs.getMetaData().getColumnLabel(i));
+					System.out.println(rs.getMetaData().getColumnType(i));
+				}
+		} catch(SQLException e){
+			return 0;
+		}
+		return 0;
 	}
 	public static ResultSet executeSelect(String statement){
 		Connection c = getConnection();

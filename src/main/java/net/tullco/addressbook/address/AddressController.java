@@ -2,11 +2,11 @@ package net.tullco.addressbook.address;
 
 import static spark.Spark.halt;
 
-import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.Map;
 
 import net.tullco.addressbook.contact.Contact;
+import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.ViewUtils;
 import spark.Request;
@@ -31,6 +31,8 @@ public class AddressController {
         model.put("city_default", "");
         model.put("state_default", "");
         model.put("zip_default", "");
+        model.put("active", false);
+        model.put("locales", LocaleUtils.allowedLocalesList());
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
 
@@ -51,14 +53,18 @@ public class AddressController {
         model.put("city_default", address.city());
         model.put("state_default", address.state());
         model.put("zip_default", address.zipCode());
+        model.put("locales", LocaleUtils.allowedLocalesList());
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
 
 	public static Route AddressPost = (Request request, Response response) -> {
 		System.out.println("Loading Address Post...");
 		String output = "";
-		ViewUtils.postBodyDecoder(request.body());
-		
+		Map<String,String> options = ViewUtils.postBodyDecoder(request.body());
+		for (String k:options.keySet())
+			output+=k+": "+options.get(k)+"<br>";
+		Address newAddress=new Address(options);
+		newAddress.save();
         return output;
         //String ummm="Well... That shouldn't have happened... Oops, I guess?";
         //System.out.println(ummm);

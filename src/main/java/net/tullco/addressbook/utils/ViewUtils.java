@@ -65,7 +65,9 @@ public class ViewUtils {
 			try {
 				decodedMap.put(keyVal[0], URLDecoder.decode(keyVal[1],"UTF-8"));
 			} catch (UnsupportedEncodingException e) {
-				continue;
+				decodedMap.put(keyVal[0], null);
+			} catch (ArrayIndexOutOfBoundsException e){
+				decodedMap.put(keyVal[0], null);
 			}
     	}
     	return decodedMap;

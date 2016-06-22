@@ -2,11 +2,27 @@
 #@master()
 <div class="form_container_div">
 	<form method="POST" action="$WebPath.getADDRESS_POST()">
-	<label class="form_label">Street</label><br><input class="form_input" value="$street_default" name="street" /><br>
-	<label class="form_label">Apartment</label><input class="form_input" value="$apartment_default" name="apartment"/><br>
-	<label class="form_label">City</label><br><input class="form_input" value="$city_default" name="city" /><br>
-	<label class="form_label">State</label><br><input class="form_input" value="$state_default" name="state" /><br>
-	<label class="form_label">Zip Code</label><br><input class="form_input" value="$zip_default" name="zip_code" /><br>
+	<label for="street" class="form_label">Street</label><br>
+	<input class="form_input" value="$street_default" name="street" id="street" /><br>
+	<label for="apartment" class="form_label">Apartment</label><br>
+	<input class="form_input" value="$apartment_default" name="apartment" id="apartment" /><br>
+	<label for="city" class="form_label">City</label><br>
+	<input class="form_input" value="$city_default" name="city" id="city" /><br>
+	<label for="state" class="form_label">State</label><br>
+	<input class="form_input" value="$state_default" name="state" id="state" /><br>
+	<label for = "zip_code" class="form_label">Zip Code</label><br>
+	<input class="form_input" value="$zip_default" name="zip_code" id="zip_code" /><br>
+	<label for = "country" class="form_label">Country</label><br>
+	<select value="us">
+	#foreach ($locale in $locales)
+		<option value="$locale[0]">$locale[1]</option>
+	#end
+	</select><br>
+	<label class="form_label">Current Address?</label>
+	<div class="form_checkbox">	
+	<input type="checkbox" value="yes" id="active" name="active" #if ($active) checked #end />
+	<label for="active"></label>
+	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />
 	<input type="hidden" value="$mode" name="mode" />
 	<input type="submit" class="submit_button" value="Save" />
