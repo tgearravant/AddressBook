@@ -24,7 +24,7 @@ public class Address {
 	private static final String ADDRESS_LOADER_SQL="SELECT * FROM addresses WHERE id=%d";
 	private static final String ADDRESS_INSERT_SQL="INSERT INTO addresses "
 			+ "(contact_id,street,apartment,zip_code,city,state,country,active) "
-			+ "VALUES (%d,%s,%s,%s,%s,%s,%s,%d)";
+			+ "VALUES (%d,'%s','%s','%s','%s','%s','%s',%d)";
 	
 	public Address(Map<String,String> values){
 		setValuesFromMap(values);
@@ -66,7 +66,8 @@ public class Address {
 					,this.country
 					,(this.active?1:0));
 			System.out.println(statement);
-			//SQLiteUtils.executeInsert();
+			int newId=SQLiteUtils.executeInsert(statement);
+			this.id=newId;
 		}
 		return true;
 	}
@@ -142,8 +143,8 @@ public class Address {
 		return null;
 	}
 	public static Address addAddress(Map<String,String> valueMap){
-		Address temp=new Address(valueMap);
-		temp.save();
-		return temp;
+		Address newAddress=new Address(valueMap);
+		newAddress.save();
+		return newAddress;
 	}
 }

@@ -40,4 +40,10 @@
     </div>
   #end
 #end
+<div class="details_container_div">
+  <span class="contact_text">Add New Address</span>
+  <div class="edit_button_div">
+  	<a href="$WebPath.getADD_ADDRESS()$contact.getId()/"><button type="button">Add Address</button></a>
+  </div
+</div>
 #end

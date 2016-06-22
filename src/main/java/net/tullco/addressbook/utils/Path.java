@@ -28,6 +28,9 @@ public class Path {
         public static String getADDRESS_POST(){
         	return ADDRESS_POST;
         }
+        public static String getADD_ADDRESS(){
+        	return ADD_ADDRESS.replace(":contact_id", "");
+        }
     }
 
     public static class Template {

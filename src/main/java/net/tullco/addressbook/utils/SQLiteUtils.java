@@ -6,22 +6,22 @@ import org.flywaydb.core.*;
 public class SQLiteUtils {
 	private static Connection conn=null;
 	public static int executeInsert(String statement){
+		System.out.println(statement);
 		Connection c = getConnection();
 		try{
 			Statement s = c.createStatement();
-			s.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+			s.executeUpdate(statement);
 			ResultSet rs=s.getGeneratedKeys();
-			if (rs.next())
-				for (int i=0; i<rs.getMetaData().getColumnCount();i++){
-					System.out.println(rs.getMetaData().getColumnLabel(i));
-					System.out.println(rs.getMetaData().getColumnType(i));
-				}
+			int last_insert_id = rs.getInt(1);
+			return last_insert_id;
 		} catch(SQLException e){
+			e.printStackTrace();
+			System.out.println("Some kind of SQL Problem...");
 			return 0;
 		}
-		return 0;
 	}
 	public static ResultSet executeSelect(String statement){
+		System.out.println(statement);
 		Connection c = getConnection();
 		try{
 			Statement s = c.createStatement();
@@ -34,6 +34,7 @@ public class SQLiteUtils {
 		return null;
 	}
 	public static boolean executeUpdate(String statement){
+		System.out.println(statement);
 		Connection c= getConnection();
 		try{
 			Statement s = c.createStatement();

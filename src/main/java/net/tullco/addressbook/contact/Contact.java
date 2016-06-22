@@ -23,8 +23,8 @@ public class Contact {
 	private List<Address> addresses;
 	private List<PhoneNumber> phoneNumbers;
 	
-	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE id=%d";
-	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT id,first_name,middle_name,last_name FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
+	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
+	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts SET first_name=%s, middle_name=%s, last_name=%s WHERE id=%d";
 
 	private Contact (Map<String,String> values){
