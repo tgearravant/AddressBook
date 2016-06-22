@@ -5,7 +5,7 @@
   <span class="contact_text">Current Address</span>
   <div class="contact_address_div">
     <span class="address_text">$contact.currentAddress().street()<br>
-    #if ("$contact.currentAddress().apartment()" != "")
+    #if ("$!contact.currentAddress().apartment()" != "")
       $contact.currentAddress().apartment()<br>
     #end
     $contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()<br>
@@ -31,7 +31,7 @@
       <span class="contact_text">Previous Address</span>
       <div class="contact_address_div">
 	     <span class="address_text">$address.street()<br>
-	    #if ("$address.apartment()" != "")
+	    #if ("$!address.apartment()" != "")
 	      $address.apartment()<br>
 	    #end
 	    $address.city(), $address.state() $address.zipCode()<br>

@@ -59,15 +59,14 @@ public class AddressController {
 
 	public static Route AddressPost = (Request request, Response response) -> {
 		System.out.println("Loading Address Post...");
-		String output = "";
 		Map<String,String> options = ViewUtils.postBodyDecoder(request.body());
+		String output = "";
 		for (String k:options.keySet())
-			output+=k+": "+options.get(k)+"<br>";
+			output+=k+": "+options.get(k)+"\n";
+		System.out.println(output);
 		Address newAddress=new Address(options);
 		newAddress.save();
-        return output;
-        //String ummm="Well... That shouldn't have happened... Oops, I guess?";
-        //System.out.println(ummm);
-        //return ummm;
+		response.redirect(Path.Web.ONE_CONTACT_NO_ID+newAddress.contactId()+"/",303);
+        return "Redirecting back to contact...";
 	};
 }

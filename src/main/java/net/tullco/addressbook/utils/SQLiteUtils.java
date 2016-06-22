@@ -1,6 +1,8 @@
 package net.tullco.addressbook.utils;
 
 import java.sql.*;
+
+import org.apache.commons.lang.StringEscapeUtils;
 import org.flywaydb.core.*;
 
 public class SQLiteUtils {
@@ -67,6 +69,14 @@ public class SQLiteUtils {
 			e.printStackTrace();
 		}
 		return SQLiteUtils.conn;
+	}
+	public static String sqlSafeFormat(String s, Object... objs){
+		for (int i=0; i < objs.length; i++){
+			if (objs[i] instanceof String && objs[i] != null){
+				objs[i] = "'"+StringEscapeUtils.escapeSql((String)objs[i])+"'";
+			}
+		}
+		return String.format(s,objs);
 	}
 	
 	public static boolean runMigrations(){

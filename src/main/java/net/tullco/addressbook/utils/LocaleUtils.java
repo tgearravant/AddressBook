@@ -23,4 +23,11 @@ public class LocaleUtils {
 		}
 		return localesArray;
 	}
+	public static String getLongLocaleName(String locale){
+		String l = allowedLocales().get(locale);
+		if (l==null){
+			l="Invalid Locale";
+		}
+		return l;
+	}
 }
