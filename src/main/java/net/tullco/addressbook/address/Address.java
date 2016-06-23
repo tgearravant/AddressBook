@@ -31,6 +31,7 @@ public class Address {
 	private static final String ADDRESS_INSERT_SQL="INSERT INTO addresses "
 			+ "(contact_id,street,apartment,zip_code,city,state,country,active) "
 			+ "VALUES (%d,%s,%s,%s,%s,%s,%s,0)";
+	private static final String ADDRESS_DELETE_SQL="DELETE FROM addresses WHERE id=%d";
 	
 	public Address(Map<String,String> values){
 		setValuesFromMap(values);
@@ -91,6 +92,10 @@ public class Address {
 			SQLiteUtils.executeUpdate(statement);
 		}
 		return true;
+	}
+	public void delete(){
+		String statement = String.format(ADDRESS_DELETE_SQL,this.contact_id);
+		SQLiteUtils.executeUpdate(statement);
 	}
 	public int id(){
 		return this.id;

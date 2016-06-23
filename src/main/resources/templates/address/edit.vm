@@ -1,7 +1,7 @@
 #parse("/templates/master.vm")
 #@master()
 <div class="form_container_div">
-	<form method="POST" action="$WebPath.getADDRESS_POST()">
+	<form method="post" action="$WebPath.getADDRESS_POST()">
 	<label for="street" class="form_label">Street</label><br>
 	<input class="form_input" value="$street_default" name="street" id="street" /><br>
 	<label for="apartment" class="form_label">Apartment</label><br>
@@ -24,10 +24,19 @@
 	<label for="active"></label>
 	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />
-	<input type="hidden" value="$address_id" name="address_id" />
+	#if ($mode == "edit")
+		<input type="hidden" value="$address_id" name="address_id" />
+	#end
 	<input type="hidden" value="$mode" name="mode" />
-	<table><tr><td><input type="submit" class="submit_button" value="Save" /></td>
-	#if ($mode == "edit") <td><a href="$WebPath.getDELETE_ADDRESS()$address_id/"><input type="button" value="Delete" class="submit_button" /></a></td>#end</tr></table>
-	</form>
+	<div class="submit_button_div"><input type="submit" class="submit_button" value="Save" /></div></form>
+	#if ($mode == "edit")
+		<div class="submit_button_div">
+			<form action="$WebPath.getADDRESS_POST()" method="post">
+				<input type="hidden" value="delete" name="mode" />
+				<input type="hidden" value="$address_id" name="address_id />
+				<input type="submit" value="Delete" class="submit_button" />
+			</form>
+		</div>
+	#end
 </div>
 #end

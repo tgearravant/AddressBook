@@ -15,7 +15,6 @@ public class Path {
         public final static String EDIT_ADDRESS = "/addresses/edit/:address_id/";
         public final static String ADD_ADDRESS = "/addresses/add/:contact_id/";
         public final static String ADDRESS_POST = "/addresses/post/";
-        public final static String DELETE_ADDRESS = "/addresses/delete/:address_id/";
         public final static String PHONE_NUMBER_POST="/phone_numbers/post/";
         public final static String EDIT_PHONE_NUMBER = "/phone_numbers/edit/:phone_number_id/";
         public final static String ADD_PHONE_NUMBER = "/phone_numbers/add/:contact_id/";
@@ -40,9 +39,6 @@ public class Path {
         }
         public static String getADD_PHONE_NUMBER(){
         	return ADD_PHONE_NUMBER.replace(":contact_id/","");
-        }
-        public static String getDELETE_ADDRESS(){
-        	return DELETE_ADDRESS.replace(":address_id/","");
         }
     }
 

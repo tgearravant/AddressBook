@@ -47,6 +47,8 @@ public class App
     	post(Path.Web.SEARCH_POST,		ContactController.searchContacts);
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
+    	
+    	//404 Routing
     	post("*",						ViewUtils.notFound);
     }
     private static void before(){

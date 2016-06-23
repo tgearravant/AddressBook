@@ -120,6 +120,11 @@ input[type=checkbox] {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+.submit_button_div{
+	float:left;
+	margin-left:10%;
+	margin-right:10%;
+}
 .submit_button{
 	border-radius: 5px;
 	margin-left: 40%;

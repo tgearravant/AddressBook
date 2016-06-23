@@ -46,9 +46,10 @@ public class AddressController {
         if (address==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
+        Contact contact = Contact.ContactLoader(address.contactId());
         model.put("contact_id", address.contactId());
         model.put("address_id",address.id());
-        model.put("main_header", "Add Address");
+        model.put("main_header", "Edit Address for "+contact.fullName());
         model.put("mode", "edit");
         model.put("street_default", address.street());
         model.put("apartment_default", (address.apartment()==null?"":address.apartment()));
@@ -77,6 +78,10 @@ public class AddressController {
 			Address address=new Address(options);
 			address.save();
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
+		}
+		else if (options.get("mode").equals("delete")){
+			options.put("id", options.get("address_id"));
+			new Address(options).delete();
 		}
 		else{
 			if (options.containsKey("contact_id"))
