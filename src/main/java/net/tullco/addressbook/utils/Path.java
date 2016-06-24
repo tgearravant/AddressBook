@@ -34,6 +34,9 @@ public class Path {
         public static String getADD_ADDRESS(){
         	return ADD_ADDRESS.replace(":contact_id/", "");
         }
+        public static String getEDIT_ADDRESS(){
+        	return EDIT_ADDRESS.replace(":address_id/", "");
+        }
         public static String getPHONE_NUMBER_POST(){
         	return PHONE_NUMBER_POST;
         }

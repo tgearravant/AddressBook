@@ -1,6 +1,7 @@
 #parse("/templates/master.vm")
 #@master()
 #if ($contact.hasAddress())
+<a href="$WebPath.getEDIT_ADDRESS()$contact.currentAddress().id()/">
 <div class="details_container_div">
   <span class="contact_text">Current Address</span>
   <div class="contact_address_div">
@@ -12,6 +13,7 @@
     $contact.currentAddress().country()</span>
   </div>
 </div>
+</a>
 #end
 #if ($contact.hasPreferredPhoneNumbers())
 <div class="details_container_div">
@@ -27,6 +29,7 @@
 #end
 #foreach($address in $contact.addresses())
   #if ($address != $contact.currentAddress())
+	<a href="$WebPath.getEDIT_ADDRESS()$address.id()/">
     <div class="details_container_div">
       <span class="contact_text">Previous Address</span>
       <div class="contact_address_div">
@@ -38,12 +41,11 @@
 	    $address.country()</span>
       </div>
     </div>
+    </a>
   #end
 #end
+<a href="$WebPath.getADD_ADDRESS()$contact.getId()/">
 <div class="details_container_div">
-  <span class="contact_text">Add New Address</span>
-  <div class="edit_button_div">
-  	<a href="$WebPath.getADD_ADDRESS()$contact.getId()/"><button type="button">Add Address</button></a>
-  </div
-</div>
+<span class="contact_text">Add New Address</span>
+</div></a>
 #end

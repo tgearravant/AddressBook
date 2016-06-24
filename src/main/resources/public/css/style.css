@@ -22,6 +22,9 @@ hr{
    border: 1px solid #005031;
    background: white;
 }
+.details_container_div:hover{
+  background: #DDDDDD;
+}
 .details_container_div{
 	width: 275px;
 	height: 150px;

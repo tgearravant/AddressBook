@@ -80,8 +80,9 @@ public class AddressController {
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
 		}
 		else if (options.get("mode").equals("delete")){
-			options.put("id", options.get("address_id"));
-			new Address(options).delete();
+			Address address = Address.addressLoader(Integer.parseInt(options.get("address_id")));
+			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
+			address.delete();
 		}
 		else{
 			if (options.containsKey("contact_id"))

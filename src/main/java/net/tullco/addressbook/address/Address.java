@@ -94,7 +94,7 @@ public class Address {
 		return true;
 	}
 	public void delete(){
-		String statement = String.format(ADDRESS_DELETE_SQL,this.contact_id);
+		String statement = String.format(ADDRESS_DELETE_SQL,this.id);
 		SQLiteUtils.executeUpdate(statement);
 	}
 	public int id(){
