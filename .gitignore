@@ -4,3 +4,4 @@
 /.project
 /contacts.db
 /*.log
+/config/config.properties
