@@ -47,7 +47,7 @@ public class Path {
 
     public static class Template {
         public final static String INDEX = "/templates/contact/list.vm";
-        public final static String LOGIN = "/velocity/login/login.vm";
+        public final static String LOGIN = "/templates/login/login.vm";
         public static final String ONE_CONTACT = "/templates/contact/details.vm";
         public static final String LIST_CONTACTS = "/templates/contact/list.vm";
         public static final String NOT_FOUND = "/templates/notFound.vm";
