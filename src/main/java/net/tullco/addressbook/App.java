@@ -17,7 +17,7 @@ public class App
     public static void main( String[] args )
     {
     	initialConfiguration();
-    	before();
+    	beforeFilters();
     	getRouting();
     	postRouting();
     	//after();
@@ -33,6 +33,10 @@ public class App
     		port(4567);
     		enableDebugScreen();
     	
+    }
+    private static void beforeFilters(){
+    	before("*",Filters.addTrailingSlashes);
+    	before("*",Filters.ensureLoggedIn);
     }
     private static void getRouting(){
     	//Index Routing
@@ -53,7 +57,5 @@ public class App
     	
     	//404 Routing
     	post("*",						ViewUtils.notFound);
-    }
-    private static void before(){
     }
 }

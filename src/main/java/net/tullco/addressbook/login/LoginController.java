@@ -1,5 +1,7 @@
 package net.tullco.addressbook.login;
 
+import static spark.Spark.halt;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class LoginController {
         if (request.session().attribute("currentUser") == null) {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
+    		halt(303,response.body());
         }
     }
 

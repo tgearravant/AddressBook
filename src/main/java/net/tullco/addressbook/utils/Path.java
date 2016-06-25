@@ -1,5 +1,7 @@
 package net.tullco.addressbook.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class Path {
     public static class Web {
@@ -46,6 +48,13 @@ public class Path {
         }
         public static String getLOGIN_POST(){
         	return LOGIN_POST;
+        }
+        public static List<String> getUnprotectedPaths(){
+        	ArrayList<String> paths = new ArrayList<String>();
+        	paths.add(LOGIN);
+        	paths.add(LOGIN_POST);
+        	paths.add(LOGOUT);
+        	return paths;
         }
     }
 
