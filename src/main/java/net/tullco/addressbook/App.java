@@ -3,6 +3,7 @@ package net.tullco.addressbook;
 import static spark.Spark.*;
 import net.tullco.addressbook.address.AddressController;
 import net.tullco.addressbook.contact.ContactController;
+import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
 import net.tullco.addressbook.utils.*;
 import static spark.debug.DebugScreen.*;
@@ -39,6 +40,7 @@ public class App
     	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
     	get(Path.Web.ADD_ADDRESS,		AddressController.addAddress);
     	get(Path.Web.EDIT_ADDRESS,		AddressController.editAddress);
+    	get(Path.Web.LOGIN,				LoginController.login);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
@@ -47,6 +49,7 @@ public class App
     	post(Path.Web.SEARCH_POST,		ContactController.searchContacts);
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
+    	post(Path.Web.LOGIN_POST,		LoginController.loginPost);
     	
     	//404 Routing
     	post("*",						ViewUtils.notFound);

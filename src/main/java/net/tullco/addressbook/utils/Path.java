@@ -5,6 +5,7 @@ public class Path {
     public static class Web {
         public static final String INDEX = "/";
         public static final String LOGIN = "/login/";
+        public static final String LOGIN_POST = "/login/post/";
         public static final String LOGOUT = "/logout/";
         public static final String ONE_CONTACT_NO_ID = "/contacts/";
         public static final String ONE_CONTACT = "/contacts/:contact_id/";
@@ -42,6 +43,9 @@ public class Path {
         }
         public static String getADD_PHONE_NUMBER(){
         	return ADD_PHONE_NUMBER.replace(":contact_id/","");
+        }
+        public static String getLOGIN_POST(){
+        	return LOGIN_POST;
         }
     }
 

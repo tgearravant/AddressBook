@@ -1,5 +1,6 @@
 package net.tullco.addressbook.login;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import net.tullco.addressbook.user.UserController;
@@ -8,12 +9,20 @@ import net.tullco.addressbook.utils.ViewUtils;
 import spark.*;
 
 public class LoginController {
-    public static void ensureUserIsLoggedIn(Request request, Response response) {
+
+	public static void ensureUserIsLoggedIn(Request request, Response response) {
         if (request.session().attribute("currentUser") == null) {
             request.session().attribute("loginRedirect", request.pathInfo());
             response.redirect(Path.Web.LOGIN);
         }
     }
+
+    public static Route login = (Request request, Response response) -> {
+    	HashMap<String,Object> model=new HashMap<String,Object>();
+    	model.put("main_header", "Please Login");
+    	return ViewUtils.render(request, model, Path.Template.LOGIN);
+    };
+
     public static Route loginPost = (Request request, Response response) -> {
     	LoginHistory.addLoginHistory(request);
     	Map<String,String> info = ViewUtils.postBodyDecoder(request.body());
@@ -28,6 +37,7 @@ public class LoginController {
     	}
     	return "Redirecting...";
     };
+
     private static String getLoginRedirect(Request r){
     	String redir=r.session().attribute("loginRedirect");
     	r.session().removeAttribute("loginRedirect");
