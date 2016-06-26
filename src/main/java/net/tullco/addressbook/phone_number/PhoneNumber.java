@@ -7,21 +7,57 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.tullco.addressbook.utils.SQLiteUtils;
+import net.tullco.addressbook.utils.SQLUtils;
 
 public class PhoneNumber {
-	private int id;
-	private int contact_id;
-	private boolean preferred;
+	private int id=0;
+	private int contact_id=0;
+	private boolean preferred=false;
 	private String type;
 	private String number;
 	private String locale;
+
+	private static final String[] allowedTypes={"mobile","home","work","other"};
 	
 	private static final String PHONE_NUMBER_LOADER_SQL="SELECT * FROM phone_numbers WHERE id=%d";
 	private static final String PHONE_NUMBERS_LOADER_SQL="SELECT * FROM phone_numbers WHERE contact_id=%d";
+	private static final String PHONE_NUMBER_UPDATE_SQL="UPDATE phone_numbers "
+			+ "SET type=%s,number=%d,locale=%d";
+	private static final String PHONE_NUMBER_INSERT_SQL="INSERT INTO phone_numbers "
+			+ "(contact_id,preferred,type,number,locale) "
+			+ "VALUES (%d,0,%s,%s,%s)";
+	private static final String PHONE_NUMBER_DEACTIVATOR_SQL="UPDATE phone_numbers SET preferred=0 WHERE contact_id=%d AND type=%s";
+	private static final String PHONE_NUMBER_ACTIVATOR_SQL="UPDATE phone_numbers SET preferred=1 WHERE id=%d";
 	
 	public PhoneNumber(Map<String,String> values){
 		setValuesFromMap(values);
+	}
+	public boolean save(){
+		if (this.contact_id==0)
+			return false;
+		if (this.id == 0){
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_INSERT_SQL,this.contact_id
+					,this.type
+					,this.number
+					,this.locale);
+			int newId=SQLUtils.executeInsert(statement);
+			this.id=newId;
+		}
+		else{
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_UPDATE_SQL
+					,this.type
+					,this.number
+					,this.locale
+					,this.id);
+			SQLUtils.executeUpdate(statement);
+		}
+		if (this.preferred){
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_DEACTIVATOR_SQL,this.contact_id,this.type);
+			SQLUtils.executeUpdate(statement);
+			statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_ACTIVATOR_SQL, this.id);
+			SQLUtils.executeUpdate(statement);
+		}
+		return true;
 	}
 
 	private static Map<String,String> convertResultSetToPhoneNumberMap(ResultSet rs) throws SQLException{
@@ -56,12 +92,13 @@ public class PhoneNumber {
 	}
 	public static List<PhoneNumber> phoneNumbersLoader(int contact_id){
 		String statement = String.format(PHONE_NUMBERS_LOADER_SQL, contact_id);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 		try {
 			while(rs.next()){
 				phoneNumbers.add(new PhoneNumber(convertResultSetToPhoneNumberMap(rs)));
 			}
+			rs.close();
 		} catch (SQLException e) {
 			System.err.println("Strange error here.");
 		}
@@ -69,12 +106,14 @@ public class PhoneNumber {
 	}
 	public static PhoneNumber phoneNumberLoader(int phone_number_id){
 		String statement = String.format(PHONE_NUMBER_LOADER_SQL, phone_number_id);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {
 			if(!rs.isBeforeFirst())
 				return null;
 			rs.next();
-			return new PhoneNumber(convertResultSetToPhoneNumberMap(rs));
+			PhoneNumber pn = new PhoneNumber(convertResultSetToPhoneNumberMap(rs));
+			rs.close();
+			return pn;
 		} catch (SQLException e) {
 			return null;
 		}
@@ -131,5 +170,8 @@ public class PhoneNumber {
 				typeNumbers.add(p);
 		}
 		return typeNumbers;
+	}
+	public static String[] getAllowedTypes(){
+		return allowedTypes;
 	}
 }

@@ -13,7 +13,7 @@ hr{
 	font-size: 3em;
 	margin: auto;
 }
-.contact_container_div,.details_container_div,.form_container_div{
+.contact_container_div,.details_container_div,.form_container_div,.login_container_div{
    float: left;
    margin: 10px;
    padding: 10px;
@@ -21,6 +21,12 @@ hr{
    height: 125px;
    border: 1px solid #005031;
    background: white;
+}
+.login_container_div{
+	height: 225px;
+}
+.details_container_div:hover{
+  background: #DDDDDD;
 }
 .details_container_div{
 	width: 275px;
@@ -119,6 +125,11 @@ input[type=checkbox] {
 	border-radius: 5px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+.submit_button_div{
+	float:left;
+	margin-left:10%;
+	margin-right:10%;
 }
 .submit_button{
 	border-radius: 5px;

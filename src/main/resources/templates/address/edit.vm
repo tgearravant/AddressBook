@@ -1,7 +1,7 @@
 #parse("/templates/master.vm")
 #@master()
 <div class="form_container_div">
-	<form method="POST" action="$WebPath.getADDRESS_POST()">
+	<form method="post" action="$WebPath.getADDRESS_POST()">
 	<label for="street" class="form_label">Street</label><br>
 	<input class="form_input" value="$street_default" name="street" id="street" /><br>
 	<label for="apartment" class="form_label">Apartment</label><br>
@@ -13,7 +13,7 @@
 	<label for = "zip_code" class="form_label">Zip Code</label><br>
 	<input class="form_input" value="$zip_default" name="zip_code" id="zip_code" /><br>
 	<label for = "country" class="form_label">Country</label><br>
-	<select value="us" name="country">
+	<select class="form_input" value="us" name="country">
 	#foreach ($locale in $locales)
 		<option value="$locale[0]">$locale[1]</option>
 	#end
@@ -24,8 +24,19 @@
 	<label for="active"></label>
 	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />
+	#if ($mode == "edit")
+		<input type="hidden" value="$address_id" name="address_id" />
+	#end
 	<input type="hidden" value="$mode" name="mode" />
-	<input type="submit" class="submit_button" value="Save" />
-	</form>
+	<div class="submit_button_div"><input type="submit" class="submit_button" value="Save" /></div></form>
+	#if ($mode == "edit")
+		<div class="submit_button_div">
+			<form action="$WebPath.getADDRESS_POST()" method="post">
+				<input type="hidden" value="delete" name="mode" />
+				<input type="hidden" value="$address_id" name="address_id" />
+				<input type="submit" value="Delete" class="submit_button" />
+			</form>
+		</div>
+	#end
 </div>
 #end
