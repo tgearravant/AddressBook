@@ -12,7 +12,7 @@ import java.util.Map;
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.phone_number.PhoneNumber;
 //import net.tullco.addressbook.utils.Path;
-import net.tullco.addressbook.utils.SQLiteUtils;
+import net.tullco.addressbook.utils.SQLUtils;
 
 public class Contact {
 	private int id;
@@ -34,7 +34,7 @@ public class Contact {
 	}
 	public boolean save(){
 		String statement=String.format(SAVE_CONTACT_SQL, this.firstName,this.middleName,this.lastName,this.id);
-		return SQLiteUtils.executeUpdate(statement);
+		return SQLUtils.executeUpdate(statement);
 	}
 	public int getId(){
 		return id;
@@ -85,7 +85,7 @@ public class Contact {
 	}
 	public static Contact ContactLoader(int id){
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {
 			if(!rs.isBeforeFirst())
 				return null;
@@ -100,7 +100,7 @@ public class Contact {
 	public static List<Contact> ContactsLoader(String where,int limit,int offset){
 		String statement=String.format(MULTIPLE_CONTACT_LOADER_SQL,where,limit,offset);
 		//System.out.println(statement);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		try {
 			while(rs.next()){

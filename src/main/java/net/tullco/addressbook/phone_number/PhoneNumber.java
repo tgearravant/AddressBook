@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.tullco.addressbook.utils.SQLiteUtils;
+import net.tullco.addressbook.utils.SQLUtils;
 
 public class PhoneNumber {
 	private int id=0;
@@ -36,26 +36,26 @@ public class PhoneNumber {
 		if (this.contact_id==0)
 			return false;
 		if (this.id == 0){
-			String statement=SQLiteUtils.sqlSafeFormat(PHONE_NUMBER_INSERT_SQL,this.contact_id
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_INSERT_SQL,this.contact_id
 					,this.type
 					,this.number
 					,this.locale);
-			int newId=SQLiteUtils.executeInsert(statement);
+			int newId=SQLUtils.executeInsert(statement);
 			this.id=newId;
 		}
 		else{
-			String statement=SQLiteUtils.sqlSafeFormat(PHONE_NUMBER_UPDATE_SQL
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_UPDATE_SQL
 					,this.type
 					,this.number
 					,this.locale
 					,this.id);
-			SQLiteUtils.executeUpdate(statement);
+			SQLUtils.executeUpdate(statement);
 		}
 		if (this.preferred){
-			String statement=SQLiteUtils.sqlSafeFormat(PHONE_NUMBER_DEACTIVATOR_SQL,this.contact_id,this.type);
-			SQLiteUtils.executeUpdate(statement);
-			statement=SQLiteUtils.sqlSafeFormat(PHONE_NUMBER_ACTIVATOR_SQL, this.id);
-			SQLiteUtils.executeUpdate(statement);
+			String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_DEACTIVATOR_SQL,this.contact_id,this.type);
+			SQLUtils.executeUpdate(statement);
+			statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_ACTIVATOR_SQL, this.id);
+			SQLUtils.executeUpdate(statement);
 		}
 		return true;
 	}
@@ -92,7 +92,7 @@ public class PhoneNumber {
 	}
 	public static List<PhoneNumber> phoneNumbersLoader(int contact_id){
 		String statement = String.format(PHONE_NUMBERS_LOADER_SQL, contact_id);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		ArrayList<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 		try {
 			while(rs.next()){
@@ -106,7 +106,7 @@ public class PhoneNumber {
 	}
 	public static PhoneNumber phoneNumberLoader(int phone_number_id){
 		String statement = String.format(PHONE_NUMBER_LOADER_SQL, phone_number_id);
-		ResultSet rs = SQLiteUtils.executeSelect(statement);
+		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {
 			if(!rs.isBeforeFirst())
 				return null;

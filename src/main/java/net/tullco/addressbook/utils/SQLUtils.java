@@ -5,7 +5,7 @@ import java.sql.*;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.flywaydb.core.*;
 
-public class SQLiteUtils {
+public class SQLUtils {
 	private static Connection conn=null;
 	public static int executeInsert(String statement){
 		System.out.println(statement);
@@ -52,7 +52,7 @@ public class SQLiteUtils {
 	}
 	private static Connection getConnection(){
 		try {
-			if (SQLiteUtils.conn==null || SQLiteUtils.conn.isClosed()){
+			if (SQLUtils.conn==null || SQLUtils.conn.isClosed()){
 				Connection c=null;
 				try{
 					Class.forName("org.sqlite.JDBC");
@@ -64,13 +64,13 @@ public class SQLiteUtils {
 					System.err.println("No JDBC Driver");
 					e.printStackTrace();
 				}
-				SQLiteUtils.conn=c;
+				SQLUtils.conn=c;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return SQLiteUtils.conn;
+		return SQLUtils.conn;
 	}
 	public static String sqlSafeFormat(String s, Object... objs){
 		for (int i=0; i < objs.length; i++){

@@ -5,6 +5,7 @@ import net.tullco.addressbook.address.AddressController;
 import net.tullco.addressbook.contact.ContactController;
 import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
+import net.tullco.addressbook.user.UserController;
 import net.tullco.addressbook.utils.*;
 import static spark.debug.DebugScreen.*;
 
@@ -22,16 +23,24 @@ public class App
     	postRouting();
     	//after();
         System.out.println(System.getProperty("os.name"));
-        get("/hello",(req,res) -> "Hello World");
     }
+    /**
+     * Runs database migrations, sets up the server, sets the static
+     * file location, confirms that required properties are set,
+     * creates admin user, and enables debugging if necessary.
+     */
     private static void initialConfiguration(){
-    	SQLiteUtils.runMigrations();
+    	SQLUtils.runMigrations();
+    	SystemUtils.checkForRequiredProperties();
+    	UserController.createAdmin(SystemUtils.getProperty("admin_username"), SystemUtils.getProperty("admin_password"));
     	staticFiles.location(SystemUtils.adjustPathForOS("/public"));
-    	if (SystemUtils.inProduction())
-    		port(80);
-    	else
-    		port(4567);
+    	port(Integer.parseInt(SystemUtils.getProperty("port", "4567")));
+    	if (SystemUtils.inProduction()){
+    		
+    	}
+    	else{
     		enableDebugScreen();
+    	}
     	
     }
     private static void beforeFilters(){
@@ -45,6 +54,7 @@ public class App
     	get(Path.Web.ADD_ADDRESS,		AddressController.addAddress);
     	get(Path.Web.EDIT_ADDRESS,		AddressController.editAddress);
     	get(Path.Web.LOGIN,				LoginController.login);
+    	get(Path.Web.LOGOUT,			LoginController.logout);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);

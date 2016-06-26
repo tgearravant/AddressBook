@@ -8,6 +8,7 @@ import net.tullco.addressbook.App;
 
 public class SystemUtils {
 	final private static Boolean is_windows=(System.getProperty("os.name").contains("Windows"));
+	final private static String[] requiredProperties={"admin_username","admin_password"};
 	private static Properties properties=null;
 	/**
 	 * Takes a Unix type path and, if it detects a Windows operating system, converts it to Windows.
@@ -49,14 +50,42 @@ public class SystemUtils {
 		}
 		return p;
 	}
+	private static void loadPropertiesWithDefaults(){
+		Properties defaultProps = new Properties();
+		loadProperties(defaultProps,"config.properties.default");
+		Properties p=new Properties(defaultProps);
+		loadProperties(p,"config.properties");
+		SystemUtils.properties=p;
+	}
+	public static String getProperty(String s,String d){
+		if(SystemUtils.properties == null){
+			loadPropertiesWithDefaults();
+		}
+		return SystemUtils.properties.getProperty(s,d);
+	}
 	public static String getProperty(String s){
 		if(SystemUtils.properties == null){
-			Properties defaultProps = new Properties();
-			loadProperties(defaultProps,"config.properties.default");
-			Properties p=new Properties(defaultProps);
-			loadProperties(p,"config.properties");
-			SystemUtils.properties=p;
+			loadPropertiesWithDefaults();
 		}
 		return SystemUtils.properties.getProperty(s);
+	}
+	
+	/**
+	 * This function checks to make sure that the configuration
+	 * properties that are required for function are set. These shouldn't be
+	 * missing as the config.properties.default file should have default values
+	 * for all of these items set, so this is just a precaution. Unless you've
+	 * been messing with the default config file... How dare you?!
+	 * 
+	 * @throws RuntimeError Thrown if a required property is missing.
+	 */
+	public static void checkForRequiredProperties(){ 
+		if(SystemUtils.properties == null){
+			loadPropertiesWithDefaults();
+		}
+		for(String s:requiredProperties){
+			if (SystemUtils.getProperty(s)==null)
+				throw new RuntimeException("Required Properties are undefined");
+		}
 	}
 }
