@@ -46,8 +46,14 @@ public class Path {
         public static String getADD_PHONE_NUMBER(){
         	return ADD_PHONE_NUMBER.replace(":contact_id/","");
         }
+        public static String getEDIT_PHONE_NUMBER(){
+        	return EDIT_PHONE_NUMBER.replace(":phone_number_id/", "");
+        }
         public static String getLOGIN_POST(){
         	return LOGIN_POST;
+        }
+        public static String getContactPath(int contact_id){
+        	return ONE_CONTACT_NO_ID+contact_id+"/";
         }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();

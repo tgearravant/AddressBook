@@ -3,6 +3,7 @@ package net.tullco.addressbook.contact;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class Contact {
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts SET first_name=%s, middle_name=%s, last_name=%s WHERE id=%d";
+	private static final String CONTACT_DELETION_SQL="DELETE FROM contacts WHERE id=%d";
 
 	private Contact (Map<String,String> values){
 		setValuesFromMap(values);
@@ -34,6 +36,17 @@ public class Contact {
 	}
 	public boolean save(){
 		String statement=String.format(SAVE_CONTACT_SQL, this.firstName,this.middleName,this.lastName,this.id);
+		return SQLUtils.executeUpdate(statement);
+	}
+	public boolean delete(){
+		if (this.id==0)
+			return false;
+		for(Address a:this.addresses){
+			a.delete();
+		}for(PhoneNumber pn:this.phoneNumbers){
+			pn.delete();
+		}
+		String statement = SQLUtils.sqlSafeFormat(CONTACT_DELETION_SQL, this.id);
 		return SQLUtils.executeUpdate(statement);
 	}
 	public int getId(){
@@ -65,6 +78,9 @@ public class Contact {
 	}
 	public List<Address> addresses(){
 		return this.addresses;
+	}
+	public List<PhoneNumber> phoneNumbers(){
+		return this.phoneNumbers;
 	}
  	public String fullName(){
 		return this.firstName+" "+this.lastName;

@@ -33,6 +33,7 @@ public class AddressController {
         model.put("zip_default", "");
         model.put("active", false);
         model.put("locales", LocaleUtils.allowedLocalesList());
+        model.put("header_link" , Path.Web.getContactPath(contact_id));
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
 
@@ -58,6 +59,7 @@ public class AddressController {
         model.put("zip_default", address.zipCode());
         model.put("active", address.active());
         model.put("locales", LocaleUtils.allowedLocalesList());
+        model.put("header_link" , Path.Web.getContactPath(contact.getId()));
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
 

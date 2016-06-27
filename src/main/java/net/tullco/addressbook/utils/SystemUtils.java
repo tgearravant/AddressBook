@@ -46,7 +46,7 @@ public class SystemUtils {
 		}finally{
 			try{
 				input.close();
-			}catch(IOException e){}
+			}catch(IOException e){}catch(NullPointerException e){}
 		}
 		return p;
 	}
@@ -85,7 +85,7 @@ public class SystemUtils {
 		}
 		for(String s:requiredProperties){
 			if (SystemUtils.getProperty(s)==null)
-				throw new RuntimeException("Required Properties are undefined");
+				throw new RuntimeException("Required Property "+s+" is undefined");
 		}
 	}
 }

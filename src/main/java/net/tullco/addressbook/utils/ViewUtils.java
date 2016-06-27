@@ -44,6 +44,13 @@ public class ViewUtils {
     public static String renderNotFound(Request request){
     	return render(request, new HashMap<>(), Path.Template.NOT_FOUND);
     }
+    
+    /**
+     * This method will halt the execution with a 404 if a parameter with name param of type type is not found.
+     * @param request The request that has to contain the parameter
+     * @param param The param you are checking for.
+     * @param type The expected type of the param. Allowed values are int.
+     */
     public static void haltIfNoParameter(Request request, String param,String type){
 		if (request.params().containsKey(param)){
         	if (type=="id"){

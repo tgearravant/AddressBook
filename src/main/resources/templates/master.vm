@@ -6,7 +6,9 @@
 </head>
 <body>
 <header>
-  <h1 class="master_header">$main_header</h1>
+	#if ($header_link) <a href="$header_link" class="header_link"> #end
+ 	<h1 class="master_header">$main_header</h1>
+	#if ($header_link) </a>#end
 </header>
 <hr>
 <main>
