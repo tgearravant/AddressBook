@@ -52,6 +52,9 @@ public class Path {
         public static String getLOGIN_POST(){
         	return LOGIN_POST;
         }
+        public static String getContactPath(int contact_id){
+        	return ONE_CONTACT_NO_ID+contact_id+"/";
+        }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();
         	paths.add(LOGIN);

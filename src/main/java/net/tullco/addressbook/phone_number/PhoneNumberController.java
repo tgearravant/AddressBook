@@ -34,7 +34,7 @@ public class PhoneNumberController {
         model.put("preferred", false);
         model.put("types", PhoneNumber.getAllowedTypes());
         model.put("locales", LocaleUtils.allowedLocalesList());
-        model.put("header_link" , Path.Web.ONE_CONTACT_NO_ID+contact_id+"/");	
+        model.put("header_link" , Path.Web.getContactPath(contact_id));
         return ViewUtils.render(request, model, Path.Template.EDIT_PHONE_NUMBER);
 	};
 	
@@ -60,7 +60,7 @@ public class PhoneNumberController {
         model.put("preferred", pn.isPreferred());
         model.put("types", PhoneNumber.getAllowedTypes());
         model.put("locales", LocaleUtils.allowedLocalesList());
-        model.put("header_link" , Path.Web.ONE_CONTACT_NO_ID+pn.getContactId()+"/");	
+        model.put("header_link" , Path.Web.getContactPath(contact.getId()));
         return ViewUtils.render(request, model, Path.Template.EDIT_PHONE_NUMBER);
 	};
 	
