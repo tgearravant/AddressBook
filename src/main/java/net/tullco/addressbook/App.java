@@ -55,6 +55,8 @@ public class App
     	get(Path.Web.EDIT_ADDRESS,		AddressController.editAddress);
     	get(Path.Web.LOGIN,				LoginController.login);
     	get(Path.Web.LOGOUT,			LoginController.logout);
+    	get(Path.Web.ADD_PHONE_NUMBER,	PhoneNumberController.addPhoneNumber);
+    	get(Path.Web.EDIT_PHONE_NUMBER,	PhoneNumberController.editPhoneNumber);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);

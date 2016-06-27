@@ -6,4 +6,7 @@ public class DisplayUtils {
 	public static String capitalize(String s){
 		return WordUtils.capitalize(s);
 	}
+	public static String fullCapitalize(String s){
+		return s.toUpperCase();
+	}
 }

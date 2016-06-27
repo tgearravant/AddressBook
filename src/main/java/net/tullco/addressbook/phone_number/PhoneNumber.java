@@ -22,12 +22,14 @@ public class PhoneNumber {
 	private static final String PHONE_NUMBER_LOADER_SQL="SELECT * FROM phone_numbers WHERE id=%d";
 	private static final String PHONE_NUMBERS_LOADER_SQL="SELECT * FROM phone_numbers WHERE contact_id=%d";
 	private static final String PHONE_NUMBER_UPDATE_SQL="UPDATE phone_numbers "
-			+ "SET type=%s,number=%d,locale=%d";
+			+ "SET type=%s,number=%s,locale=%s,preferred=%d "
+			+ "WHERE id = %d";
 	private static final String PHONE_NUMBER_INSERT_SQL="INSERT INTO phone_numbers "
 			+ "(contact_id,preferred,type,number,locale) "
 			+ "VALUES (%d,0,%s,%s,%s)";
 	private static final String PHONE_NUMBER_DEACTIVATOR_SQL="UPDATE phone_numbers SET preferred=0 WHERE contact_id=%d AND type=%s";
 	private static final String PHONE_NUMBER_ACTIVATOR_SQL="UPDATE phone_numbers SET preferred=1 WHERE id=%d";
+	private static final String PHONE_NUMBER_DELETION_SQL="DELETE FROM phone_numbers WHERE id=%d";
 	
 	public PhoneNumber(Map<String,String> values){
 		setValuesFromMap(values);
@@ -48,6 +50,7 @@ public class PhoneNumber {
 					,this.type
 					,this.number
 					,this.locale
+					,(this.preferred?1:0)
 					,this.id);
 			SQLUtils.executeUpdate(statement);
 		}
@@ -58,6 +61,12 @@ public class PhoneNumber {
 			SQLUtils.executeUpdate(statement);
 		}
 		return true;
+	}
+	public boolean delete(){
+		if (this.contact_id==0)
+			return false;
+		String statement=SQLUtils.sqlSafeFormat(PHONE_NUMBER_DELETION_SQL, this.id);
+		return SQLUtils.executeUpdate(statement);
 	}
 
 	private static Map<String,String> convertResultSetToPhoneNumberMap(ResultSet rs) throws SQLException{

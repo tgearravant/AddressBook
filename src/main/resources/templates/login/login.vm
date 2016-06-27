@@ -7,7 +7,7 @@
 	<input class="form_input" name="username" id="username" /><br>
 
 	<label for="password" class="form_label">Password</label><br>
-	<input class="form_input" name="password" id="password" /><br>
+	<input type="password" class="form_input" name="password" id="password" /><br>
 
 	<div class="submit_button_div"><input type="submit" class="submit_button" value="Login" /></div></form>
 </div>

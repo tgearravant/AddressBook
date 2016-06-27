@@ -26,7 +26,7 @@ public class Address {
 	private static final String ADDRESS_DEACTIVATOR_SQL="UPDATE addresses SET active=0 WHERE contact_id = %d";
 	private static final String ADDRESS_ACTIVATOR_SQL="UPDATE addresses SET active=1 WHERE id = %d";
 	private static final String ADDRESS_UPDATE_SQL="UPDATE addresses "
-			+ "SET street=%s,apartment=%s,zip_code=%s,city=%s,state=%s,country=%s "
+			+ "SET street=%s,apartment=%s,zip_code=%s,city=%s,state=%s,country=%s,active=%d "
 			+ "WHERE id=%d";
 	private static final String ADDRESS_INSERT_SQL="INSERT INTO addresses "
 			+ "(contact_id,street,apartment,zip_code,city,state,country,active) "
@@ -82,6 +82,7 @@ public class Address {
 					,this.city
 					,this.state
 					,this.country
+					,(this.active?1:0)
 					,this.id);
 			SQLUtils.executeUpdate(statement);
 		}

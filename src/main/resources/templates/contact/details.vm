@@ -20,9 +20,10 @@
   <span class="contact_text">Preferred Phone Numbers</span>    
   <div class="contact_address_div">
   #foreach ($pn in $contact.getPreferredPhoneNumbers())
+    <a href="$WebPath.getEDIT_PHONE_NUMBER()$pn.getId()">
     <span class="phone_text">
-      $display_utils_class.capitalize($pn.type) : $pn.getNumber()
-    </span><br>
+      $display_utils_class.capitalize($pn.getType()): $pn.getNumber() ($display_utils_class.fullCapitalize($pn.getLocale()))
+    </span></a><br>
   #end
   </div>
 </div>
@@ -44,8 +45,23 @@
     </a>
   #end
 #end
+<div class="details_container_div">
+	<span class="contact_text">Other Phone Numbers</span> 
+	#foreach($number in $contact.phoneNumbers())
+		#if ($number.isPreferred()==false)
+		<a href="$WebPath.getEDIT_PHONE_NUMBER()$number.getId()">
+		<span class="phone_text">
+			$display_utils_class.capitalize($number.getType()): $number.getNumber() ($display_utils_class.fullCapitalize($number.getLocale()))
+		</span></a><br>
+		#end
+	#end
+</div>
 <a href="$WebPath.getADD_ADDRESS()$contact.getId()/">
 <div class="details_container_div">
 <span class="contact_text">Add New Address</span>
+</div></a>
+<a href="$WebPath.getADD_PHONE_NUMBER()$contact.getId()/">
+<div class="details_container_div">
+<span class="contact_text">Add New Phone Number</span>
 </div></a>
 #end

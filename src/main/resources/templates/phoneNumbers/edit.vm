@@ -1,29 +1,39 @@
 #parse("/templates/master.vm")
 #@master()
-<div class="form_container_div">
+<div class="phone_form_container_div">
 	<form method="POST" action="$WebPath.getPHONE_NUMBER_POST()">
 	<label for="number" class="form_label">Number</label><br>
 	<input class="form_input" value="$number" name="number" id="number" /><br>
 	<label for = "type" class="form_label">Type</label><br>
-	<select value="mobile" name="type">
-	#foreach ($locale in $locales)
-		<option value="$locale[0]">$locale[1]</option>
+	<select class="form_input" value="mobile" name="type">
+	#foreach ($d_type in $types)
+		<option value="$d_type">$display_utils_class.capitalize($d_type)</option>
 	#end
 	</select><br>
 	<label for = "country" class="form_label">Country</label><br>
-	<select value="us" name="country">
+	<select class="form_input" value="us" name="locale">
 	#foreach ($locale in $locales)
 		<option value="$locale[0]">$locale[1]</option>
 	#end
 	</select><br>
 	<label class="form_label">Preferred Number?</label>
 	<div class="form_checkbox">	
-	<input type="checkbox" value="1" id="active" name="active" #if ($active) checked #end />
-	<label for="active"></label>
+	<input type="checkbox" value="1" id="preferred" name="preferred" #if ($preferred) checked #end />
+	<label for="preferred"></label>
 	</div>
+	#if ($mode=="edit") <input type="hidden" value="$phone_number_id" name="phone_number_id"> #end
 	<input type="hidden" value="$contact_id" name="contact_id" />
 	<input type="hidden" value="$mode" name="mode" />
-	<input type="submit" class="submit_button" value="Save" />
+	<div class="submit_button_div"><input type="submit" class="submit_button" value="Save" /></div></form>
+	#if ($mode == "edit")
+		<div class="submit_button_div">
+			<form action="$WebPath.getPHONE_NUMBER_POST()" method="post">
+				<input type="hidden" value="delete" name="mode" />
+				<input type="hidden" value="$phone_number_id" name="phone_number_id" />
+				<input type="submit" value="Delete" class="submit_button" />
+			</form>
+		</div>
+	#end
 	</form>
 </div>
 #end
