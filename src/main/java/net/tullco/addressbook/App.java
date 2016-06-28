@@ -7,22 +7,32 @@ import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
 import net.tullco.addressbook.user.UserController;
 import net.tullco.addressbook.utils.*;
+import spark.servlet.SparkApplication;
+
 import static spark.debug.DebugScreen.*;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class App implements SparkApplication
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ){
     	initialConfiguration();
     	beforeFilters();
     	getRouting();
     	postRouting();
     	//after();
         System.out.println(System.getProperty("os.name"));
+    }
+    public void init(){
+    	initialConfiguration();
+    	beforeFilters();
+    	getRouting();
+    	postRouting();
+    	//after();
+        System.out.println(System.getProperty("os.name"));
+    	
     }
     /**
      * Runs database migrations, sets up the server, sets the static
