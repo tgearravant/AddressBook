@@ -1,6 +1,7 @@
 package net.tullco.addressbook.contact;
 
 
+import java.util.Calendar;
 //import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,19 +15,8 @@ import static spark.Spark.halt;
 public class ContactController {
 	public static Route displayContact = (Request request, Response response) -> {
 		int contact_id;
-		
-		if (request.params().containsKey(":contact_id")){
-        	try{
-        		contact_id=Integer.parseInt(request.params(":contact_id"));
-        	}catch(NumberFormatException e){
-            	halt(404,ViewUtils.renderNotFound(request));
-            	return "";
-        	}
-		}
-		else{
-			halt(404,ViewUtils.renderNotFound(request));
-			return "";
-		}
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
+		contact_id=Integer.parseInt(request.params(":contact_id"));
 		HashMap<String, Object> model = new HashMap<>();
         Contact contact=Contact.ContactLoader(contact_id);
         if (contact==null){
@@ -57,24 +47,48 @@ public class ContactController {
         return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	}; 
 	
-/*	public static Route editContact = (Request request, Response response) -> {
+	public static Route editContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
-        List<Contact> contacts= new ArrayList<Contact>();
-        Contact contact=new Contact(0);
-        model.put("contact", contact);
-        contacts.add(new Contact(0));
-        model.put("contacts", contacts);
-        return ViewUtil.render(request, model, Path.Template.INDEX);
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
+		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
+		if (c==null)
+			halt(404,ViewUtils.renderNotFound(request));
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(c.birthday());
+        model.put("type", "edit");
+        model.put("id", c.getId());
+        model.put("first_name", c.firstName());
+        model.put("last_name", c.lastName());
+        model.put("middle_name",c.middleName());
+        model.put("birthday", cal.get(Calendar.DATE));
+        model.put("birthmonth", cal.get(Calendar.MONTH));
+        model.put("birthyear", cal.get(Calendar.YEAR));
+        
+        return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
 	public static Route addContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
-        List<Contact> contacts= new ArrayList<Contact>();
-        Contact contact=new Contact(0);
-        model.put("contact", contact);
-        contacts.add(new Contact(0));
-        model.put("contacts", contacts);
-        return ViewUtil.render(request, model, Path.Template.INDEX);
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
+		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
+		if (c==null)
+			halt(404,ViewUtils.renderNotFound(request));
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(c.birthday());
+        model.put("type", "edit");
+        model.put("id", c.getId());
+        model.put("first_name", c.firstName());
+        model.put("last_name", c.lastName());
+        model.put("middle_name",c.middleName());
+        model.put("birthday", cal.get(Calendar.DATE));
+        model.put("birthmonth", cal.get(Calendar.MONTH));
+        model.put("birthyear", cal.get(Calendar.YEAR));
+        
+        return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
+	public static Route contactPost = (Request request, Response response) -> {
+		return "";
+	};
+	/*
 	public static Route deleteContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
         List<Contact> contacts= new ArrayList<Contact>();

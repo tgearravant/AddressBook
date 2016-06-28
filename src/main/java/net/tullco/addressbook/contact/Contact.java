@@ -122,6 +122,12 @@ public class Contact {
 	public String middleName(){
 		return this.middleName;
 	}
+	public Date birthday(){
+		return this.birthday;
+	}
+	public String email(){
+		return this.email;
+	}
 	public static Contact ContactLoader(int id){
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
 		ResultSet rs = SQLUtils.executeSelect(statement);

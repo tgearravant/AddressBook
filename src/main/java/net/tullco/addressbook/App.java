@@ -32,7 +32,6 @@ public class App implements SparkApplication
     	postRouting();
     	//after();
         System.out.println(System.getProperty("os.name"));
-    	
     }
     /**
      * Runs database migrations, sets up the server, sets the static
@@ -67,6 +66,8 @@ public class App implements SparkApplication
     	get(Path.Web.LOGOUT,			LoginController.logout);
     	get(Path.Web.ADD_PHONE_NUMBER,	PhoneNumberController.addPhoneNumber);
     	get(Path.Web.EDIT_PHONE_NUMBER,	PhoneNumberController.editPhoneNumber);
+    	get(Path.Web.ADD_CONTACT,		ContactController.addContact);
+    	get(Path.Web.EDIT_CONTACT,		ContactController.editContact);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
@@ -76,6 +77,7 @@ public class App implements SparkApplication
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
     	post(Path.Web.LOGIN_POST,		LoginController.loginPost);
+    	post(Path.Web.CONTACT_POST,		ContactController.contactPost);
     	
     	//404 Routing
     	post("*",						ViewUtils.notFound);

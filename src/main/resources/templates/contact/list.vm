@@ -1,5 +1,9 @@
 #parse("/templates/master.vm")
 #@master()
+	<a href="$WebPath.getADD_CONTACT()">
+	<div class="contact_container_div">
+	<span class="contact_text">Add New Address</span>
+	</div></a>
 	#foreach($contact in $contacts) 
     <a href="$WebPath.getONE_CONTACT()$contact.getId()/">
     <div class="contact_container_div">
