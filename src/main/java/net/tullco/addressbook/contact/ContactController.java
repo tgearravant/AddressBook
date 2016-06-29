@@ -2,6 +2,7 @@ package net.tullco.addressbook.contact;
 
 
 import java.util.Calendar;
+import java.util.Date;
 //import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,8 +56,8 @@ public class ContactController {
 			halt(404,ViewUtils.renderNotFound(request));
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(c.birthday());
-        model.put("type", "edit");
-        model.put("id", c.getId());
+        model.put("mode", "edit");
+        model.put("contact_id", c.getId());
         model.put("first_name", c.firstName());
         model.put("last_name", c.lastName());
         model.put("middle_name",c.middleName());
@@ -68,25 +69,22 @@ public class ContactController {
 	};
 	public static Route addContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
-		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
-		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
-		if (c==null)
-			halt(404,ViewUtils.renderNotFound(request));
 		Calendar cal=Calendar.getInstance();
-		cal.setTime(c.birthday());
-        model.put("type", "edit");
-        model.put("id", c.getId());
-        model.put("first_name", c.firstName());
-        model.put("last_name", c.lastName());
-        model.put("middle_name",c.middleName());
-        model.put("birthday", cal.get(Calendar.DATE));
-        model.put("birthmonth", cal.get(Calendar.MONTH));
+		cal.setTime(new Date());
+        model.put("mode", "add");
+        model.put("first_name", "");
+        model.put("last_name", "");
+        model.put("middle_name","");
+        model.put("birthday", 1);
+        model.put("birthmonth", 1);
         model.put("birthyear", cal.get(Calendar.YEAR));
         
         return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
 	public static Route contactPost = (Request request, Response response) -> {
-		return "";
+		ViewUtils.postBodyDecoder(request.body());
+		
+		return "Redirecting to list...";
 	};
 	/*
 	public static Route deleteContact = (Request request, Response response) -> {
