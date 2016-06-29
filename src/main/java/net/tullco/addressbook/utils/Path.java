@@ -9,8 +9,10 @@ public class Path {
         public static final String LOGIN = "/login/";
         public static final String LOGIN_POST = "/login/post/";
         public static final String LOGOUT = "/logout/";
-        public static final String ONE_CONTACT_NO_ID = "/contacts/";
-        public static final String ONE_CONTACT = "/contacts/:contact_id/";
+        public static final String ONE_CONTACT_NO_ID = "/contacts/view/";
+        public static final String ONE_CONTACT = "/contacts/view/:contact_id/";
+        public static final String ADD_CONTACT="/contacts/add/";
+        public static final String EDIT_CONTACT="/contacts/edit/:contact_id/";
         public final static String SEARCH_POST = "/contacts/search/";
         public final static String SEARCH_RESULTS = "/contacts/search/:search/";
         public final static String STYLESHEET = "/css/style.css";
@@ -21,6 +23,7 @@ public class Path {
         public final static String PHONE_NUMBER_POST="/phone_numbers/post/";
         public final static String EDIT_PHONE_NUMBER = "/phone_numbers/edit/:phone_number_id/";
         public final static String ADD_PHONE_NUMBER = "/phone_numbers/add/:contact_id/";
+        public final static String CONTACT_POST = "/contacts/post/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -55,6 +58,15 @@ public class Path {
         public static String getContactPath(int contact_id){
         	return ONE_CONTACT_NO_ID+contact_id+"/";
         }
+        public static String getADD_CONTACT(){
+        	return ADD_CONTACT;
+        }
+        public static String getCONTACT_POST(){
+        	return CONTACT_POST;
+        }
+        public static String getContactEdit(int contact_id){
+        	return EDIT_CONTACT.replace(":contact_id/", "")+contact_id+"/";
+        }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();
         	paths.add(LOGIN);
@@ -72,5 +84,6 @@ public class Path {
         public static final String NOT_FOUND = "/templates/notFound.vm";
         public static final String EDIT_ADDRESS = "/templates/address/edit.vm";
         public static final String EDIT_PHONE_NUMBER = "/templates/phoneNumbers/edit.vm";
+        public static final String EDIT_CONTACTS = "/templates/contact/edit.vm";
     }
 }

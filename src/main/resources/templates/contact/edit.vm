@@ -1,0 +1,48 @@
+#parse("/templates/master.vm")
+#@master()
+<div class="contact_form_container_div">
+	<form method="POST" action="$WebPath.getCONTACT_POST()">
+	<label for="first_name" class="form_label">First Name</label><br>
+	<input class="form_input" value="$first_name" name="first_name" id="first_name" /><br>
+	<label for = "middle_name" class="form_label">Middle Name</label><br>
+	<input class="form_input" value="$middle_name" name="middle_name" id="middle_name" /><br>
+	<label for = "last_name" class="form_label">Last Name</label><br>
+	<input class="form_input" value="$last_name" name="last_name" id="last_name" /><br>
+	<label for = "email" class="form_label">Email</label><br>
+	<input class="form_input" value="$email" name="email" id="email" /><br>
+	<label class="form_label">Birthday</label><br>
+	<label class="tiny_label" for="birthday">D:</label>
+	<select class="tiny_input" value="$birthday" name="birthday" id="birthday">
+	#foreach ($day in $display_utils_class.dateList())
+		<option value="$day" #if ($day.equals($birthday)) selected="selected" #end>$day</option>
+	#end
+	</select>
+	<label class="tiny_label" for="birthmonth">M:</label>
+	<select class="tiny_input" value="$birthmonth" name="birthmonth" id="birthmonth">
+	#foreach ($month in $display_utils_class.monthList())
+		<option value="$month" #if ($month.equals($birthmonth)) selected="selected" #end>$month</option>
+	#end
+	</select>
+	<label class="tiny_label" for="birthyear">Y:</label>
+	<select class="tiny_input" value="$birthyear" name="birthyear" id="birthyear">
+	#foreach ($year in $display_utils_class.yearList())
+		<option value="$year" #if ($year.equals($birthyear)) selected="selected" #end>$year</option>
+	#end
+	</select>
+	<br>
+	#if ($mode=="edit") <input type="hidden" value="$contact_id" name="contact_id" /> #end
+	<input type="hidden" value="$mode" name="mode" />
+	<div>
+		<div class="submit_button_div"><input type="submit" class="submit_button" value="Save" /></div></form>
+		#if ($mode == "edit")
+			<div class="submit_button_div">
+				<form action="$WebPath.getCONTACT_POST()" method="post">
+					<input type="hidden" value="delete" name="mode" />
+					<input type="hidden" value="$contact_id" name="contact_id" />
+					<input type="submit" value="Delete" class="submit_button" />
+				</form>
+			</div>
+		#end
+	</div>
+</div>
+#end

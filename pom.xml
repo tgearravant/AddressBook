@@ -5,7 +5,6 @@
   <groupId>net.tullco.addressbook</groupId>
   <artifactId>application</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
 
   <name>application</name>
   <url>http://maven.apache.org</url>
@@ -78,6 +77,17 @@
     	<artifactId>jbcrypt</artifactId>
     	<version>0.3m</version>
     </dependency>
+    <dependency>
+    	<groupId>com.amazonaws</groupId>
+    	<artifactId>aws-java-sdk-bom</artifactId>
+    	<version>1.11.10</version>
+    	<type>pom</type>
+    </dependency>
+    <dependency>
+    	<groupId>com.amazonaws</groupId>
+    	<artifactId>aws-java-sdk-s3</artifactId>
+    	<version>1.11.10</version>
+    </dependency>
   </dependencies>
   <build>
   	<plugins>
@@ -92,4 +102,5 @@
   		</plugin>
   	</plugins>
   </build>
+  <packaging>war</packaging>
 </project>

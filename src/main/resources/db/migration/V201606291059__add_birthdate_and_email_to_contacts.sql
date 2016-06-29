@@ -1,0 +1,2 @@
+ALTER TABLE contacts ADD COLUMN birthdate INTEGER;
+ALTER TABLE contacts ADD COLUMN email VARCHAR(255);

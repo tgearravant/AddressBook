@@ -7,16 +7,25 @@ import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
 import net.tullco.addressbook.user.UserController;
 import net.tullco.addressbook.utils.*;
+import spark.servlet.SparkApplication;
+
 import static spark.debug.DebugScreen.*;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class App implements SparkApplication
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ){
+    	initialConfiguration();
+    	beforeFilters();
+    	getRouting();
+    	postRouting();
+    	//after();
+        System.out.println(System.getProperty("os.name"));
+    }
+    public void init(){
     	initialConfiguration();
     	beforeFilters();
     	getRouting();
@@ -57,6 +66,9 @@ public class App
     	get(Path.Web.LOGOUT,			LoginController.logout);
     	get(Path.Web.ADD_PHONE_NUMBER,	PhoneNumberController.addPhoneNumber);
     	get(Path.Web.EDIT_PHONE_NUMBER,	PhoneNumberController.editPhoneNumber);
+    	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
+    	get(Path.Web.ADD_CONTACT,		ContactController.addContact);
+    	get(Path.Web.EDIT_CONTACT,		ContactController.editContact);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
@@ -66,6 +78,7 @@ public class App
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
     	post(Path.Web.LOGIN_POST,		LoginController.loginPost);
+    	post(Path.Web.CONTACT_POST,		ContactController.contactPost);
     	
     	//404 Routing
     	post("*",						ViewUtils.notFound);
