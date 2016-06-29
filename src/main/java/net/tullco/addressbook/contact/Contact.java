@@ -3,6 +3,7 @@ package net.tullco.addressbook.contact;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Contact {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private Date birthday;
+	private Date birthdate;
 	private String email;
 	private String imageLocation;
 	private List<Address> addresses;
@@ -29,14 +30,14 @@ public class Contact {
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts "
-			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthday=%d,email=%s"
+			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s"
 			+ "WHERE id=%d";
 	private static final String CONTACT_INSERT_SQL="INSERT INTO contacts "
-			+ "(first_name,middle_name,last_name,birthday,email)"
-			+ "VALUES (%s,%s,%s,%d,%s";
+			+ "(first_name,middle_name,last_name,birthdate,email)"
+			+ "VALUES (%s,%s,%s,%d,%s)";
 	private static final String CONTACT_DELETION_SQL="DELETE FROM contacts WHERE id=%d";
 
-	private Contact (Map<String,String> values){
+	public Contact (Map<String,String> values){
 		setValuesFromMap(values);
 		this.addresses = Address.addressesLoader(this.id);
 		this.phoneNumbers = PhoneNumber.phoneNumbersLoader(this.id);
@@ -47,16 +48,16 @@ public class Contact {
 					,this.firstName
 					,this.middleName
 					,this.lastName
-					,this.birthday.getTime()
+					,this.birthdate.getTime()
 					,this.email);
 			this.id=SQLUtils.executeInsert(statement);
 			return (this.id==0?false:true);
 		}
-		String statement=String.format(SAVE_CONTACT_SQL
+		String statement=SQLUtils.sqlSafeFormat(SAVE_CONTACT_SQL
 				,this.firstName
 				,this.middleName
 				,this.lastName
-				,this.birthday.getTime()
+				,this.birthdate.getTime()
 				,this.email
 				,this.id);
 		return SQLUtils.executeUpdate(statement);
@@ -122,8 +123,8 @@ public class Contact {
 	public String middleName(){
 		return this.middleName;
 	}
-	public Date birthday(){
-		return this.birthday;
+	public Date birthdate(){
+		return this.birthdate;
 	}
 	public String email(){
 		return this.email;
@@ -158,11 +159,13 @@ public class Contact {
 		return contacts;
 	}
 	private static Map<String,String> convertResultSetToContactMap(ResultSet rs) throws SQLException{
-		String[] fields={"first_name","middle_name","last_name"};
+		String[] fields={"first_name","middle_name","last_name","email"};
 		HashMap<String,String> contact=new HashMap<String, String>();
 		for(String s:fields){
 			contact.put(s, rs.getString(s));
 		}
+		long epoch=rs.getLong("birthdate");
+		contact.put("birthdate", Long.toString(epoch));
 		contact.put("id", Integer.toString(rs.getInt("id")));
 		return contact;
 	}
@@ -176,6 +179,21 @@ public class Contact {
 				this.middleName = values.get(k);
 			if(k.equals("id"))
 				this.id=Integer.parseInt(values.get(k));
+			if(k.equals("email"))
+				this.email=values.get(k);
+			if(k.equals("birthdate")){
+				this.birthdate=new Date(Long.parseLong(values.get(k)));
+			}
+		}
+		if (this.birthdate==null){
+			if(values.containsKey("birthyear")&&values.containsKey("birthmonth")&&values.containsKey("birthday")){
+				Calendar cal = Calendar.getInstance();
+				cal.set(Integer.parseInt(values.get("birthyear"))
+						,Integer.parseInt(values.get("birthmonth"))
+						,Integer.parseInt(values.get("birthday")));
+				this.birthdate=cal.getTime();
+				
+			}
 		}
 	}
 }

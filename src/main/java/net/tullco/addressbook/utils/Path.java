@@ -9,9 +9,9 @@ public class Path {
         public static final String LOGIN = "/login/";
         public static final String LOGIN_POST = "/login/post/";
         public static final String LOGOUT = "/logout/";
-        public static final String ONE_CONTACT_NO_ID = "/contacts/";
-        public static final String ONE_CONTACT = "/contacts/:contact_id/";
-        public static final String ADD_CONTACT="/contacts/add";
+        public static final String ONE_CONTACT_NO_ID = "/contacts/view/";
+        public static final String ONE_CONTACT = "/contacts/view/:contact_id/";
+        public static final String ADD_CONTACT="/contacts/add/";
         public static final String EDIT_CONTACT="/contacts/edit/:contact_id/";
         public final static String SEARCH_POST = "/contacts/search/";
         public final static String SEARCH_RESULTS = "/contacts/search/:search/";
@@ -60,6 +60,9 @@ public class Path {
         }
         public static String getADD_CONTACT(){
         	return ADD_CONTACT;
+        }
+        public static String getCONTACT_POST(){
+        	return CONTACT_POST;
         }
         public static String getContactEdit(int contact_id){
         	return EDIT_CONTACT.replace(":contact_id/", "")+contact_id+"/";

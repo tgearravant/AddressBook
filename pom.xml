@@ -77,6 +77,17 @@
     	<artifactId>jbcrypt</artifactId>
     	<version>0.3m</version>
     </dependency>
+    <dependency>
+    	<groupId>com.amazonaws</groupId>
+    	<artifactId>aws-java-sdk-bom</artifactId>
+    	<version>1.11.10</version>
+    	<type>pom</type>
+    </dependency>
+    <dependency>
+    	<groupId>com.amazonaws</groupId>
+    	<artifactId>aws-java-sdk-s3</artifactId>
+    	<version>1.11.10</version>
+    </dependency>
   </dependencies>
   <build>
   	<plugins>

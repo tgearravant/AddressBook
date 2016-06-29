@@ -66,6 +66,7 @@ public class App implements SparkApplication
     	get(Path.Web.LOGOUT,			LoginController.logout);
     	get(Path.Web.ADD_PHONE_NUMBER,	PhoneNumberController.addPhoneNumber);
     	get(Path.Web.EDIT_PHONE_NUMBER,	PhoneNumberController.editPhoneNumber);
+    	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
     	get(Path.Web.ADD_CONTACT,		ContactController.addContact);
     	get(Path.Web.EDIT_CONTACT,		ContactController.editContact);
     	
