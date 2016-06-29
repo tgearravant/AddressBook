@@ -57,11 +57,7 @@ public class ContactController {
 		if (c==null)
 			halt(404,ViewUtils.renderNotFound(request));
 		Calendar cal=Calendar.getInstance();
-<<<<<<< HEAD
 		cal.setTime(c.birthdate());
-=======
-		cal.setTime(c.birthday());
->>>>>>> refs/remotes/origin/contact_features
         model.put("mode", "edit");
         model.put("contact_id", c.getId());
         model.put("first_name", c.firstName());
@@ -80,7 +76,6 @@ public class ContactController {
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(new Date());
         model.put("mode", "add");
-<<<<<<< HEAD
         model.put("id", "");
         model.put("first_name", "");
         model.put("last_name", "");
@@ -90,19 +85,10 @@ public class ContactController {
         model.put("birthmonth",cal.get(Calendar.MONTH)+1);
         model.put("birthyear", cal.get(Calendar.YEAR)-26);
         model.put("header_link" , Path.Web.INDEX);
-=======
-        model.put("first_name", "");
-        model.put("last_name", "");
-        model.put("middle_name","");
-        model.put("birthday", 1);
-        model.put("birthmonth", 1);
-        model.put("birthyear", cal.get(Calendar.YEAR));
->>>>>>> refs/remotes/origin/contact_features
         
         return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
 	public static Route contactPost = (Request request, Response response) -> {
-<<<<<<< HEAD
 		System.out.println("Loading Contact Post...");
 		Map<String,String> options = ViewUtils.postBodyDecoder(request.body());
 		String output = "";
@@ -132,11 +118,6 @@ public class ContactController {
 				response.redirect(Path.Web.INDEX,303);
 		}
         return "Redirecting back to contact...";
-=======
-		ViewUtils.postBodyDecoder(request.body());
-		
-		return "Redirecting to list...";
->>>>>>> refs/remotes/origin/contact_features
 	};
 	/*
 	public static Route deleteContact = (Request request, Response response) -> {
