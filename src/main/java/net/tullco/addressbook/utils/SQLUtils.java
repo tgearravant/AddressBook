@@ -8,7 +8,8 @@ import org.flywaydb.core.*;
 
 public class SQLUtils {
 	
-	private final static String TABLE_SELECT_STATEMENT = "SELECT * FROM %s";
+	private final static String TABLE_SELECT_SQL = "SELECT * FROM %s";
+	private final static String TABLE_DELETE_SQL="DELETE FROM %s";
 	
 	private static Connection conn=null;
 	public static int executeInsert(String statement){
@@ -86,7 +87,7 @@ public class SQLUtils {
 	}
 
 	public static String getTableAsInsertString(String table) throws SQLException{
-		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_STATEMENT, table));
+		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_SQL, table));
 		ResultSetMetaData md =rs.getMetaData();
 		
 		String[] columnHeaders = new String[md.getColumnCount()];
@@ -132,5 +133,8 @@ public class SQLUtils {
         }*/
 		flyway.migrate();
 		return true;
+	}
+	public static boolean truncateTable(String table){
+		return executeUpdate(String.format(TABLE_DELETE_SQL, table));
 	}
 }

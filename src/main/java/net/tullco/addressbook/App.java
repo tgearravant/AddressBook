@@ -25,7 +25,6 @@ public class App implements SparkApplication
     	postRouting();
     	//after();
         //System.out.println(System.getProperty("os.name"));
-        BackupUtils.s3Put(BackupUtils.zipBackupFiles());
     }
     public void init(){
     	initialConfiguration();
@@ -72,6 +71,7 @@ public class App implements SparkApplication
     	get(Path.Web.ADD_CONTACT,		ContactController.addContact);
     	get(Path.Web.EDIT_CONTACT,		ContactController.editContact);
     	get(Path.Web.BACKUP,			BackupUtils.backup);
+    	get(Path.Web.RESTORE,			BackupUtils.restore);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);

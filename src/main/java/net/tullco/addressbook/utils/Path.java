@@ -25,6 +25,7 @@ public class Path {
         public final static String ADD_PHONE_NUMBER = "/phone_numbers/add/:contact_id/";
         public final static String CONTACT_POST = "/contacts/post/";
         public final static String BACKUP="/backup/";
+        public final static String RESTORE="/backup/restore/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -73,6 +74,8 @@ public class Path {
         	paths.add(LOGIN);
         	paths.add(LOGIN_POST);
         	paths.add(LOGOUT);
+        	paths.add(BACKUP);
+        	paths.add(RESTORE);
         	return paths;
         }
     }
