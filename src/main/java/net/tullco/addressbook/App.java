@@ -11,19 +11,20 @@ import spark.servlet.SparkApplication;
 
 import static spark.debug.DebugScreen.*;
 
+
 /**
  * Hello world!
  *
  */
 public class App implements SparkApplication
 {
-    public static void main( String[] args ){
+    public static void main( String[] args ) {
     	initialConfiguration();
     	beforeFilters();
     	getRouting();
     	postRouting();
     	//after();
-        System.out.println(System.getProperty("os.name"));
+        //System.out.println(System.getProperty("os.name"));
     }
     public void init(){
     	initialConfiguration();
@@ -31,7 +32,7 @@ public class App implements SparkApplication
     	getRouting();
     	postRouting();
     	//after();
-        System.out.println(System.getProperty("os.name"));
+        //System.out.println(System.getProperty("os.name"));
     }
     /**
      * Runs database migrations, sets up the server, sets the static
@@ -69,6 +70,8 @@ public class App implements SparkApplication
     	get(Path.Web.ONE_CONTACT,		ContactController.displayContact);
     	get(Path.Web.ADD_CONTACT,		ContactController.addContact);
     	get(Path.Web.EDIT_CONTACT,		ContactController.editContact);
+    	get(Path.Web.BACKUP,			BackupUtils.backup);
+    	get(Path.Web.RESTORE,			BackupUtils.restore);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
