@@ -24,6 +24,7 @@ public class Path {
         public final static String EDIT_PHONE_NUMBER = "/phone_numbers/edit/:phone_number_id/";
         public final static String ADD_PHONE_NUMBER = "/phone_numbers/add/:contact_id/";
         public final static String CONTACT_POST = "/contacts/post/";
+        public final static String BACKUP="/backup/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
