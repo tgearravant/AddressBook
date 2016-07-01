@@ -1,0 +1,10 @@
+<html>
+<body>
+<form action="$WebPath.getADMIN_POST()" method="post">
+	<label>Username</label><input type="text" name="username" id="username" />
+	<label>Password</label><input type="text" name="password" id="password" />
+	<input type="hidden" name="mode" id="mode" value="edit_user" />
+	<input type="submit" value="create" />
+</form>
+</body>
+</html>
