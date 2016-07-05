@@ -27,6 +27,7 @@ public class ContactController {
         model.put("contact", contact);
         model.put("main_header", contact.fullName());
         model.put("header_link" , Path.Web.INDEX);
+        model.put("contact_id", contact.getId());
         return ViewUtils.render(request, model, Path.Template.ONE_CONTACT);
 	};
 

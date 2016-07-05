@@ -188,4 +188,34 @@ input[type=checkbox] {
   font-size: 1.1em;
   color: #005031;
  }
+.header_button {
+  background: #EFEFEF;
+  background-image: -webkit-linear-gradient(top, #EFEFEF, #DDDDDD);
+  background-image: -moz-linear-gradient(top, #EFEFEF, #DDDDDD);
+  background-image: -ms-linear-gradient(top, #EFEFEF, #DDDDDD);
+  background-image: -o-linear-gradient(top, #EFEFEF, #DDDDDD);
+  background-image: linear-gradient(to bottom, #EFEFEF, #DDDDDD);
+  -webkit-border-radius: 27;
+  -moz-border-radius: 27;
+  border-radius: 27px;
+  -webkit-box-shadow: 0px 1px 9px #666666;
+  -moz-box-shadow: 0px 1px 9px #666666;
+  box-shadow: 0px 1px 9px #666666;
+  font-family: Arial;
+  color: #005031;
+  font-size: 25px;
+  margin-right: 10px;
+  padding: 5px 20px 5px 20px;
+  text-decoration: none;
+}
+
+.header_button:hover {
+  background: #c4cbcf;
+  background-image: -webkit-linear-gradient(top, #c4cbcf, #cbfade);
+  background-image: -moz-linear-gradient(top, #c4cbcf, #cbfade);
+  background-image: -ms-linear-gradient(top, #c4cbcf, #cbfade);
+  background-image: -o-linear-gradient(top, #c4cbcf, #cbfade);
+  background-image: linear-gradient(to bottom, #c4cbcf, #cbfade);
+  text-decoration: none;
+}
  

@@ -10,6 +10,7 @@
  	<h1 class="master_header">$main_header</h1>
 	#if ($header_link) </a>#end
 </header>
+#if ($contact_id) <a href="$WebPath.getADD_ADDRESS()$contact_id/" class="header_button">Add Address</a><a href="$WebPath.getADD_PHONE_NUMBER()$contact_id/" class="header_button">Add Phone Number</a><a href="$WebPath.getContactEdit($contact_id)" class="header_button">Edit Contact</a>#end
 <hr>
 <main>
   $!bodyContent
