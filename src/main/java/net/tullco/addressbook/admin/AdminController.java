@@ -31,6 +31,9 @@ public class AdminController {
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
 	public static Route addUser = (Request request, Response response) -> {
+		User current_user = User.UserLoader(request.session().attribute("current_user"));
+		if(current_user == null || !current_user.isAdmin())
+			halt(403,"Admin Only");
 		HashMap<String,Object> model=new HashMap<String,Object>();
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
