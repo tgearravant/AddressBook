@@ -42,6 +42,9 @@ public class User {
 	public String getUserName(){
 		return this.username;
 	}
+	public boolean isAdmin(){
+		return this.admin;
+	}
 	public boolean checkPassword(String pw){
 		String hashedPassword = BCrypt.hashpw(pw,this.salt);
 		return (hashedPassword.equals(this.hashedPassword)?true:false);

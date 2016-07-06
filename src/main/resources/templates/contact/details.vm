@@ -56,16 +56,4 @@
 		#end
 	#end
 </div>
-<a href="$WebPath.getADD_ADDRESS()$contact.getId()/">
-<div class="details_container_div">
-<span class="contact_text">Add New Address</span>
-</div></a>
-<a href="$WebPath.getADD_PHONE_NUMBER()$contact.getId()/">
-<div class="details_container_div">
-<span class="contact_text">Add New Phone Number</span>
-</div></a>
-<a href="$WebPath.getContactEdit($contact.getId())">
-<div class="details_container_div">
-<span class="contact_text">Edit Contact</span>
-</div></a>
 #end

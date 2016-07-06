@@ -28,7 +28,7 @@ public class Contact {
 	private List<PhoneNumber> phoneNumbers;
 	
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
-	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY first_name ASC LIMIT %d OFFSET %d";
+	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY last_name,first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts "
 			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s"
 			+ "WHERE id=%d";
@@ -143,6 +143,17 @@ public class Contact {
 			return null;
 		}
 	}
+	
+	/**
+	 * This loads all contacts in the database alphabetically by last name, then by first name.
+	 * Limit and offset define which contacts to load.
+	 * Please note that the where option is /not/ escaped.
+	 * Please make sure that your where statement is already safe before adding it here.
+	 * @param where A SQL where clause that is used to limit the contacts loaded
+	 * @param limit The number of contacts to load
+	 * @param offset The number of contacts to forward. Defaults to 0.
+	 * @return A list of the contacts that were loaded.
+	 */
 	public static List<Contact> ContactsLoader(String where,int limit,int offset){
 		String statement=String.format(MULTIPLE_CONTACT_LOADER_SQL,where,limit,offset);
 		//System.out.println(statement);

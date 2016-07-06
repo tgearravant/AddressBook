@@ -53,18 +53,20 @@ public class ViewUtils {
      */
     public static void haltIfNoParameter(Request request, String param,String type){
 		if (request.params().containsKey(param)){
-        	if (type=="id"){
+        	if (type.equals("id")){
 				try{
 	        		Integer.parseInt(request.params(param));
 	        	}catch(NumberFormatException e){
 	            	halt(404,ViewUtils.renderNotFound(request));
 	        	}
         	}
+        	if(type.equals("string")){}
 		}
 		else{
 			halt(404,ViewUtils.renderNotFound(request));
 		}
     }
+
     public static Map<String,String> postBodyDecoder(String body){
     	HashMap<String,String> decodedMap=new HashMap<String,String>();
     	for (String param: body.split("\\&")){
