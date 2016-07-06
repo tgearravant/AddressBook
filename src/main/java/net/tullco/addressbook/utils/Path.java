@@ -74,6 +74,9 @@ public class Path {
         public static String getADMIN_POST(){
         	return ADMIN_POST;
         }
+        public static String getSEARCH_POST(){
+        	return SEARCH_POST;
+        }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();
         	paths.add(LOGIN);

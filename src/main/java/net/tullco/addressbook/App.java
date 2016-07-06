@@ -74,12 +74,13 @@ public class App implements SparkApplication
     	get(Path.Web.BACKUP,			BackupUtils.backup);
     	get(Path.Web.RESTORE,			BackupUtils.restore);
     	get(Path.Web.ADMIN_USER_ADD,	AdminController.addUser);
+    	get(Path.Web.SEARCH_RESULTS,	ContactController.searchContacts);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
     }
     private static void postRouting(){
-    	post(Path.Web.SEARCH_POST,		ContactController.searchContacts);
+    	post(Path.Web.SEARCH_POST,		ContactController.contactSearchPost);
     	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
     	post(Path.Web.LOGIN_POST,		LoginController.loginPost);

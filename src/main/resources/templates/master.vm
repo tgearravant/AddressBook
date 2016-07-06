@@ -3,6 +3,7 @@
 <head>
   <title>$title</title>
   <link rel="stylesheet" type="text/css" href="$WebPath.getSTYLESHEET()">
+  <link rel="shortcut icon" href="http://tullco.net/img/favicon.ico" />
 </head>
 <body>
 <header>
@@ -10,7 +11,22 @@
  	<h1 class="master_header">$main_header</h1>
 	#if ($header_link) </a>#end
 </header>
-#if ($contact_id) <a href="$WebPath.getADD_ADDRESS()$contact_id/" class="header_button">Add Address</a><a href="$WebPath.getADD_PHONE_NUMBER()$contact_id/" class="header_button">Add Phone Number</a><a href="$WebPath.getContactEdit($contact_id)" class="header_button">Edit Contact</a>#end
+#if ($contact_id)
+	<div class="header_button_container_div">
+	<a href="$WebPath.getADD_ADDRESS()$contact_id/" class="header_button">Add Address</a>
+	<a href="$WebPath.getADD_PHONE_NUMBER()$contact_id/" class="header_button">Add Phone Number</a>
+	<a href="$WebPath.getContactEdit($contact_id)" class="header_button">Edit Contact</a>
+	</div>
+#end
+#if ($add_contact)
+	<div class="header_button_container_div">
+		<form method="post" action="$WebPath.getSEARCH_POST()">
+			<input class="search_input" name="search" id="search" />
+			<input type="submit" class="header_button" value="Search" />
+		</form>
+		<a href="$WebPath.getADD_CONTACT()" class="header_button">Add Contact</a>
+	</div>
+#end	
 <hr>
 <main>
   $!bodyContent

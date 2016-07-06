@@ -79,7 +79,7 @@ public class SQLUtils {
 	}
 	public static String sqlSafeFormat(String s, Object... objs){
 		for (int i=0; i < objs.length; i++){
-			if (objs[i] instanceof String && objs[i] != null){
+			if (objs[i] instanceof String && objs[i] != null && !objs[i].equals("")){
 				objs[i] = "'"+StringEscapeUtils.escapeSql((String)objs[i])+"'";
 			}
 		}

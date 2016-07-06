@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.tullco.addressbook.utils.Path;
+import net.tullco.addressbook.utils.SQLUtils;
 import net.tullco.addressbook.utils.ViewUtils;
 import spark.Request;
 import spark.Response;
@@ -34,21 +35,27 @@ public class ContactController {
 	public static Route listContacts = (Request request, Response response) -> {
 		HashMap<String, Object> model = new HashMap<>();
         model.put("contacts",Contact.ContactsLoader("", 50, 0));
+        model.put("add_contact", "yes");
         return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	};
 
 	public static Route searchContacts = (Request request, Response response) -> {
+		String search="%"+request.params(":search")+"%";
+		String whereStatement="AND (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s))";
+		String safeWhereStatement=SQLUtils.sqlSafeFormat(whereStatement,search, search);
+		System.out.println(safeWhereStatement);
 		HashMap<String, Object> model = new HashMap<>();
-		if (request.params().containsKey(":search"))
-		response.redirect(Path.Web.INDEX);
-        model.put("contacts",Contact.ContactsLoader("", 50, 0));
+		ViewUtils.haltIfNoParameter(request, ":search", "string");
+		model.put("contacts",Contact.ContactsLoader(safeWhereStatement, 50, 0));
+        model.put("add_contact", "yes");
         return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	};
 	
 	public static Route contactSearchPost = (Request request, Response response) -> {
-		HashMap<String, Object> model = new HashMap<>();
-        model.put("contacts",Contact.ContactsLoader("", 50, 0));
-        return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
+		Map<String,String> map = ViewUtils.postBodyDecoder(request.body());
+		String searchRedirect = Path.Web.SEARCH_RESULTS.replace(":search", map.get("search"));
+		response.redirect(searchRedirect, 303);
+        return "Redirecting to search results...";
 	}; 
 
 	public static Route editContact = (Request request, Response response) -> {
@@ -69,6 +76,7 @@ public class ContactController {
         model.put("birthmonth", cal.get(Calendar.MONTH)+1);
         model.put("birthyear", cal.get(Calendar.YEAR));
         model.put("header_link" , Path.Web.getContactPath(c.getId()));
+        model.put("main_header", "Edit Contact "+c.fullName());
         
         return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
@@ -86,6 +94,7 @@ public class ContactController {
         model.put("birthmonth",cal.get(Calendar.MONTH)+1);
         model.put("birthyear", cal.get(Calendar.YEAR)-26);
         model.put("header_link" , Path.Web.INDEX);
+        model.put("main_header", "Add Contact");
         
         return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};
