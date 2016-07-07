@@ -13,6 +13,7 @@ import java.util.Map;
 
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.phone_number.PhoneNumber;
+import net.tullco.addressbook.utils.DisplayUtils;
 //import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
 
@@ -30,10 +31,10 @@ public class Contact {
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY last_name,first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts "
-			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s"
+			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s "
 			+ "WHERE id=%d";
 	private static final String CONTACT_INSERT_SQL="INSERT INTO contacts "
-			+ "(first_name,middle_name,last_name,birthdate,email)"
+			+ "(first_name,middle_name,last_name,birthdate,email) "
 			+ "VALUES (%s,%s,%s,%d,%s)";
 	private static final String CONTACT_DELETION_SQL="DELETE FROM contacts WHERE id=%d";
 
@@ -126,6 +127,9 @@ public class Contact {
 	public Date birthdate(){
 		return this.birthdate;
 	}
+	public String birthdate_formatted(){
+		return DisplayUtils.dateToString(this.birthdate);
+	}
 	public String email(){
 		return this.email;
 	}
@@ -200,7 +204,7 @@ public class Contact {
 			if(values.containsKey("birthyear")&&values.containsKey("birthmonth")&&values.containsKey("birthday")){
 				Calendar cal = Calendar.getInstance();
 				cal.set(Integer.parseInt(values.get("birthyear"))
-						,Integer.parseInt(values.get("birthmonth"))
+						,Integer.parseInt(values.get("birthmonth"))-1
 						,Integer.parseInt(values.get("birthday")));
 				this.birthdate=cal.getTime();
 				

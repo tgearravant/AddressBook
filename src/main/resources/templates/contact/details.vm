@@ -1,15 +1,29 @@
 #parse("/templates/master.vm")
 #@master()
+#if ($contact.email() || $contact.birthdate())
+<div class="details_container_div">
+	<span class="contact_text">Details</span>
+	<div class="contact_address_div">
+		<span class="phone_text">
+		#if($contact.email())Email: $contact.email()<br>#end
+		#if($contact.birthdate())Birthdate: $contact.birthdate_formatted()#end
+		</span>
+	</div>
+</div>
+#end
 #if ($contact.hasAddress())
 <a href="$WebPath.getEDIT_ADDRESS()$contact.currentAddress().id()/">
 <div class="details_container_div">
   <span class="contact_text">Current Address</span>
   <div class="contact_address_div">
-    <span class="address_text">$contact.currentAddress().street()<br>
+    <span class="address_text">
+    #if($contact.currentAddress().street())$contact.currentAddress().street()<br>#end
     #if ("$!contact.currentAddress().apartment()" != "")
       $contact.currentAddress().apartment()<br>
     #end
-    $contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()<br>
+    #if ($contact.currentAddress().city())$contact.currentAddress().city(), #end
+    #if ($contact.currentAddress().state())$contact.currentAddress().state() #end
+	#if ($contact.currentAddress().zipCode())$contact.currentAddress().zipCode()<br>#end
     $contact.currentAddress().country()</span>
   </div>
 </div>
@@ -32,20 +46,22 @@
   #if ($address != $contact.currentAddress())
 	<a href="$WebPath.getEDIT_ADDRESS()$address.id()/">
     <div class="details_container_div">
-      <span class="contact_text">Previous Address</span>
-      <div class="contact_address_div">
-	     <span class="address_text">$address.street()<br>
+    <span class="address_text">
+	    #if($address.street())$address.street()<br>#end
 	    #if ("$!address.apartment()" != "")
-	      $address.apartment()<br>
+	      $contact.address.apartment()<br>
 	    #end
-	    $address.city(), $address.state() $address.zipCode()<br>
+	    #if ($address.city())$address.city(), #end
+	    #if ($address.state())$address.state() #end
+		#if ($address.zipCode())$address.zipCode()<br>#end
 	    $address.country()</span>
       </div>
     </div>
     </a>
   #end
 #end
-<div class="details_container_div">
+#if($contact.phoneNumbers().size() > $contact.getPreferredPhoneNumbers().size())
+	<div class="details_container_div">
 	<span class="contact_text">Other Phone Numbers</span> 
 	#foreach($number in $contact.phoneNumbers())
 		#if ($number.isPreferred()==false)
@@ -56,4 +72,5 @@
 		#end
 	#end
 </div>
+#end
 #end

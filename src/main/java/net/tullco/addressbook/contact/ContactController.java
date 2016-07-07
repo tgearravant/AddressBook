@@ -68,15 +68,15 @@ public class ContactController {
 		cal.setTime(c.birthdate());
         model.put("mode", "edit");
         model.put("contact_id", c.getId());
-        model.put("first_name", c.firstName());
-        model.put("last_name", c.lastName());
-        model.put("middle_name",c.middleName());
-        model.put("email", c.email());
+        model.put("first_name", (c.firstName()==null?"":c.firstName()));
+        model.put("last_name", (c.lastName()==null?"":c.lastName()));
+        model.put("middle_name",(c.middleName()==null?"":c.middleName()));
+        model.put("email", (c.email()==null?"":c.email()));
         model.put("birthday", cal.get(Calendar.DATE));
         model.put("birthmonth", cal.get(Calendar.MONTH)+1);
         model.put("birthyear", cal.get(Calendar.YEAR));
         model.put("header_link" , Path.Web.getContactPath(c.getId()));
-        model.put("main_header", "Edit Contact "+c.fullName());
+        model.put("main_header", "Edit Contact "+(c.fullName()==null?"":c.fullName()));
         
         return ViewUtils.render(request, model, Path.Template.EDIT_CONTACTS);
 	};

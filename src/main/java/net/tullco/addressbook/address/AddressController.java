@@ -32,6 +32,7 @@ public class AddressController {
         model.put("state_default", "");
         model.put("zip_default", "");
         model.put("active", false);
+        model.put("country", "us");
         model.put("locales", LocaleUtils.allowedLocalesList());
         model.put("header_link" , Path.Web.getContactPath(contact_id));
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
@@ -50,14 +51,15 @@ public class AddressController {
         Contact contact = Contact.ContactLoader(address.contactId());
         model.put("contact_id", address.contactId());
         model.put("address_id",address.id());
-        model.put("main_header", "Edit Address for "+contact.fullName());
+        model.put("main_header", "Edit Address for "+(contact.fullName()==null?"":contact.fullName()));
         model.put("mode", "edit");
-        model.put("street_default", address.street());
+        model.put("street_default", (address.street()==null?"":address.street()));
         model.put("apartment_default", (address.apartment()==null?"":address.apartment()));
-        model.put("city_default", address.city());
-        model.put("state_default", address.state());
-        model.put("zip_default", address.zipCode());
+        model.put("city_default", (address.city()==null?"":address.city()));
+        model.put("state_default", (address.state()==null?"":address.state()));
+        model.put("zip_default", (address.zipCode()==null?"":address.zipCode()));
         model.put("active", address.active());
+        model.put("country", address.getLocale());
         model.put("locales", LocaleUtils.allowedLocalesList());
         model.put("header_link" , Path.Web.getContactPath(contact.getId()));
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);

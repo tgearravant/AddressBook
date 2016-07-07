@@ -119,6 +119,9 @@ public class Address {
 	public String state(){
 		return this.state;
 	}
+	public String getLocale(){
+		return this.country;
+	}
 	public String country(){
 		return LocaleUtils.getLongLocaleName(this.country);
 	}

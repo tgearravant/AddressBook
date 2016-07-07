@@ -13,9 +13,9 @@
 	<label for = "zip_code" class="form_label">Zip Code</label><br>
 	<input class="form_input" value="$zip_default" name="zip_code" id="zip_code" /><br>
 	<label for = "country" class="form_label">Country</label><br>
-	<select class="form_input" value="us" name="country">
+	<select class="form_input" name="country">
 	#foreach ($locale in $locales)
-		<option value="$locale[0]">$locale[1]</option>
+		<option value="$locale[0]" #if($locale[0]==$country)selected="selected"#end>$locale[1]</option>
 	#end
 	</select><br>
 	<label class="form_label">Current Address?</label>
