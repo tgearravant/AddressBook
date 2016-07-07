@@ -28,6 +28,7 @@ public class Path {
         public final static String RESTORE="/backup/restore/";
         public final static String ADMIN_POST="/admin/post/";
         public final static String ADMIN_USER_ADD="/admin/user_add/";
+        public final static String CHANGE_PASSWORD="/admin/change_password/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -98,5 +99,6 @@ public class Path {
         public static final String EDIT_PHONE_NUMBER = "/templates/phoneNumbers/edit.vm";
         public static final String EDIT_CONTACTS = "/templates/contact/edit.vm";
         public static final String EDIT_USER = "/templates/admin/editUser.vm";
+        public static final String CHANGE_PASSWORD = "/templates/admin/changePassword.vm";
     }
 }

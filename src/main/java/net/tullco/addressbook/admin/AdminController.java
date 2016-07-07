@@ -37,4 +37,10 @@ public class AdminController {
 		HashMap<String,Object> model=new HashMap<String,Object>();
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
+	public static Route changePassword = (Request request, Response response) -> {
+		HashMap<String,Object> model=new HashMap<String,Object>();
+    	model.put("main_header", "Change Password");
+    	model.put("header_link", Path.Web.INDEX);
+    	return ViewUtils.render(request,model,Path.Template.CHANGE_PASSWORD);
+	};
 }
