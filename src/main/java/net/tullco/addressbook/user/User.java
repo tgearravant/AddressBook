@@ -39,7 +39,7 @@ public class User {
 				this.admin=(dataMap.get(key).equals("1")?true:false);
 		}
 	}
-	public String getUserName(){
+	public String getUsername(){
 		return this.username;
 	}
 	public boolean isAdmin(){
@@ -107,6 +107,14 @@ public class User {
 			}
 		}
 	}
+	/**
+	 * Creates a new user with the given username and password.
+	 * If the username given already exists, it updates the
+	 * password of the existing user with the same username.
+	 * @param username The username for the new user
+	 * @param password The password for the new user
+	 * @return The user that was created/edited.
+	 */
 	public static User newUser(String username,String password){
 		User u;
 		if((u=UserLoader(username)) != null){
@@ -117,7 +125,6 @@ public class User {
 		}
 		HashMap<String,String> userMap = new HashMap<String,String>();
 		String salt=BCrypt.gensalt();
-		System.out.println("Username at newUser: "+username);
 		userMap.put("username", username);
 		userMap.put("password_hash", BCrypt.hashpw(password, salt));
 		userMap.put("password_salt", salt);

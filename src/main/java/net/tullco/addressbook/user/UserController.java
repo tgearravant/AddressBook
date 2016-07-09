@@ -1,8 +1,14 @@
 package net.tullco.addressbook.user;
 
 public class UserController {
+	/**
+	 * This function authenticates a given username and password against the database.
+	 * @param username The username of the user being authenticated.
+	 * @param password The password corresponding to the username.
+	 * @return True if the username and password is valid. False otherwise.
+	 */
 	public static boolean authenticate(String username, String password){
-		if (username.isEmpty() || password.isEmpty())
+		if (username == null || password == null || username.isEmpty() || password.isEmpty())
 			return false;
 		User u = User.UserLoader(username);
 		if (u==null)

@@ -20,6 +20,15 @@ hr{
 	font-size: 3em;
 	margin: auto;
 }
+.header_user_container_div{
+	float:right;
+	margin: 15px 50px 20px 30px;
+    text-align: right;
+}
+.tiny_text{
+  color: #005031;
+  font-size: 0.9em;
+}
 .contact_container_div,.details_container_div,.form_container_div,.login_container_div,.phone_form_container_div,.contact_form_container_div{
    float: left;
    margin: 10px;
@@ -145,7 +154,7 @@ input[type=checkbox] {
 	margin-bottom: 5px;
 }
 .search_input{
-	width: 20%;
+	width: 250px;
 	margin-left: 0;
 	margin-right: 10px;
 }

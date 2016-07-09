@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.tullco.addressbook.user.User;
 import net.tullco.addressbook.utils.Path;
 
 import org.apache.velocity.app.*;
@@ -24,6 +25,8 @@ public class ViewUtils {
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
         model.put("title", "Tull & Beverly's Address Book");
         model.put("display_utils_class", DisplayUtils.class);
+        User u=User.UserLoader(request.session().attribute("current_user"));
+        model.put("current_user", u);
         if (!model.containsKey("main_header")){
         	model.put("main_header", "Tull & Beverly's Address Book");
         }
