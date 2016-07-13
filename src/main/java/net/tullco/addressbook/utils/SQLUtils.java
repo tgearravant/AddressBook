@@ -72,7 +72,6 @@ public class SQLUtils {
 				SQLUtils.conn=c;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return SQLUtils.conn;
