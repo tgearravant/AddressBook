@@ -29,7 +29,6 @@
 		<form method="post" action="$WebPath.getSEARCH_POST()">
 			<input class="search_input" name="search" id="search" />
 			<input type="submit" class="header_button" value="Search" />
-		
 		<a href="$WebPath.getADD_CONTACT()" class="header_button">Add Contact</a>
 		</form>
 	</div>
