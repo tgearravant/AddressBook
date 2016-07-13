@@ -26,7 +26,7 @@ public class ContactController {
         	halt(404,ViewUtils.renderNotFound(request));
         }
         model.put("contact", contact);
-        model.put("main_header", contact.fullName());
+        model.put("main_header", "Details for "+(contact.fullName().isEmpty()?"unnamed contact":contact.fullName()));
         model.put("header_link" , Path.Web.INDEX);
         model.put("contact_id", contact.getId());
         return ViewUtils.render(request, model, Path.Template.ONE_CONTACT);
@@ -48,13 +48,19 @@ public class ContactController {
 		ViewUtils.haltIfNoParameter(request, ":search", "string");
 		model.put("contacts",Contact.ContactsLoader(safeWhereStatement, 50, 0));
         model.put("add_contact", "yes");
+        model.put("header_link", Path.Web.INDEX);
+        model.put("main_header", "Search Results for: "+search.substring(1, search.length()-1));
         return ViewUtils.render(request, model, Path.Template.LIST_CONTACTS);
 	};
 	
 	public static Route contactSearchPost = (Request request, Response response) -> {
 		Map<String,String> map = ViewUtils.postBodyDecoder(request.body());
-		String searchRedirect = Path.Web.SEARCH_RESULTS.replace(":search", map.get("search"));
-		response.redirect(searchRedirect, 303);
+		if (map.get("search")==null||map.get("search").isEmpty())
+			response.redirect(Path.Web.INDEX);
+		else{
+			String searchRedirect = Path.Web.SEARCH_RESULTS.replace(":search", map.get("search").trim());
+			response.redirect(searchRedirect, 303);
+		}
         return "Redirecting to search results...";
 	}; 
 

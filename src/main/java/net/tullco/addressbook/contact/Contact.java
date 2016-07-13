@@ -108,7 +108,7 @@ public class Contact {
 		return this.phoneNumbers;
 	}
  	public String fullName(){
-		return this.firstName+" "+this.lastName;
+		return (this.firstName==null?"":this.firstName+" ")+(this.lastName==null?"":this.lastName);
 	}
 	public String getImageLocation(){
 		if (this.imageLocation==null)

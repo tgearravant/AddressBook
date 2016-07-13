@@ -14,7 +14,7 @@ import static spark.debug.DebugScreen.*;
 
 
 /**
- * Hello world!
+ * This contains all the routing and stuff. :)
  *
  */
 public class App implements SparkApplication
@@ -75,6 +75,7 @@ public class App implements SparkApplication
     	get(Path.Web.RESTORE,			BackupUtils.restore);
     	get(Path.Web.ADMIN_USER_ADD,	AdminController.addUser);
     	get(Path.Web.SEARCH_RESULTS,	ContactController.searchContacts);
+    	get(Path.Web.CHANGE_PASSWORD,	AdminController.changePassword);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);

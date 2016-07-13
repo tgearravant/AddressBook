@@ -6,6 +6,12 @@
   <link rel="shortcut icon" href="http://tullco.net/img/favicon.ico" />
 </head>
 <body>
+#if($current_user)
+<div class="header_user_container_div">
+	<span class="contact_text">Welcome, $display_utils_class.capitalize($current_user.getUsername())</span><br>
+	<span class="tiny_text">[<a href="$WebPath.getLOGOUT()">Logout</a>][<a href="$WebPath.getCHANGE_PASSWORD()">Change Password</a>]</span>
+</div>
+#end
 <header>
 	#if ($header_link) <a href="$header_link" class="header_link"> #end
  	<h1 class="master_header">$main_header</h1>
@@ -23,10 +29,10 @@
 		<form method="post" action="$WebPath.getSEARCH_POST()">
 			<input class="search_input" name="search" id="search" />
 			<input type="submit" class="header_button" value="Search" />
-		</form>
 		<a href="$WebPath.getADD_CONTACT()" class="header_button">Add Contact</a>
+		</form>
 	</div>
-#end	
+#end
 <hr>
 <main>
   $!bodyContent

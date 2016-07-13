@@ -28,6 +28,7 @@ public class Path {
         public final static String RESTORE="/backup/restore/";
         public final static String ADMIN_POST="/admin/post/";
         public final static String ADMIN_USER_ADD="/admin/user_add/";
+        public final static String CHANGE_PASSWORD="/admin/change_password/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -59,6 +60,9 @@ public class Path {
         public static String getLOGIN_POST(){
         	return LOGIN_POST;
         }
+        public static String getLOGOUT(){
+        	return LOGOUT;
+        }
         public static String getContactPath(int contact_id){
         	return ONE_CONTACT_NO_ID+contact_id+"/";
         }
@@ -76,6 +80,9 @@ public class Path {
         }
         public static String getSEARCH_POST(){
         	return SEARCH_POST;
+        }
+        public static String getCHANGE_PASSWORD(){
+        	return CHANGE_PASSWORD;
         }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();
@@ -98,5 +105,6 @@ public class Path {
         public static final String EDIT_PHONE_NUMBER = "/templates/phoneNumbers/edit.vm";
         public static final String EDIT_CONTACTS = "/templates/contact/edit.vm";
         public static final String EDIT_USER = "/templates/admin/editUser.vm";
+        public static final String CHANGE_PASSWORD = "/templates/admin/changePassword.vm";
     }
 }

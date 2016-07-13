@@ -7,7 +7,7 @@ import java.util.Properties;
 import net.tullco.addressbook.App;
 
 public class SystemUtils {
-	final private static Boolean is_windows=(System.getProperty("os.name").contains("Windows"));
+	final private static Boolean IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
 	final private static String[] requiredProperties={"admin_username","admin_password","s3_access_key_id","s3_secret_key","backup_key"};
 	private static Properties properties=null;
 	/**
@@ -16,18 +16,14 @@ public class SystemUtils {
 	 * @return Returns a path string appropriate for the OS.
 	 */
 	public static String adjustPathForOS(String path){
-		if (is_windows){
+		if (IS_WINDOWS){
 			return path.replace('/', '\\');
 		}
 		else
 			return path;
 	}
 	public static boolean inProduction(){
-		String env=System.getenv("");
-		if (env != null)
-			return true;
-		else
-			return false;
+		return !IS_WINDOWS;
 	}
 	private static Properties loadProperties(Properties p,String s){
 		if (SystemUtils.properties!=null)
