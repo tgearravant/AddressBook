@@ -17,7 +17,7 @@ public class Path {
         public final static String SEARCH_RESULTS = "/contacts/search/:search/";
         public final static String STYLESHEET = "/css/style.css";
         public final static String IMAGE_DIRECTORY = "/img/";
-        public final static String EDIT_ADDRESS = "/addresses/edit/:address_id/";
+        public final static String EDIT_ADDRESS = "/contacts/:contact_id/address/:address_id/edit/";
         public final static String ADD_ADDRESS = "/addresses/add/:contact_id/";
         public final static String ADDRESS_POST = "/addresses/post/";
         public final static String PHONE_NUMBER_POST="/phone_numbers/post/";
@@ -45,8 +45,8 @@ public class Path {
         public static String getADD_ADDRESS(){
         	return ADD_ADDRESS.replace(":contact_id/", "");
         }
-        public static String getEDIT_ADDRESS(){
-        	return EDIT_ADDRESS.replace(":address_id/", "");
+        public static String getAddressEdit(Integer contact_id,Integer address_id){
+        	return EDIT_ADDRESS.replace(":address_id", address_id.toString()).replace(":contact_id", contact_id.toString());
         }
         public static String getPHONE_NUMBER_POST(){
         	return PHONE_NUMBER_POST;

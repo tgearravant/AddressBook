@@ -21,7 +21,6 @@ ALTER TABLE addresses RENAME TO addresses_old;
 --Create new address table
 CREATE TABLE addresses(
 	id INTEGER PRIMARY KEY NOT NULL,
-	contact_id INTEGER NOT NULL,
 	street VARCHAR(255),
 	apartment VARCHAR(255),
 	zip_code VARCHAR(255),
@@ -30,8 +29,8 @@ CREATE TABLE addresses(
 	country VARCHAR(255)
 );
 -- Copy old data
-INSERT INTO addresses (id,contact_id,street,apartment,zip_code,city,state,country)
-SELECT id,contact_id,street,apartment,zip_code,city,state,country FROM addresses_old;
+INSERT INTO addresses (id,street,apartment,zip_code,city,state,country)
+SELECT id,street,apartment,zip_code,city,state,country FROM addresses_old;
 
 -- Drop old table
 

@@ -41,10 +41,12 @@ public class AddressController {
 	public static Route editAddress = (Request request, Response response) -> {
 		
 		ViewUtils.haltIfNoParameter(request, ":address_id", "id");
-		int address_id = Integer.parseInt(request.params(":address_id"));;
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "id");
+		int address_id = Integer.parseInt(request.params(":address_id"));
+		int contact_id = Integer.parseInt(request.params(":contact_id"));
 
 		HashMap<String, Object> model = new HashMap<>();
-        Address address=Address.addressLoader(address_id);
+        Address address=Address.addressLoader(address_id, contact_id);
         if (address==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
@@ -84,7 +86,8 @@ public class AddressController {
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
 		}
 		else if (options.get("mode").equals("delete")){
-			Address address = Address.addressLoader(Integer.parseInt(options.get("address_id")));
+			Address address = Address.addressLoader(Integer.parseInt(options.get("address_id"))
+					,Integer.parseInt(options.get("contact_id")));
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
 			address.delete();
 		}
