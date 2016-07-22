@@ -36,11 +36,12 @@ public class BackupUtils {
 	private final static String BUCKET_NAME=SystemUtils.getProperty("s3_bucket","addressbook-backups");
 	private final static String BACKUP_KEY=SystemUtils.getProperty("backup_key");
 	
-	private final static String OUTPUT_DESTINATION="%d%d%d%d%d_addressbook_backup";
+	private final static String OUTPUT_DESTINATION="%d%s%s%s%s_addressbook_backup";
 	private final static String[] TABLES_TO_BACKUP= {"contacts","addresses","users","phone_numbers"};
 	
 	public static Route backup = (Request request, Response response) -> {
 		String givenKey = request.queryParams("backup_key");
+		System.out.println(getFileName());
 		if(givenKey==null || !givenKey.equals(BACKUP_KEY))
 			return "Backup Unsuccessful. Bad Key.";
 		s3Put(zipBackupFiles());
@@ -196,10 +197,10 @@ public class BackupUtils {
 		Calendar cal = Calendar.getInstance();
 		String outputFileName = String.format(OUTPUT_DESTINATION
 				,cal.get(Calendar.YEAR)
-				,cal.get(Calendar.MONTH)+1
-				,cal.get(Calendar.DAY_OF_MONTH)
-				,cal.get(Calendar.HOUR_OF_DAY)
-				,cal.get(Calendar.MINUTE));
+				,String.format("%02d",cal.get(Calendar.MONTH)+1)
+				,String.format("%02d", cal.get(Calendar.DAY_OF_MONTH))
+				,String.format("%02d", cal.get(Calendar.HOUR_OF_DAY))
+				,String.format("%02d", cal.get(Calendar.MINUTE)));
 		return outputFileName;
 	}
 	private static void handleAmazonServiceException(AmazonServiceException ase){

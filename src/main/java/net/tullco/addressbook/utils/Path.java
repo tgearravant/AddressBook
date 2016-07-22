@@ -106,5 +106,6 @@ public class Path {
         public static final String EDIT_CONTACTS = "/templates/contact/edit.vm";
         public static final String EDIT_USER = "/templates/admin/editUser.vm";
         public static final String CHANGE_PASSWORD = "/templates/admin/changePassword.vm";
+        public static final String ADD_SHARED_ADDRESS = "/templates/address/";
     }
 }

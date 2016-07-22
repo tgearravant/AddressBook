@@ -20,6 +20,7 @@
 #if ($contact_id)
 	<div class="header_button_container_div">
 	<a href="$WebPath.getADD_ADDRESS()$contact_id/" class="header_button">Add Address</a>
+	<a href="$WebPath.getContactEdit($contact_id)" class="header_button">Add Shared Address</a>
 	<a href="$WebPath.getADD_PHONE_NUMBER()$contact_id/" class="header_button">Add Phone Number</a>
 	<a href="$WebPath.getContactEdit($contact_id)" class="header_button">Edit Contact</a>
 	</div>
