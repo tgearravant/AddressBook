@@ -76,13 +76,15 @@ public class App implements SparkApplication
     	get(Path.Web.ADMIN_USER_ADD,	AdminController.addUser);
     	get(Path.Web.SEARCH_RESULTS,	ContactController.searchContacts);
     	get(Path.Web.CHANGE_PASSWORD,	AdminController.changePassword);
+    	get(Path.Web.ADD_SHARED_ADDRESS,AddressController.addSharedAddress);
+    	get(Path.Web.HANDLE_SHARED_ADDRESS,AddressController.sharedAddressHandler);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);
     }
     private static void postRouting(){
     	post(Path.Web.SEARCH_POST,		ContactController.contactSearchPost);
-    	post(Path.Web.ADDRESS_POST,		AddressController.AddressPost);
+    	post(Path.Web.ADDRESS_POST,		AddressController.addressPost);
     	post(Path.Web.PHONE_NUMBER_POST,PhoneNumberController.phoneNumberPost);
     	post(Path.Web.LOGIN_POST,		LoginController.loginPost);
     	post(Path.Web.CONTACT_POST,		ContactController.contactPost);

@@ -20,7 +20,7 @@
 	</select><br>
 	<label class="form_label">Current Address?</label>
 	<div class="form_checkbox">	
-	<input type="checkbox" value="1" id="active" name="active" #if ($active) checked #end />
+	<input type="checkbox" value="1" id="active" name="active" #if ($active || $mode=="add") checked #end />
 	<label for="active"></label>
 	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />
@@ -33,6 +33,7 @@
 		<div class="submit_button_div">
 			<form action="$WebPath.getADDRESS_POST()" method="post">
 				<input type="hidden" value="delete" name="mode" />
+				<input type="hidden" value="$contact_id" name="contact_id" />
 				<input type="hidden" value="$address_id" name="address_id" />
 				<input type="submit" value="Delete" class="submit_button" />
 			</form>

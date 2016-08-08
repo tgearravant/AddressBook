@@ -12,7 +12,7 @@
 </div>
 #end
 #if ($contact.hasAddress())
-<a href="$WebPath.getEDIT_ADDRESS()$contact.currentAddress().id()/">
+<a href="$contact.currentAddress().getEditURL()">
 <div class="details_container_div">
   <span class="contact_text">Current Address</span>
   <div class="contact_address_div">
@@ -44,12 +44,14 @@
 #end
 #foreach($address in $contact.addresses())
   #if ($address != $contact.currentAddress())
-	<a href="$WebPath.getEDIT_ADDRESS()$address.id()/">
+	<a href="$address.getEditURL()">
     <div class="details_container_div">
+    <span class="contact_text">Previous Address</span><br>
+    <div class="contact_address_div">
     <span class="address_text">
 	    #if($address.street())$address.street()<br>#end
 	    #if ("$!address.apartment()" != "")
-	      $contact.address.apartment()<br>
+	      $address.apartment()<br>
 	    #end
 	    #if ($address.city())$address.city(), #end
 	    #if ($address.state())$address.state() #end
@@ -62,7 +64,8 @@
 #end
 #if($contact.phoneNumbers().size() > $contact.getPreferredPhoneNumbers().size())
 	<div class="details_container_div">
-	<span class="contact_text">Other Phone Numbers</span> 
+	<span class="contact_text">Other Phone Numbers</span><br>
+	<div class="contact_address_div">
 	#foreach($number in $contact.phoneNumbers())
 		#if ($number.isPreferred()==false)
 		<a href="$WebPath.getEDIT_PHONE_NUMBER()$number.getId()">
@@ -71,6 +74,7 @@
 		</span></a><br>
 		#end
 	#end
+	</div>
 </div>
 #end
 #end

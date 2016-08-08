@@ -2,6 +2,7 @@ package net.tullco.addressbook.address;
 
 import static spark.Spark.halt;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +42,12 @@ public class AddressController {
 	public static Route editAddress = (Request request, Response response) -> {
 		
 		ViewUtils.haltIfNoParameter(request, ":address_id", "id");
-		int address_id = Integer.parseInt(request.params(":address_id"));;
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "id");
+		int address_id = Integer.parseInt(request.params(":address_id"));
+		int contact_id = Integer.parseInt(request.params(":contact_id"));
 
 		HashMap<String, Object> model = new HashMap<>();
-        Address address=Address.addressLoader(address_id);
+        Address address=Address.addressLoader(address_id, contact_id);
         if (address==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
@@ -65,7 +68,7 @@ public class AddressController {
         return ViewUtils.render(request, model, Path.Template.EDIT_ADDRESS);
 	};
 
-	public static Route AddressPost = (Request request, Response response) -> {
+	public static Route addressPost = (Request request, Response response) -> {
 		System.out.println("Loading Address Post...");
 		Map<String,String> options = ViewUtils.postBodyDecoder(request.body());
 		String output = "";
@@ -84,9 +87,10 @@ public class AddressController {
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
 		}
 		else if (options.get("mode").equals("delete")){
-			Address address = Address.addressLoader(Integer.parseInt(options.get("address_id")));
-			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
+			Address address = Address.addressLoader(Integer.parseInt(options.get("address_id"))
+					,Integer.parseInt(options.get("contact_id")));
 			address.delete();
+			response.redirect(Path.Web.ONE_CONTACT_NO_ID+address.contactId()+"/",303);
 		}
 		else{
 			if (options.containsKey("contact_id"))
@@ -95,5 +99,44 @@ public class AddressController {
 				response.redirect(Path.Web.INDEX,303);
 		}
         return "Redirecting back to contact...";
+	};
+	
+	public static Route addSharedAddress = (Request request, Response response) -> {
+		ViewUtils.haltIfNoParameter(request, ":contact_id", "id");
+		System.out.println("Loading Add Shared Address...");
+		HashMap<String, Object> model = new HashMap<>();
+		int contact_id=Integer.parseInt(request.params("contact_id"));
+		model.put("header_link",Path.Web.getContactPath(contact_id));
+		model.put("contact_id", contact_id);
+		model.put("main_header", "Share Address");
+		if (request.queryParams().contains("search")){
+			model.put("addresses", Address.addressesLoaderByName(request.queryParams("search")));
+			model.put("search", request.queryParams("search"));
+		}
+		else{
+			model.put("addresses", new ArrayList<Address>());
+			model.put("search", "");
+		}
+		model.put("add_shared_search", "true");
+		return ViewUtils.render(request, model, Path.Template.ADD_SHARED_ADDRESS);
+	};
+	
+	public static Route sharedAddressHandler = (Request request, Response response) -> {
+		if(!(request.queryParams().contains("contact_id") && request.queryParams().contains("address_id") && request.queryParams().contains("old_contact_id"))){
+			response.redirect(Path.Web.INDEX,303);
+			return "Required information missing. Redirecting back to index...";
+		}
+		int contact_id=Integer.parseInt(request.queryParams("contact_id"));
+		int old_contact_id=Integer.parseInt(request.queryParams("old_contact_id"));
+		int address_id=Integer.parseInt(request.queryParams("address_id"));
+		if(contact_id==old_contact_id){
+			response.redirect(Path.Web.getContactPath(contact_id));
+			return "Old and new IDs identical";
+		}
+		Address a = Address.addressLoader(address_id, old_contact_id);
+		a.setContactId(contact_id);
+		a.save();
+		response.redirect(Path.Web.getContactPath(contact_id));
+		return "Successful update. Redirecting...";
 	};
 }

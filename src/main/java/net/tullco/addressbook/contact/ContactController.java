@@ -135,14 +135,4 @@ public class ContactController {
 		}
         return "Redirecting back to contact...";
 	};
-	/*
-	public static Route deleteContact = (Request request, Response response) -> {
-        HashMap<String, Object> model = new HashMap<>();
-        List<Contact> contacts= new ArrayList<Contact>();
-        Contact contact=new Contact(0);
-        model.put("contact", contact);
-        contacts.add(new Contact(0));
-        model.put("contacts", contacts);
-        return ViewUtil.render(request, model, Path.Template.INDEX);
-	};*/
 }

@@ -10,6 +10,7 @@ public class LocaleUtils {
 		HashMap<String,String> locales = new HashMap<String,String>();
 		locales.put("us", "United States");
 		locales.put("ca", "Canada");
+		locales.put("nl", "Netherlands");
 		return locales;
 	}
 	public static List<String[]> allowedLocalesList(){
