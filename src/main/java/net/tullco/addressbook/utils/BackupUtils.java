@@ -41,7 +41,6 @@ public class BackupUtils {
 	
 	public static Route backup = (Request request, Response response) -> {
 		String givenKey = request.queryParams("backup_key");
-		System.out.println(getFileName());
 		if(givenKey==null || !givenKey.equals(BACKUP_KEY))
 			return "Backup Unsuccessful. Bad Key.";
 		s3Put(zipBackupFiles());

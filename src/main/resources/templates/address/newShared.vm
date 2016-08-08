@@ -1,0 +1,24 @@
+#parse("/templates/master.vm")
+#@master()
+
+	#foreach($address in $addresses) 
+    <a href="$WebPath.getSharedAddressHandler($contact_id,$address.contactId(),$address.id())">
+    <div class="contact_container_div">
+      <div class="contact_name_div">
+		    <span class="contact_text">$address.getContact().fullName()</span>
+      </div>                                      
+        <div class="contact_address_div">
+          <span class="address_text">
+          #if ($address.street())$address.street()#end<br>
+          #if ($address.apartment())
+            $address.apartment()<br>
+          #end
+          #if ($address.city()) $address.city(), #end
+          #if ($address.state()) $address.state() #end
+          #if ($address.zipCode()) $address.zipCode()#end<br>
+          $address.country()</span>
+        </div>
+    </div>
+    </a>   
+	#end
+#end

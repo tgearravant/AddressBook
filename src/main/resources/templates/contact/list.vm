@@ -14,11 +14,14 @@
       </div>
       #if ($contact.hasAddress())                                      
         <div class="contact_address_div">
-          <span class="address_text">$contact.currentAddress().street()<br>
+          <span class="address_text">
+          #if ($contact.currentAddress().street())$contact.currentAddress().street()#end <br>
           #if ("$!contact.currentAddress().apartment()" != "")
             $contact.currentAddress().apartment()<br>
           #end
-          $contact.currentAddress().city(), $contact.currentAddress().state() $contact.currentAddress().zipCode()<br>
+          #if($contact.currentAddress().city())$contact.currentAddress().city(), #end
+          #if($contact.currentAddress().state())$contact.currentAddress().state() #end
+          #if($contact.currentAddress().zipCode())$contact.currentAddress().zipCode()#end<br>
           $contact.currentAddress().country()</span>
         </div>
       #end

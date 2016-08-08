@@ -29,6 +29,8 @@ public class Path {
         public final static String ADMIN_POST="/admin/post/";
         public final static String ADMIN_USER_ADD="/admin/user_add/";
         public final static String CHANGE_PASSWORD="/admin/change_password/";
+        public final static String ADD_SHARED_ADDRESS="/addresses/add_shared/:contact_id/";
+        public final static String HANDLE_SHARED_ADDRESS="/addresses/add_shared/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -84,6 +86,12 @@ public class Path {
         public static String getCHANGE_PASSWORD(){
         	return CHANGE_PASSWORD;
         }
+        public static String getAddSharedAddress(int contact_id){
+        	return ADD_SHARED_ADDRESS.replace(":contact_id", contact_id+"");
+        }
+        public static String getSharedAddressHandler(int contact_id,int old_contact_id,int address_id){
+        	return Path.Web.HANDLE_SHARED_ADDRESS+"?contact_id="+contact_id+"&old_contact_id="+old_contact_id+"&address_id="+address_id;
+        }
         public static List<String> getUnprotectedPaths(){
         	ArrayList<String> paths = new ArrayList<String>();
         	paths.add(LOGIN);
@@ -106,6 +114,6 @@ public class Path {
         public static final String EDIT_CONTACTS = "/templates/contact/edit.vm";
         public static final String EDIT_USER = "/templates/admin/editUser.vm";
         public static final String CHANGE_PASSWORD = "/templates/admin/changePassword.vm";
-        public static final String ADD_SHARED_ADDRESS = "/templates/address/";
+        public static final String ADD_SHARED_ADDRESS = "/templates/address/newShared.vm";
     }
 }

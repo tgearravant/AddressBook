@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.tullco.addressbook.contact.Contact;
 import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
@@ -42,7 +43,16 @@ public class Address {
 			+ "(street,apartment,zip_code,city,state,country) "
 			+ "VALUES (%s,%s,%s,%s,%s,%s)";
 	private static final String ADDRESS_DELETE_SQL="DELETE FROM contact_addresses WHERE address_id=%d AND contact_id=%d";
-	
+	private static final String ADDRESS_NAME_SEARCH_SQL="SELECT a.*,ca.contact_id,ca.current_address "
+			+ "FROM addresses a "
+			+ "INNER JOIN contact_addresses ca ON ca.address_id=a.id "
+			+ "INNER JOIN contacts c ON c.id=ca.contact_id "
+			+ "WHERE (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s)) "
+			+ "ORDER BY c.last_name,c.first_name "
+			+ "LIMIT 30";
+	private static final String ORPHAN_ADDRESS_FINDER_SQL="SELECT count(*) AS count_addresses FROM contact_addresses WHERE address_id=%d";
+	private static final String ORPHAN_ADDRESS_DELETER_SQL="DELETE FROM addresses WHERE id=%d";
+
 	public Address(Map<String,String> values){
 		setValuesFromMap(values);
 	}
@@ -111,8 +121,22 @@ public class Address {
 		return true;
 	}
 	public void delete(){
-		String statement = SQLUtils.sqlSafeFormat(ADDRESS_DELETE_SQL,this.id);
+		String statement = SQLUtils.sqlSafeFormat(ADDRESS_DELETE_SQL,this.id,this.contact_id);
 		SQLUtils.executeUpdate(statement);
+		statement = SQLUtils.sqlSafeFormat(ORPHAN_ADDRESS_FINDER_SQL, this.id);
+		ResultSet rs = SQLUtils.executeSelect(statement);
+		try{
+			rs.next();
+			int i = rs.getInt("count_addresses");
+			rs.close();	
+			if (i==0){
+				statement = SQLUtils.sqlSafeFormat(ORPHAN_ADDRESS_DELETER_SQL, this.id);
+				SQLUtils.executeUpdate(statement);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
 	}
 	public boolean hasContactLinkage(){
 		String statement = SQLUtils.sqlSafeFormat(ADDRESS_CONTACT_FINDER, this.id,this.contact_id);
@@ -120,6 +144,7 @@ public class Address {
 		try{
 			rs.next();
 			int i = rs.getInt("has_record");
+			rs.close();
 			if(i==1)
 				return true;
 			else
@@ -129,6 +154,9 @@ public class Address {
 			return false;
 		}
 		
+	}
+	public Contact getContact(){
+		return Contact.ContactLoader(this.contact_id);
 	}
 	public int id(){
 		return this.id;
@@ -162,6 +190,9 @@ public class Address {
 	}
 	public String getEditURL(){
 		return Path.Web.getAddressEdit(this.contact_id, this.id);
+	}
+	public void setContactId(int contact_id){
+		this.contact_id=contact_id;
 	}
 	private static Map<String,String> convertResultSetToAddressMap(ResultSet rs) throws SQLException{
 		String[] fields={"street","apartment","zip_code","city","state","country"};
@@ -203,6 +234,21 @@ public class Address {
 		}
 		return addresses;
 	}
+	public static List<Address> addressesLoaderByName(String name){
+		ArrayList<Address> addresses = new ArrayList<Address>();
+		String search = "%"+name+"%";
+		String statement = SQLUtils.sqlSafeFormat(ADDRESS_NAME_SEARCH_SQL,search,search);
+		ResultSet rs = SQLUtils.executeSelect(statement);
+		try {
+			while(rs.next()){
+				addresses.add(new Address(convertResultSetToAddressMap(rs)));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println("Strange error here.");
+		}
+		return addresses;
+	}
 	public static Address getCurrentAddress(List<Address> addresses){
 		for (Address a: addresses){
 			if (a.active())
@@ -214,5 +260,8 @@ public class Address {
 		Address newAddress=new Address(valueMap);
 		newAddress.save();
 		return newAddress;
+	}
+	public static void addAddressLink(int contact_id,int address_id){
+		
 	}
 }
