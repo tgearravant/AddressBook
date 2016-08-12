@@ -85,7 +85,7 @@ public class SQLUtils {
 		return String.format(s,objs);
 	}
 
-	public static String getTableAsInsertString(String table) throws SQLException{
+	protected static String getTableAsInsertString(String table) throws SQLException{
 		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_SQL, table));
 		ResultSetMetaData md =rs.getMetaData();
 		
@@ -133,7 +133,7 @@ public class SQLUtils {
 		flyway.migrate();
 		return true;
 	}
-	public static boolean truncateTable(String table){
+	protected static boolean truncateTable(String table){
 		return executeUpdate(String.format(TABLE_DELETE_SQL, table));
 	}
 }
