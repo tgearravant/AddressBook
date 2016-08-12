@@ -37,7 +37,7 @@ public class BackupUtils {
 	private final static String BACKUP_KEY=SystemUtils.getProperty("backup_key");
 	
 	private final static String OUTPUT_DESTINATION="%d%s%s%s%s_addressbook_backup";
-	private final static String[] TABLES_TO_BACKUP= {"contacts","addresses","users","phone_numbers"};
+	private final static String[] TABLES_TO_BACKUP= {"contacts","addresses","users","phone_numbers","contact_addresses"};
 	
 	public static Route backup = (Request request, Response response) -> {
 		String givenKey = request.queryParams("backup_key");
