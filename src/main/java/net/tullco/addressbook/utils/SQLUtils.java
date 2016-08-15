@@ -12,6 +12,13 @@ public class SQLUtils {
 	private final static String TABLE_DELETE_SQL="DELETE FROM %s";
 	
 	private static Connection conn=null;
+	
+	/**
+	 * Execute the given string as an insert statement.
+	 * Also prints the query to the console.
+	 * @param statement The SQL query to be executed.
+	 * @return The id of the inserted row.
+	 */
 	public static int executeInsert(String statement){
 		System.out.println(statement);
 		Connection c = getConnection();
@@ -28,6 +35,13 @@ public class SQLUtils {
 			return 0;
 		}
 	}
+	
+	/**
+	 * Execute the given statement as a select statement.
+	 * Please close the returned result set object when you're done with it. 
+	 * @param statement The statement to be executed.
+	 * @return A results set object with the results of the query.
+	 */
 	public static ResultSet executeSelect(String statement){
 		System.out.println(statement);
 		Connection c = getConnection();
@@ -41,6 +55,12 @@ public class SQLUtils {
 		}
 		return null;
 	}
+	
+	/**
+	 * Execute the given statement as an update
+	 * @param statement
+	 * @return True if the statement was successful. False if there was an error.
+	 */
 	public static boolean executeUpdate(String statement){
 		System.out.println(statement);
 		Connection c= getConnection();
@@ -55,6 +75,12 @@ public class SQLUtils {
 			return false;
 		}
 	}
+	
+	/**
+	 * Gets the connection to the database that is used by the execute methods.
+	 * A single connection is shared by all methods. 
+	 * @return The SQL connection object.
+	 */
 	private static Connection getConnection(){
 		try {
 			if (SQLUtils.conn==null || SQLUtils.conn.isClosed()){
@@ -76,6 +102,17 @@ public class SQLUtils {
 		}
 		return SQLUtils.conn;
 	}
+	
+	/**
+	 * This works like String.format. Basically, give it a string and objects like you would
+	 * normally with String.format, and it will escape all strings to be safe,
+	 * surround strings in single quotes, and then perform a normal format with the results.
+	 * 
+	 * Try not to execute SQL statements without it.
+	 * @param s The string to add the objects into.
+	 * @param objs The objects to escape and add to the string.
+	 * @return The escaped, safe string.
+	 */
 	public static String sqlSafeFormat(String s, Object... objs){
 		for (int i=0; i < objs.length; i++){
 			if (objs[i] instanceof String && objs[i] != null && !objs[i].equals("")){
@@ -84,7 +121,13 @@ public class SQLUtils {
 		}
 		return String.format(s,objs);
 	}
-
+	
+	/**
+	 * Converts the table into an insert string for backup/restore operations.
+	 * @param table The table to convert into a series of insert strings.
+	 * @return The table data as a series of insert strings. One per line, semicolon separated.
+	 * @throws SQLException If there was a problem getting the insert string.
+	 */
 	protected static String getTableAsInsertString(String table) throws SQLException{
 		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_SQL, table));
 		ResultSetMetaData md =rs.getMetaData();
@@ -117,11 +160,14 @@ public class SQLUtils {
 		return tableOutput;
 	}	
 
+	/**
+	 * Runs all the migrations in the resources/db/migration folder.
+	 * @return True. May later implement a false if migrations fail.
+	 */
 	public static boolean runMigrations(){
 		Flyway flyway = new Flyway();
 		flyway.setDataSource("jdbc:sqlite:contacts.db","sa",null);
 		flyway.setLocations("classpath:db\\migration");
-		flyway.getLocations();
 		System.out.println("Migrating...");
 		/*for (String s:flyway.getLocations())
 			System.out.println(s);
@@ -133,6 +179,14 @@ public class SQLUtils {
 		flyway.migrate();
 		return true;
 	}
+	
+	/**
+	 * Removes all rows from the specified table.
+	 * Currently only used by backup restoration methods.
+	 * Be /very/ careful with it, as there are no other checks on it.
+	 * @param table The table to truncate.
+	 * @return True if the update was successful. False otherwise.
+	 */
 	protected static boolean truncateTable(String table){
 		return executeUpdate(String.format(TABLE_DELETE_SQL, table));
 	}
