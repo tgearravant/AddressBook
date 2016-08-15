@@ -49,7 +49,8 @@ public class Contact {
 					,this.firstName
 					,this.middleName
 					,this.lastName
-					,this.birthdate.getTime()
+					,(this.birthdate==null?
+							null:(this.birthdate.getTime()))
 					,this.email);
 			this.id=SQLUtils.executeInsert(statement);
 			return (this.id==0?false:true);
@@ -58,7 +59,8 @@ public class Contact {
 				,this.firstName
 				,this.middleName
 				,this.lastName
-				,this.birthdate.getTime()
+				,(this.birthdate==null?
+						null:(this.birthdate.getTime()))
 				,this.email
 				,this.id);
 		return SQLUtils.executeUpdate(statement);
@@ -180,6 +182,7 @@ public class Contact {
 			contact.put(s, rs.getString(s));
 		}
 		long epoch=rs.getLong("birthdate");
+		System.out.println("Database epoch: "+epoch);
 		contact.put("birthdate", Long.toString(epoch));
 		contact.put("id", Integer.toString(rs.getInt("id")));
 		return contact;
@@ -197,11 +200,14 @@ public class Contact {
 			if(k.equals("email"))
 				this.email=values.get(k);
 			if(k.equals("birthdate")){
-				this.birthdate=new Date(Long.parseLong(values.get(k)));
+				if(values.get(k).equals("0"))
+					this.birthdate=null;
+				else
+					this.birthdate=new Date(Long.parseLong(values.get(k)));
 			}
 		}
 		if (this.birthdate==null){
-			if(values.containsKey("birthyear")&&values.containsKey("birthmonth")&&values.containsKey("birthday")){
+			if(values.get("birthyear")!=null&&values.get("birthmonth")!=null&&values.get("birthday")!=null){
 				Calendar cal = Calendar.getInstance();
 				cal.set(Integer.parseInt(values.get("birthyear"))
 						,Integer.parseInt(values.get("birthmonth"))-1

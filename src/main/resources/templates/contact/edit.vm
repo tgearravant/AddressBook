@@ -13,18 +13,21 @@
 	<label class="form_label">Birthday</label><br>
 	<label class="tiny_label" for="birthday">D:</label>
 	<select class="tiny_input" value="$birthday" name="birthday" id="birthday">
+	<option value=""></option>
 	#foreach ($day in $display_utils_class.dateList())
 		<option value="$day" #if ($day.equals($birthday)) selected="selected" #end>$day</option>
 	#end
 	</select>
 	<label class="tiny_label" for="birthmonth">M:</label>
 	<select class="tiny_input" value="$birthmonth" name="birthmonth" id="birthmonth">
+	<option value=""></option>
 	#foreach ($month in $display_utils_class.monthList())
 		<option value="$month" #if ($month.equals($birthmonth)) selected="selected" #end>$month</option>
 	#end
 	</select>
 	<label class="tiny_label" for="birthyear">Y:</label>
 	<select class="tiny_input" value="$birthyear" name="birthyear" id="birthyear">
+	<option value=""></option>
 	#foreach ($year in $display_utils_class.yearList())
 		<option value="$year" #if ($year.equals($birthyear)) selected="selected" #end>$year</option>
 	#end

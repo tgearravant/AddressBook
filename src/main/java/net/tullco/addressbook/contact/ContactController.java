@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.tullco.addressbook.utils.DisplayUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
 import net.tullco.addressbook.utils.ViewUtils;
@@ -70,17 +71,24 @@ public class ContactController {
 		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
 		if (c==null)
 			halt(404,ViewUtils.renderNotFound(request));
-		Calendar cal=Calendar.getInstance();
-		cal.setTime(c.birthdate());
+		System.out.println("Birthday: "+DisplayUtils.dateToString(c.birthdate()));
         model.put("mode", "edit");
         model.put("contact_id", c.getId());
         model.put("first_name", (c.firstName()==null?"":c.firstName()));
         model.put("last_name", (c.lastName()==null?"":c.lastName()));
         model.put("middle_name",(c.middleName()==null?"":c.middleName()));
         model.put("email", (c.email()==null?"":c.email()));
-        model.put("birthday", cal.get(Calendar.DATE));
-        model.put("birthmonth", cal.get(Calendar.MONTH)+1);
-        model.put("birthyear", cal.get(Calendar.YEAR));
+        if (c.birthdate()!=null){
+    		Calendar cal=Calendar.getInstance();
+    		cal.setTime(c.birthdate());
+	        model.put("birthday", cal.get(Calendar.DATE));
+	        model.put("birthmonth", cal.get(Calendar.MONTH)+1);
+	        model.put("birthyear", cal.get(Calendar.YEAR));
+        }else{
+            model.put("birthday", "");
+            model.put("birthmonth", "");
+            model.put("birthyear", "");
+        }
         model.put("header_link" , Path.Web.getContactPath(c.getId()));
         model.put("main_header", "Edit Contact "+(c.fullName()==null?"":c.fullName()));
         
@@ -96,9 +104,9 @@ public class ContactController {
         model.put("last_name", "");
         model.put("middle_name","");
         model.put("email", "");
-        model.put("birthday", cal.get(Calendar.DAY_OF_MONTH));
-        model.put("birthmonth",cal.get(Calendar.MONTH)+1);
-        model.put("birthyear", cal.get(Calendar.YEAR)-26);
+        model.put("birthday", "");
+        model.put("birthmonth", "");
+        model.put("birthyear", "");
         model.put("header_link" , Path.Web.INDEX);
         model.put("main_header", "Add Contact");
         

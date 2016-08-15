@@ -16,6 +16,8 @@ public class DisplayUtils {
 		return s.toUpperCase();
 	}
 	public static String dateToString(Date d){
+		if(d==null)
+			return null;
 		SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 		return df.format(d);
 	}
