@@ -182,7 +182,6 @@ public class Contact {
 			contact.put(s, rs.getString(s));
 		}
 		long epoch=rs.getLong("birthdate");
-		System.out.println("Database epoch: "+epoch);
 		contact.put("birthdate", Long.toString(epoch));
 		contact.put("id", Integer.toString(rs.getInt("id")));
 		return contact;

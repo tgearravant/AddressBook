@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.tullco.addressbook.utils.DisplayUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
 import net.tullco.addressbook.utils.ViewUtils;
@@ -71,7 +70,6 @@ public class ContactController {
 		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
 		if (c==null)
 			halt(404,ViewUtils.renderNotFound(request));
-		System.out.println("Birthday: "+DisplayUtils.dateToString(c.birthdate()));
         model.put("mode", "edit");
         model.put("contact_id", c.getId());
         model.put("first_name", (c.firstName()==null?"":c.firstName()));
