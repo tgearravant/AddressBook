@@ -167,17 +167,32 @@ public class Address {
 	public String street(){
 		return this.street;
 	}
+	public void setStreet(String street){
+		this.street=street;
+	}
 	public String apartment(){
 		return this.apartment;
+	}
+	public void setApartment(String apartment){
+		this.apartment=apartment;
 	}
 	public String zipCode(){
 		return this.zipCode;
 	}
+	public void setZipCode(String zip){
+		this.zipCode=zip;
+	}
 	public String city(){
 		return this.city;
 	}
+	public void setCity(String city){
+		this.city=city;
+	}
 	public String state(){
 		return this.state;
+	}
+	public void setState(String state){
+		this.state=state;
 	}
 	public String getLocale(){
 		return this.country;
@@ -185,8 +200,14 @@ public class Address {
 	public String country(){
 		return LocaleUtils.getLongLocaleName(this.country);
 	}
+	public void setLocale(String locale){
+		this.country=locale;
+	}
 	public boolean active(){
 		return this.active;
+	}
+	public void setActive(boolean active){
+		this.active=active;
 	}
 	public String getEditURL(){
 		return Path.Web.getAddressEdit(this.contact_id, this.id);
@@ -260,8 +281,5 @@ public class Address {
 		Address newAddress=new Address(valueMap);
 		newAddress.save();
 		return newAddress;
-	}
-	public static void addAddressLink(int contact_id,int address_id){
-		
 	}
 }

@@ -2,6 +2,8 @@ package net.tullco.addressbook.test_classes;
 
 import static org.junit.Assert.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Before;
@@ -29,7 +31,19 @@ public class AddressTest {
 
 	@Test
 	public void testSave() {
-		Address a = Address.addressLoader(2,1);
+		Address a = Address.addressLoader(1,1);
+		assertTrue(a.active());
+		a = Address.addressLoader(2,1);
+		a.setStreet("Boardwalk");
+		a.setCity("New York");
+		a.setActive(true);
+		a.save();
+		a = Address.addressLoader(2,1);
+		assertTrue(a.active());
+		assertEquals("Boardwalk",a.street());
+		assertEquals("New York",a.city());
+		a = Address.addressLoader(1,1);
+		assertFalse(a.active());
 	}
 	
 	@Test
@@ -38,12 +52,30 @@ public class AddressTest {
 		assertNotEquals(null,aLuke);
 		aLuke.delete();
 		aLuke = Address.addressLoader(3, 2);
-		assertEquals(null,Address.addressLoader(3, 2));
+		assertEquals(null,aLuke);
+		ResultSet rs = SQLUtils.executeSelect("SELECT count(*) AS count_addresses FROM addresses WHERE id=3");
+		try{
+			while(rs.next()){
+				int count=rs.getInt("count_addresses");
+				assertEquals(1,count);
+			}
+		}catch(SQLException e){
+			fail(e.getMessage());
+		}
 		Address aLeia = Address.addressLoader(3, 3);
 		assertNotEquals(null,aLeia);
 		aLeia.delete();
 		aLeia = Address.addressLoader(3, 3);
 		assertEquals(null,aLeia);
+		rs = SQLUtils.executeSelect("SELECT count(*) AS count_addresses FROM addresses WHERE id=3");
+		try{
+			while(rs.next()){
+				int count=rs.getInt("count_addresses");
+				assertEquals(0,count);
+			}
+		}catch(SQLException e){
+			fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -68,6 +100,8 @@ public class AddressTest {
 		assertFalse(a.active());
 		a = Address.addressLoader(3, 3);
 		assertTrue(a.active());
+		a = Address.addressLoader(1, 3);
+		assertEquals(null,a);
 	}
 
 	@Test
@@ -83,8 +117,10 @@ public class AddressTest {
 	}
 
 	@Test
-	public void testAddAddressLink() {
-		fail("Not yet implemented");
+	public void testAddressSearch() {
+		List<Address> addresses = Address.addressesLoaderByName("Skywalker");
+		assertEquals(2,addresses.size());
+		assertEquals(3,addresses.get(0).id());
+		assertEquals(3,addresses.get(1).id());
 	}
-
 }
