@@ -7,6 +7,7 @@ import java.util.Properties;
 import net.tullco.addressbook.App;
 
 public class SystemUtils {
+	private static Boolean inTesting=false;
 	final private static Boolean IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
 	final private static String[] requiredProperties={"admin_username","admin_password","s3_access_key_id","s3_secret_key","backup_key"};
 	private static Properties properties=null;
@@ -24,6 +25,12 @@ public class SystemUtils {
 	}
 	public static boolean inProduction(){
 		return !IS_WINDOWS;
+	}
+	public static boolean inTesting(){
+		return inTesting;
+	}
+	public static void setTesting(boolean testing){
+		inTesting=testing;
 	}
 	private static Properties loadProperties(Properties p,String s){
 		if (SystemUtils.properties!=null)
