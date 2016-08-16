@@ -26,9 +26,9 @@ public class GetPageLoadTest {
 	@Test
 	public void test() {
 		String page = TestUtils.getPage("http://127.0.0.1:4567/");
-		System.out.println(TestUtils.cookie);
-		System.out.println(page);
 		assertTrue(page.contains("Luke"));
+		assertTrue(page.contains("Leia"));
+		assertTrue(page.contains("Rebel"));
 	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {

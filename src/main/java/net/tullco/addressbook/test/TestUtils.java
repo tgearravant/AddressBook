@@ -5,6 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -15,7 +18,7 @@ import net.tullco.addressbook.utils.SystemUtils;
 import spark.utils.IOUtils;
 
 public class TestUtils {
-	public static String cookie="JSESSIONID=";
+	
 	public static void seedTestDB(){
 		if(!SystemUtils.inTesting())
 			return;
@@ -42,7 +45,6 @@ public class TestUtils {
 		try{
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 			con.setRequestMethod("GET");
-			con.setRequestProperty("Cookie",TestUtils.cookie);
 			con.connect();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 			String line;
@@ -59,12 +61,10 @@ public class TestUtils {
 	}
 	public static void postToPage(String url, String postBody){
 		try{
-			System.out.println(url);
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 			con.setRequestMethod("POST");
 			con.setDoOutput(true);
 			con.setRequestProperty("Content-Type","multipart/form-data");
-			con.setRequestProperty("Cookie",TestUtils.cookie);
 			//con.setDoInput(false);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
@@ -72,6 +72,7 @@ public class TestUtils {
 		}catch(Exception e){}
 	}
 	public static void login(String username,String password){
+		CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 		String url = "http://127.0.0.1:4567"+Path.Web.LOGIN_POST;
 		String postBody = "username="+username+"&password="+password;
 		try{
@@ -84,7 +85,6 @@ public class TestUtils {
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
 			System.out.println(con.getHeaderField("Set-Cookie"));
-			TestUtils.cookie=con.getHeaderField("Set-Cookie").split(";")[0];
 		}catch(Exception e){}
 	}
 }
