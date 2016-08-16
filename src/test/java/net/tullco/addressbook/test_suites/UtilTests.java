@@ -4,8 +4,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import net.tullco.addressbook.test_classes.SQLUtilTest;
+
 @RunWith(Suite.class)
-@SuiteClasses({ ModelTests.class, UtilTests.class })
-public class AllTests {
+@SuiteClasses({ SQLUtilTest.class })
+public class UtilTests {
 
 }

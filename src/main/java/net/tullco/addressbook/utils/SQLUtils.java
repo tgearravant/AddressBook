@@ -86,7 +86,7 @@ public class SQLUtils {
 		return String.format(s,objs);
 	}
 
-	protected static String getTableAsInsertString(String table) throws SQLException{
+	public static String getTableAsInsertString(String table) throws SQLException{
 		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_SQL, table));
 		ResultSetMetaData md =rs.getMetaData();
 		
