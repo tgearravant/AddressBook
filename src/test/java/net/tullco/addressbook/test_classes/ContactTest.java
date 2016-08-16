@@ -1,4 +1,4 @@
-package net.tullco.addressbook.test;
+package net.tullco.addressbook.test_classes;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.contact.Contact;
+import net.tullco.addressbook.test.TestUtils;
 import net.tullco.addressbook.utils.DisplayUtils;
 import net.tullco.addressbook.utils.SQLUtils;
 import net.tullco.addressbook.utils.SystemUtils;
@@ -104,6 +105,7 @@ public class ContactTest {
 		addresses.remove(currentAddress);
 		assertTrue(addresses.size()>=1);
 		Address otherAddress=addresses.get(0);assertTrue(currentAddress.active());
+		assertFalse(otherAddress.active());
 		assertEquals("775",otherAddress.apartment());
 		assertEquals("600 Nonsense Ave",otherAddress.street());
 		assertEquals("Beverly",otherAddress.city());
