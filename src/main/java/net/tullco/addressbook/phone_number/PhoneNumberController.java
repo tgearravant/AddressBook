@@ -21,7 +21,7 @@ public class PhoneNumberController {
 		int contact_id = Integer.parseInt(request.params(":contact_id"));
 
 		HashMap<String, Object> model = new HashMap<>();
-        Contact c = Contact.ContactLoader(contact_id);
+        Contact c = Contact.contactLoader(contact_id);
         if (c==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
@@ -49,7 +49,7 @@ public class PhoneNumberController {
         if (pn==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
-        Contact contact = Contact.ContactLoader(pn.getContactId());
+        Contact contact = Contact.contactLoader(pn.getContactId());
         model.put("contact_id", pn.getContactId());
         model.put("phone_number_id",pn.getId());
         model.put("main_header", "Edit Phone Number for "+contact.fullName());

@@ -156,7 +156,7 @@ public class Address {
 		
 	}
 	public Contact getContact(){
-		return Contact.ContactLoader(this.contact_id);
+		return Contact.contactLoader(this.contact_id);
 	}
 	public int id(){
 		return this.id;

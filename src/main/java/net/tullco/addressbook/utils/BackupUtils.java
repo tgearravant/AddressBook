@@ -129,10 +129,13 @@ public class BackupUtils {
 		for(String s:TABLES_TO_BACKUP)
 			SQLUtils.truncateTable(s);
 		String[] stuff = backup.split("\n");
-		for (String s:stuff){
-			SQLUtils.executeInsert(s);
-		}
+		executeInsertArray(stuff);
 		return true;
+	}
+	public static void executeInsertArray(String[] backupStrings){
+		for (String s:backupStrings){
+			SQLUtils.executeInsert(s);
+		}		
 	}
 	private static String unzipBackupFile(File f) throws ZipException, IOException{
 		if(f==null)

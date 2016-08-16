@@ -20,7 +20,7 @@ public class AddressController {
 		ViewUtils.haltIfNoParameter(request, ":contact_id", "id");
 		int contact_id = Integer.parseInt(request.params(":contact_id"));
 		HashMap<String, Object> model = new HashMap<>();
-        Contact contact=Contact.ContactLoader(contact_id);
+        Contact contact=Contact.contactLoader(contact_id);
         if (contact==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
@@ -51,7 +51,7 @@ public class AddressController {
         if (address==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
-        Contact contact = Contact.ContactLoader(address.contactId());
+        Contact contact = Contact.contactLoader(address.contactId());
         model.put("contact_id", address.contactId());
         model.put("address_id",address.id());
         model.put("main_header", "Edit Address for "+(contact.fullName()==null?"":contact.fullName()));
