@@ -66,7 +66,7 @@ public class Path {
         	return LOGOUT;
         }
         public static String getContactPath(int contact_id){
-        	return ONE_CONTACT_NO_ID+contact_id+"/";
+        	return ONE_CONTACT.replace(":contact_id", new Integer(contact_id).toString());
         }
         public static String getADD_CONTACT(){
         	return ADD_CONTACT;
@@ -82,6 +82,9 @@ public class Path {
         }
         public static String getSEARCH_POST(){
         	return SEARCH_POST;
+        }
+        public static String getSearchResultsAddress(String search){
+        	return SEARCH_RESULTS.replace(":search", search);
         }
         public static String getCHANGE_PASSWORD(){
         	return CHANGE_PASSWORD;

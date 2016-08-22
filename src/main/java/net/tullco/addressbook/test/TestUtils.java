@@ -45,7 +45,7 @@ public class TestUtils {
 		try{
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 			con.setRequestMethod("GET");
-			con.connect();
+			//con.connect();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 			String line;
 			String page="";
@@ -53,7 +53,7 @@ public class TestUtils {
 				page+=line;
 			}
 			reader.close();
-			System.out.println(con.getHeaderFields());
+			//System.out.println(con.getHeaderFields());
 			return page;
 		}catch(Exception e){
 			return "";
@@ -68,7 +68,6 @@ public class TestUtils {
 			//con.setDoInput(false);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
-			System.out.println(con.getHeaderFields());
 		}catch(Exception e){}
 	}
 	public static void login(String username,String password){
@@ -84,7 +83,8 @@ public class TestUtils {
 			//con.setDoInput(false);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
-			System.out.println(con.getHeaderField("Set-Cookie"));
+			wr.close();
+			con.getResponseCode();
 		}catch(Exception e){}
 	}
 }
