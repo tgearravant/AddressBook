@@ -45,7 +45,7 @@ public class App implements SparkApplication
     	SystemUtils.checkForRequiredProperties();
     	if(!SystemUtils.inTesting())
     		UserController.createAdmin(SystemUtils.getProperty("admin_username"), SystemUtils.getProperty("admin_password"));
-    	staticFiles.location(SystemUtils.adjustPathForOS("/public"));
+    	staticFiles.location("/public");
     	port(Integer.parseInt(SystemUtils.getProperty("port", "4567")));
     	if (SystemUtils.inProduction()){
     		

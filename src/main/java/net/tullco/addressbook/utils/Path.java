@@ -44,8 +44,8 @@ public class Path {
         public static String getADDRESS_POST(){
         	return ADDRESS_POST;
         }
-        public static String getADD_ADDRESS(){
-        	return ADD_ADDRESS.replace(":contact_id/", "");
+        public static String getAddAddress(int contact_id){
+        	return ADD_ADDRESS.replace(":contact_id", new Integer(contact_id).toString());
         }
         public static String getAddressEdit(Integer contact_id,Integer address_id){
         	return EDIT_ADDRESS.replace(":address_id", address_id.toString()).replace(":contact_id", contact_id.toString());
@@ -53,11 +53,11 @@ public class Path {
         public static String getPHONE_NUMBER_POST(){
         	return PHONE_NUMBER_POST;
         }
-        public static String getADD_PHONE_NUMBER(){
-        	return ADD_PHONE_NUMBER.replace(":contact_id/","");
+        public static String getAddPhoneNumber(int contact_id){
+        	return ADD_PHONE_NUMBER.replace(":contact_id",new Integer(contact_id).toString());
         }
-        public static String getEDIT_PHONE_NUMBER(){
-        	return EDIT_PHONE_NUMBER.replace(":phone_number_id/", "");
+        public static String getEditPhoneNumber(int phone_number_id){
+        	return EDIT_PHONE_NUMBER.replace(":phone_number_id", new Integer(phone_number_id).toString());
         }
         public static String getLOGIN_POST(){
         	return LOGIN_POST;
@@ -75,7 +75,7 @@ public class Path {
         	return CONTACT_POST;
         }
         public static String getContactEdit(int contact_id){
-        	return EDIT_CONTACT.replace(":contact_id/", "")+contact_id+"/";
+        	return EDIT_CONTACT.replace(":contact_id", new Integer(contact_id).toString());
         }
         public static String getADMIN_POST(){
         	return ADMIN_POST;
@@ -90,7 +90,7 @@ public class Path {
         	return CHANGE_PASSWORD;
         }
         public static String getAddSharedAddress(int contact_id){
-        	return ADD_SHARED_ADDRESS.replace(":contact_id", contact_id+"");
+        	return ADD_SHARED_ADDRESS.replace(":contact_id", new Integer(contact_id).toString());
         }
         public static String getSharedAddressHandler(int contact_id,int old_contact_id,int address_id){
         	return Path.Web.HANDLE_SHARED_ADDRESS+"?contact_id="+contact_id+"&old_contact_id="+old_contact_id+"&address_id="+address_id;

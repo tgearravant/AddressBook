@@ -16,13 +16,6 @@ public class SystemUtils {
 	 * @param path A Unix path
 	 * @return Returns a path string appropriate for the OS.
 	 */
-	public static String adjustPathForOS(String path){
-		if (IS_WINDOWS){
-			return path.replace('/', '\\');
-		}
-		else
-			return path;
-	}
 	public static boolean inProduction(){
 		return !IS_WINDOWS;
 	}
@@ -56,6 +49,10 @@ public class SystemUtils {
 	private static void loadPropertiesWithDefaults(){
 		Properties defaultProps = new Properties();
 		loadProperties(defaultProps,"config.properties.default");
+		if(inTesting()){
+			SystemUtils.properties=defaultProps;
+			return;
+		}
 		Properties p=new Properties(defaultProps);
 		loadProperties(p,"config.properties");
 		SystemUtils.properties=p;
@@ -80,7 +77,7 @@ public class SystemUtils {
 	 * for all of these items set, so this is just a precaution. Unless you've
 	 * been messing with the default config file... How dare you?!
 	 * 
-	 * @throws RuntimeError Thrown if a required property is missing.
+	 * @throws RuntimeException Thrown if a required property is missing.
 	 */
 	public static void checkForRequiredProperties(){ 
 		if(SystemUtils.properties == null){
