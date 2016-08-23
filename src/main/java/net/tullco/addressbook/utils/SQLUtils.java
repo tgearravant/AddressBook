@@ -145,7 +145,7 @@ public class SQLUtils {
 	protected static boolean truncateTable(String table){
 		return executeUpdate(String.format(TABLE_DELETE_SQL, table));
 	}
-	public static void trucateAllTables(){
+	public static void truncateAllTables(){
 		for(String table:TABLE_LIST){
 			truncateTable(table);
 		}

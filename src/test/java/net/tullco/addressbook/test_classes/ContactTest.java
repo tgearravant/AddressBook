@@ -27,7 +27,7 @@ public class ContactTest {
 
 	@Before
 	public void setUp() throws Exception {
-		SQLUtils.trucateAllTables();
+		SQLUtils.truncateAllTables();
 		TestUtils.seedTestDB();
 	}
 

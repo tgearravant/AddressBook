@@ -25,7 +25,7 @@ public class AddressTest {
 
 	@Before
 	public void setUp() throws Exception {
-		SQLUtils.trucateAllTables();
+		SQLUtils.truncateAllTables();
 		TestUtils.seedTestDB();
 	}
 
