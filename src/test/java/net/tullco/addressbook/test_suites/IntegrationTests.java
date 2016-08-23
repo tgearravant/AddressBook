@@ -5,9 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import net.tullco.addressbook.test_classes.GetPageLoadTest;
+import net.tullco.addressbook.test_classes.PostPageTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ GetPageLoadTest.class })
+@SuiteClasses({ GetPageLoadTest.class, PostPageTest.class })
 public class IntegrationTests {
 
 }
