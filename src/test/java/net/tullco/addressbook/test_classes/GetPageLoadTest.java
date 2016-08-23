@@ -46,6 +46,7 @@ public class GetPageLoadTest {
 		assertTrue(page.contains("Rebel Base"));
 		assertTrue(page.contains("8887774444"));
 		page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.getContactPath(3));
+		assertFalse(page.contains("Invalid Locale"));
 		assertTrue(page.contains("Leia"));
 		assertTrue(page.contains("Current Address"));
 		assertTrue(!page.contains("Previous Address"));
