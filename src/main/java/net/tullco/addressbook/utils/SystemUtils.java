@@ -7,29 +7,19 @@ import java.util.Properties;
 import net.tullco.addressbook.App;
 
 public class SystemUtils {
+	private static Boolean inTesting=false;
 	final private static Boolean IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
 	final private static String[] requiredProperties={"admin_username","admin_password","s3_access_key_id","s3_secret_key","backup_key"};
 	private static Properties properties=null;
 
-	/**
-	 * Takes a Unix type path and, if it detects a Windows operating system, converts it to Windows.
-	 * @param path A Unix path
-	 * @return Returns a path string appropriate for the OS.
-	 */
-	public static String adjustPathForOS(String path){
-		if (IS_WINDOWS){
-			return path.replace('/', '\\');
-		}
-		else
-			return path;
-	}
-
-	/**
-	 * This function tells you whether or not you're executing in production.
-	 * @return True if the the program is executing in production. False otherwise.
-	 */
 	public static boolean inProduction(){
 		return !IS_WINDOWS;
+	}
+	public static boolean inTesting(){
+		return inTesting;
+	}
+	public static void setTesting(boolean testing){
+		inTesting=testing;
 	}
 
 	/**
@@ -71,6 +61,10 @@ public class SystemUtils {
 	private static void loadPropertiesWithDefaults(){
 		Properties defaultProps = new Properties();
 		loadProperties(defaultProps,"config.properties.default");
+		if(inTesting()){
+			SystemUtils.properties=defaultProps;
+			return;
+		}
 		Properties p=new Properties(defaultProps);
 		loadProperties(p,"config.properties");
 		SystemUtils.properties=p;
@@ -111,7 +105,7 @@ public class SystemUtils {
 	 * for all of these items set, so this is just a precaution. Unless you've
 	 * been messing with the default config file... How dare you?!
 	 * 
-	 * @throws RuntimeError Thrown if a required property is missing.
+	 * @throws RuntimeException Thrown if a required property is missing.
 	 */
 	public static void checkForRequiredProperties(){ 
 		if(SystemUtils.properties == null){

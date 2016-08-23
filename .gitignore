@@ -5,3 +5,4 @@
 /contacts.db
 /*.log
 /src/main/resources/config/config.properties
+/tests.db

@@ -38,13 +38,14 @@ public class App implements SparkApplication
     /**
      * Runs database migrations, sets up the server, sets the static
      * file location, confirms that required properties are set,
-     * creates admin user, and enables debugging if necessary.
+     * creates admin user, and enables debugging if not in production.
      */
     private static void initialConfiguration(){
     	SQLUtils.runMigrations();
     	SystemUtils.checkForRequiredProperties();
-    	UserController.createAdmin(SystemUtils.getProperty("admin_username"), SystemUtils.getProperty("admin_password"));
-    	staticFiles.location(SystemUtils.adjustPathForOS("/public"));
+    	if(!SystemUtils.inTesting())
+    		UserController.createAdmin(SystemUtils.getProperty("admin_username"), SystemUtils.getProperty("admin_password"));
+    	staticFiles.location("/public");
     	port(Integer.parseInt(SystemUtils.getProperty("port", "4567")));
     	if (SystemUtils.inProduction()){
     		
@@ -78,6 +79,7 @@ public class App implements SparkApplication
     	get(Path.Web.CHANGE_PASSWORD,	AdminController.changePassword);
     	get(Path.Web.ADD_SHARED_ADDRESS,AddressController.addSharedAddress);
     	get(Path.Web.HANDLE_SHARED_ADDRESS,AddressController.sharedAddressHandler);
+    	get(Path.Web.ADD_LOCALE,		AdminController.addLocale);
     	
     	//404 Routing
     	get("*",						ViewUtils.notFound);

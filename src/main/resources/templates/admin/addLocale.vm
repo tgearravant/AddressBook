@@ -1,0 +1,9 @@
+#parse("/templates/master.vm")
+#@master()
+<form method="post" action="$WebPath.getADMIN_POST()">
+<label for="password" class="form_label">New Locale Code</label><br><input class="search_input" id="locale" name="locale"/><br>
+<label for="long_name" class="form_label">New Locale Name</label><br><input class="search_input" id="long_name" name="long_name"/><br>
+<input type="hidden" name="mode" value="add_locale" />
+<input type="submit" class="submit_button" value="Confirm Change" />
+</form>
+#end
