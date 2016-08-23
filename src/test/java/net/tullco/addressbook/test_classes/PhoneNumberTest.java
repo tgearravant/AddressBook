@@ -29,46 +29,72 @@ public class PhoneNumberTest {
 	@Test
 	public void testSave() {
 		PhoneNumber pn = PhoneNumber.phoneNumberLoader(1);
+		pn.setNumber("4447778888");
+		pn.setLocale("ca");
+		pn.setType("home");
+		pn.setPreferred(true);
+		pn.save();
+		pn = PhoneNumber.phoneNumberLoader(1);
+		assertEquals("4447778888",pn.getNumber());
+		assertEquals("ca",pn.getLocale());
+		assertEquals("home",pn.getType());
+		assertTrue(pn.isPreferred());
 	}
 
 	@Test
 	public void testDelete() {
-		fail("Not yet implemented");
+		PhoneNumber pn = PhoneNumber.phoneNumberLoader(1);
+		assertNotEquals(null,pn);
+		pn.delete();
+		pn = PhoneNumber.phoneNumberLoader(1);
+		assertEquals(null,pn);
+		
 	}
 
 	@Test
 	public void testPhoneNumbersLoader() {
-		fail("Not yet implemented");
+		List<PhoneNumber> numbers = PhoneNumber.phoneNumbersLoader(2);
+		assertEquals(2, numbers.size());
+		numbers = PhoneNumber.phoneNumbersLoader(3);
+		assertEquals(1, numbers.size());
+		numbers = PhoneNumber.phoneNumbersLoader(1);
+		assertEquals(0, numbers.size());
 	}
 
 	@Test
 	public void testPhoneNumberLoader() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testIsPreferred() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetPreferred() {
-		fail("Not yet implemented");
+		PhoneNumber pn = PhoneNumber.phoneNumberLoader(1);
+		assertEquals("8887774444",pn.getNumber());
+		assertFalse(pn.isPreferred());
+		pn = PhoneNumber.phoneNumberLoader(5555555);
+		assertEquals(null,pn);
 	}
 
 	@Test
 	public void testGetPreferredNumberOfType() {
-		fail("Not yet implemented");
+		List<PhoneNumber>numbers=PhoneNumber.phoneNumbersLoader(2);
+		PhoneNumber pn = PhoneNumber.phoneNumberLoader(2);
+		assertEquals(pn, PhoneNumber.getPreferredNumberOfType(numbers, "mobile"));
 	}
 
 	@Test
 	public void testGetPreferredNumbers() {
-		fail("Not yet implemented");
+		List<PhoneNumber> numbers = PhoneNumber.phoneNumbersLoader(2);
+		List<PhoneNumber> preferredNumbers = PhoneNumber.getPreferredNumbers(numbers);
+		assertEquals(1, preferredNumbers.size());
+		PhoneNumber pn = PhoneNumber.phoneNumberLoader(2);
+		assertEquals(pn, preferredNumbers.get(0));
+		preferredNumbers = PhoneNumber.getPreferredNumbers(PhoneNumber.phoneNumbersLoader(3));
+		assertEquals(0, preferredNumbers.size());
 	}
 
 	@Test
 	public void testGetNumbersOfType() {
-		fail("Not yet implemented");
+		List<PhoneNumber> numbers = PhoneNumber.phoneNumbersLoader(2);
+		List<PhoneNumber> mobileNumbers = PhoneNumber.getNumbersOfType(numbers, "mobile");
+		assertEquals(2,mobileNumbers.size());
+		mobileNumbers = PhoneNumber.getNumbersOfType(numbers, "work");
+		assertEquals(0,mobileNumbers.size());
 	}
 
 	@Test

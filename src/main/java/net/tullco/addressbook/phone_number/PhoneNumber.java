@@ -183,4 +183,14 @@ public class PhoneNumber {
 	public static String[] getAllowedTypes(){
 		return allowedTypes;
 	}
+	@Override
+	public boolean equals(Object pn){
+		if(pn==null)
+			return false;
+		if(this==pn)
+			return true;
+		if(pn instanceof PhoneNumber)
+			return ((PhoneNumber) pn).id==this.id;
+		return false;
+	}
 }
