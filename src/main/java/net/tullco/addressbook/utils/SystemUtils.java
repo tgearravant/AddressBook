@@ -11,11 +11,7 @@ public class SystemUtils {
 	final private static Boolean IS_WINDOWS=(System.getProperty("os.name").contains("Windows"));
 	final private static String[] requiredProperties={"admin_username","admin_password","s3_access_key_id","s3_secret_key","backup_key"};
 	private static Properties properties=null;
-	/**
-	 * Takes a Unix type path and, if it detects a Windows operating system, converts it to Windows.
-	 * @param path A Unix path
-	 * @return Returns a path string appropriate for the OS.
-	 */
+
 	public static boolean inProduction(){
 		return !IS_WINDOWS;
 	}
