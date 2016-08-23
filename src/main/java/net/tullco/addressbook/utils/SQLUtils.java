@@ -10,6 +10,8 @@ public class SQLUtils {
 	
 	private final static String TABLE_SELECT_SQL = "SELECT * FROM %s";
 	private final static String TABLE_DELETE_SQL="DELETE FROM %s";
+	final private static String[] TABLE_LIST={"addresses","contact_addresses"
+			,"contacts","login_attempt_history","phone_numbers","users","locales"};
 	
 	private static Connection conn=null;
 	public static int executeInsert(String statement){
@@ -61,7 +63,7 @@ public class SQLUtils {
 				Connection c=null;
 				try{
 					Class.forName("org.sqlite.JDBC");
-					c=DriverManager.getConnection("jdbc:sqlite:contacts.db");
+					c=DriverManager.getConnection("jdbc:sqlite:"+databaseLocation());
 				}catch(SQLException e){
 					System.err.println("Could not connect to database for some reason...");
 					e.printStackTrace();
@@ -85,7 +87,7 @@ public class SQLUtils {
 		return String.format(s,objs);
 	}
 
-	protected static String getTableAsInsertString(String table) throws SQLException{
+	public static String getTableAsInsertString(String table) throws SQLException{
 		ResultSet rs = SQLUtils.executeSelect(String.format(TABLE_SELECT_SQL, table));
 		ResultSetMetaData md =rs.getMetaData();
 		
@@ -117,9 +119,16 @@ public class SQLUtils {
 		return tableOutput;
 	}	
 
+	public static String databaseLocation(){
+		if(SystemUtils.inTesting())
+			return "tests.db";
+		else
+			return "contacts.db";
+	}
+
 	public static boolean runMigrations(){
 		Flyway flyway = new Flyway();
-		flyway.setDataSource("jdbc:sqlite:contacts.db","sa",null);
+		flyway.setDataSource("jdbc:sqlite:"+databaseLocation(),"sa",null);
 		flyway.setLocations("classpath:db\\migration");
 		flyway.getLocations();
 		System.out.println("Migrating...");
@@ -135,5 +144,10 @@ public class SQLUtils {
 	}
 	protected static boolean truncateTable(String table){
 		return executeUpdate(String.format(TABLE_DELETE_SQL, table));
+	}
+	public static void trucateAllTables(){
+		for(String table:TABLE_LIST){
+			truncateTable(table);
+		}
 	}
 }

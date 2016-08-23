@@ -120,14 +120,26 @@ public class Contact {
 	public String firstName(){
 		return this.firstName;
 	}
+	public void setFirstName(String firstname){
+		this.firstName=firstname;
+	}
 	public String lastName(){
 		return this.lastName;
+	}
+	public void setLastName(String lastname){
+		this.lastName=lastname;
 	}
 	public String middleName(){
 		return this.middleName;
 	}
+	public void setMiddleName(String middlename){
+		this.middleName=middlename;
+	}
 	public Date birthdate(){
 		return this.birthdate;
+	}
+	public void setBirthdate(Date birthdate){
+		this.birthdate=birthdate;
 	}
 	public String birthdate_formatted(){
 		return DisplayUtils.dateToString(this.birthdate);
@@ -135,7 +147,10 @@ public class Contact {
 	public String email(){
 		return this.email;
 	}
-	public static Contact ContactLoader(int id){
+	public void setEmail(String email){
+		this.email=email;
+	}
+	public static Contact contactLoader(int id){
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
 		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {

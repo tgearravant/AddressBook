@@ -18,7 +18,7 @@
 	</select><br>
 	<label class="form_label">Preferred Number?</label>
 	<div class="form_checkbox">	
-	<input type="checkbox" value="1" id="preferred" name="preferred" #if ($preferred) checked #end />
+	<input type="checkbox" value="1" id="preferred" name="preferred" #if($preferred || $mode=="add")checked="checked" #end/>
 	<label for="preferred"></label>
 	</div>
 	#if ($mode=="edit") <input type="hidden" value="$phone_number_id" name="phone_number_id"> #end

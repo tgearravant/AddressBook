@@ -37,7 +37,7 @@ public class BackupUtils {
 	private final static String BACKUP_KEY=SystemUtils.getProperty("backup_key");
 	
 	private final static String OUTPUT_DESTINATION="%d%s%s%s%s_addressbook_backup";
-	private final static String[] TABLES_TO_BACKUP= {"contacts","addresses","users","phone_numbers","contact_addresses"};
+	private final static String[] TABLES_TO_BACKUP= {"contacts","addresses","users","phone_numbers","contact_addresses","locales"};
 	
 	public static Route backup = (Request request, Response response) -> {
 		String givenKey = request.queryParams("backup_key");
@@ -129,10 +129,13 @@ public class BackupUtils {
 		for(String s:TABLES_TO_BACKUP)
 			SQLUtils.truncateTable(s);
 		String[] stuff = backup.split("\n");
-		for (String s:stuff){
-			SQLUtils.executeInsert(s);
-		}
+		executeInsertArray(stuff);
 		return true;
+	}
+	public static void executeInsertArray(String[] backupStrings){
+		for (String s:backupStrings){
+			SQLUtils.executeInsert(s);
+		}		
 	}
 	private static String unzipBackupFile(File f) throws ZipException, IOException{
 		if(f==null)

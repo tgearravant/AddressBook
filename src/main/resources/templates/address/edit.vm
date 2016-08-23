@@ -20,7 +20,7 @@
 	</select><br>
 	<label class="form_label">Current Address?</label>
 	<div class="form_checkbox">	
-	<input type="checkbox" value="1" id="active" name="active" #if ($active || $mode=="add") checked #end />
+	<input type="checkbox" value="1" id="active" name="active" #if($active || $mode=="add")checked="checked" #end/>
 	<label for="active"></label>
 	</div>
 	<input type="hidden" value="$contact_id" name="contact_id" />

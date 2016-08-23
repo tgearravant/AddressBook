@@ -21,7 +21,7 @@ public class ContactController {
 		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
 		contact_id=Integer.parseInt(request.params(":contact_id"));
 		HashMap<String, Object> model = new HashMap<>();
-        Contact contact=Contact.ContactLoader(contact_id);
+        Contact contact=Contact.contactLoader(contact_id);
         if (contact==null){
         	halt(404,ViewUtils.renderNotFound(request));
         }
@@ -67,7 +67,7 @@ public class ContactController {
 	public static Route editContact = (Request request, Response response) -> {
         HashMap<String, Object> model = new HashMap<>();
 		ViewUtils.haltIfNoParameter(request, ":contact_id", "int");
-		Contact c=Contact.ContactLoader(Integer.parseInt(request.params(":contact_id")));
+		Contact c=Contact.contactLoader(Integer.parseInt(request.params(":contact_id")));
 		if (c==null)
 			halt(404,ViewUtils.renderNotFound(request));
         model.put("mode", "edit");
@@ -129,7 +129,7 @@ public class ContactController {
 			response.redirect(Path.Web.ONE_CONTACT_NO_ID+c.getId()+"/",303);
 		}
 		else if (options.get("mode").equals("delete")){
-			Contact c = Contact.ContactLoader(Integer.parseInt(options.get("contact_id")));
+			Contact c = Contact.contactLoader(Integer.parseInt(options.get("contact_id")));
 			response.redirect(Path.Web.INDEX,303);
 			c.delete();
 		}
