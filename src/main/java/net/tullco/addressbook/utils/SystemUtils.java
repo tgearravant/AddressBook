@@ -21,6 +21,17 @@ public class SystemUtils {
 	public static void setTesting(boolean testing){
 		inTesting=testing;
 	}
+
+	/**
+	 * This function loads properties from the location in the string into the
+	 * passed in properties object.
+	 * 
+	 * If the System Properties are already set, it returns the properties file.
+	 * @param p The properties object to load properties into
+	 * @param s The location in the resources folder of the properties file.
+	 * @return The properties object passed in loaded with the values in the file.
+	 * Will be the global properties file if it has already been set.
+	 */
 	private static Properties loadProperties(Properties p,String s){
 		if (SystemUtils.properties!=null)
 			return SystemUtils.properties;
@@ -42,6 +53,11 @@ public class SystemUtils {
 		}
 		return p;
 	}
+
+	/**
+	 * This function loads the property files for the program from the
+	 * default locations, with the default properties inside the per set properties files.
+	 */
 	private static void loadPropertiesWithDefaults(){
 		Properties defaultProps = new Properties();
 		loadProperties(defaultProps,"config.properties.default");
@@ -53,12 +69,28 @@ public class SystemUtils {
 		loadProperties(p,"config.properties");
 		SystemUtils.properties=p;
 	}
+	
+	/**
+	 * Gets a property from the configuration files.
+	 * Will pull from the defaults if not all properties are set.
+	 * Defaults to the string passed in if the property isn't found anywhere
+	 * @param s The property key.
+	 * @param d The default value.
+	 * @return The value of the property, or the default if nothing is found.
+	 */
 	public static String getProperty(String s,String d){
 		if(SystemUtils.properties == null){
 			loadPropertiesWithDefaults();
 		}
 		return SystemUtils.properties.getProperty(s,d);
 	}
+
+	/**
+	 * Gets a property from the configuration files.
+	 * Will pull from the defaults if not all properties are set.
+	 * @param s The property key.
+	 * @return The value of the property.
+	 */
 	public static String getProperty(String s){
 		if(SystemUtils.properties == null){
 			loadPropertiesWithDefaults();

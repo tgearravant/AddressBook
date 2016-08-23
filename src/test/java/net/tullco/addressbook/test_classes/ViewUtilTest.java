@@ -1,4 +1,4 @@
-package net.tullco.addressbook.utils;
+package net.tullco.addressbook.test_classes;
 
 import static org.junit.Assert.*;
 
@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
-public class ViewUtilsTest {
+import net.tullco.addressbook.utils.ViewUtils;
+
+public class ViewUtilTest {
 	@Test
 	public void testPostBodyDecoder() {
 		String body = "jedi=returning&sith=revenging&hope=new";

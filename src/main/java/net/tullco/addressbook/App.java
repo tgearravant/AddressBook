@@ -19,6 +19,10 @@ import static spark.debug.DebugScreen.*;
  */
 public class App implements SparkApplication
 {
+	/**
+	 * The main method that is used to start the server in development.
+	 * @param args Leave empty. Not used.
+	 */
     public static void main( String[] args ) {
     	initialConfiguration();
     	beforeFilters();
@@ -27,6 +31,9 @@ public class App implements SparkApplication
     	//after();
         //System.out.println(System.getProperty("os.name"));
     }
+    /**
+     * The non-static init function for use in the production deploy.
+     */
     public void init(){
     	initialConfiguration();
     	beforeFilters();
@@ -38,7 +45,7 @@ public class App implements SparkApplication
     /**
      * Runs database migrations, sets up the server, sets the static
      * file location, confirms that required properties are set,
-     * creates admin user, and enables debugging if necessary.
+     * creates admin user, and enables debugging if not in production.
      */
     private static void initialConfiguration(){
     	SQLUtils.runMigrations();
@@ -47,7 +54,7 @@ public class App implements SparkApplication
     		UserController.createAdmin(SystemUtils.getProperty("admin_username"), SystemUtils.getProperty("admin_password"));
     	staticFiles.location("/public");
     	port(Integer.parseInt(SystemUtils.getProperty("port", "4567")));
-    	if (SystemUtils.inProduction()){
+    	if (SystemUtils.inProduction() || SystemUtils.inTesting()){
     		
     	}
     	else{
@@ -55,10 +62,18 @@ public class App implements SparkApplication
     	}
     	
     }
+    
+    /**
+     * Instantiates all the filters that happen before a request.
+     */
     private static void beforeFilters(){
     	before("*",Filters.addTrailingSlashes);
     	before("*",Filters.ensureLoggedIn);
     }
+    
+    /**
+     * Sets up all the GET routing for incoming requests.
+     */
     private static void getRouting(){
     	//Index Routing
     	get(Path.Web.INDEX,				ContactController.listContacts);
@@ -84,6 +99,9 @@ public class App implements SparkApplication
     	//404 Routing
     	get("*",						ViewUtils.notFound);
     }
+    /**
+     * Sets up all the POST routing for incoming requests.
+     */
     private static void postRouting(){
     	post(Path.Web.SEARCH_POST,		ContactController.contactSearchPost);
     	post(Path.Web.ADDRESS_POST,		AddressController.addressPost);
