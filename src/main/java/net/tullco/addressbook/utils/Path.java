@@ -31,6 +31,7 @@ public class Path {
         public final static String CHANGE_PASSWORD="/admin/change_password/";
         public final static String ADD_SHARED_ADDRESS="/addresses/add_shared/:contact_id/";
         public final static String HANDLE_SHARED_ADDRESS="/addresses/add_shared/";
+        public final static String ADD_LOCALE="/admin/locale_add/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -118,5 +119,6 @@ public class Path {
         public static final String EDIT_USER = "/templates/admin/editUser.vm";
         public static final String CHANGE_PASSWORD = "/templates/admin/changePassword.vm";
         public static final String ADD_SHARED_ADDRESS = "/templates/address/newShared.vm";
+        public static final String ADD_LOCALE = "/templates/admin/addLocale.vm";
     }
 }

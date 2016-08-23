@@ -1,10 +1,9 @@
-<html>
-<body>
+#parse("/templates/master.vm")
+#@master()
 <form action="$WebPath.getADMIN_POST()" method="post">
-	<label>Username</label><input type="text" name="username" id="username" />
-	<label>Password</label><input type="text" name="password" id="password" />
-	<input type="hidden" name="mode" id="mode" value="edit_user" />
-	<input type="submit" value="create" />
+<label for="username" class="form_label">Username</label><br><input class="search_input" type="username" id="password" name="username"/><br>
+<label for="password" class="form_label">Password</label><br><input class="search_input" type="password" id="password" name="password"/><br>
+<input type="hidden" name="mode" id="mode" value="edit_user" />
+<input type="submit" class="submit_button" value="Create" />
 </form>
-</body>
-</html>
+#end

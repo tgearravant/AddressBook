@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.tullco.addressbook.user.User;
+import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.ViewUtils;
 import spark.Request;
@@ -38,6 +39,10 @@ public class AdminController {
 			}
 			return "Redirecting...";
 		}
+		else if(options.get("mode").equals("add_locale")){
+			LocaleUtils.addLocale(options.get("locale"), options.get("long_name"));
+			response.redirect(Path.Web.INDEX);
+		}
 		HashMap<String,Object> model=new HashMap<String,Object>();
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
@@ -46,6 +51,8 @@ public class AdminController {
 		if(current_user == null || !current_user.isAdmin())
 			halt(403,"Admin Only");
 		HashMap<String,Object> model=new HashMap<String,Object>();
+    	model.put("main_header", "Change Password");
+    	model.put("header_link", Path.Web.INDEX);
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
 	public static Route changePassword = (Request request, Response response) -> {
@@ -53,5 +60,14 @@ public class AdminController {
     	model.put("main_header", "Change Password");
     	model.put("header_link", Path.Web.INDEX);
     	return ViewUtils.render(request,model,Path.Template.CHANGE_PASSWORD);
+	};
+	public static Route addLocale = (Request request, Response response) -> {
+		User current_user = User.UserLoader(request.session().attribute("current_user"));
+		HashMap<String,Object> model=new HashMap<String,Object>();
+		if(current_user == null || !current_user.isAdmin())
+			halt(403,"Admin Only");
+    	model.put("main_header", "Add Locale");
+    	model.put("header_link", Path.Web.INDEX);
+    	return ViewUtils.render(request,model,Path.Template.ADD_LOCALE);
 	};
 }

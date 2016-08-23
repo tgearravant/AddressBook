@@ -19,7 +19,7 @@ public class SQLUtilTest {
 	public static void setUpClass() throws Exception {
 		SystemUtils.setTesting(true);
 		SQLUtils.runMigrations();
-		SQLUtils.trucateAllTables();
+		SQLUtils.truncateAllTables();
 		TestUtils.seedTestDB();
 	}
 
