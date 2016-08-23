@@ -21,8 +21,8 @@ public class GetPageLoadTest {
 	public static void setUpBeforeClass() throws Exception {
 		SystemUtils.setTesting(true);
 		SQLUtils.truncateAllTables();
-		App.main(new String[0]);
 		TestUtils.seedTestDB();
+		App.main(new String[0]);
 	}
 	@Before
 	public void setUp() {
@@ -128,6 +128,32 @@ public class GetPageLoadTest {
 		String page = TestUtils.getPage("http://127.0.0.1:4567/beverlyisthegreatest");
 		System.out.println(page);
 		assertEquals("",page);
+	}
+	@Test
+	public void addUserTest(){
+		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.ADMIN_USER_ADD);
+		assertEquals("",page);
+		TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.LOGOUT);
+		TestUtils.login("admin", "password");
+		page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.ADMIN_USER_ADD);
+		assertTrue(page.contains("username"));
+		assertTrue(page.contains("password"));
+	}
+	@Test
+	public void addLocaleTest(){
+		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.ADD_LOCALE);
+		assertEquals("",page);
+		TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.LOGOUT);
+		TestUtils.login("admin", "password");
+		page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.ADD_LOCALE);
+		assertTrue(page.contains("locale"));
+		assertTrue(page.contains("long_name"));
+	}
+	@Test
+	public void addChangePassword(){
+		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.CHANGE_PASSWORD);
+		assertTrue(page.contains("name=\"password\""));
+		assertTrue(page.contains("name=\"confirm_password\""));
 	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
