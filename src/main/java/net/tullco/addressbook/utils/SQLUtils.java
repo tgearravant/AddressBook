@@ -10,7 +10,8 @@ public class SQLUtils {
 	
 	private final static String TABLE_SELECT_SQL = "SELECT * FROM %s";
 	private final static String TABLE_DELETE_SQL="DELETE FROM %s";
-	final private static String[] TABLE_LIST={"addresses","contact_addresses","contacts","login_attempt_history","phone_numbers","users"};
+	final private static String[] TABLE_LIST={"addresses","contact_addresses"
+			,"contacts","login_attempt_history","phone_numbers","users","locales"};
 	
 	private static Connection conn=null;
 	public static int executeInsert(String statement){

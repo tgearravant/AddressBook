@@ -68,6 +68,8 @@ public class TestUtils {
 			//con.setDoInput(false);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
+			wr.close();
+			con.getResponseCode();
 		}catch(Exception e){}
 	}
 	public static void login(String username,String password){
