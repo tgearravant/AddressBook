@@ -223,6 +223,7 @@ public class Contact {
 		if (this.birthdate==null){
 			if(values.get("birthyear")!=null&&values.get("birthmonth")!=null&&values.get("birthday")!=null){
 				Calendar cal = Calendar.getInstance();
+				cal.clear();
 				cal.set(Integer.parseInt(values.get("birthyear"))
 						,Integer.parseInt(values.get("birthmonth"))-1
 						,Integer.parseInt(values.get("birthday")));
