@@ -76,12 +76,12 @@
 	#end
 	</div>
 </div>
+#end
 #foreach($relation in $contact.getRelatedContacts())
 <a href="$WebPath.getONE_CONTACT()$relation.getId()/">
 	<div class="details_container_div">
 	  <span class="contact_text">Shares an Address With:<br>$relation.fullName()</span>
 	</div>
 </a>
-#end
 #end
 #end
