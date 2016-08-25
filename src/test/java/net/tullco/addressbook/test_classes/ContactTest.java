@@ -118,4 +118,11 @@ public class ContactTest {
 		assertEquals("17235",otherAddress.zipCode());
 		assertEquals("Canada",otherAddress.country());
 	}
+	@Test
+	public void testRelatedContactFinder() {
+		Contact c = Contact.contactLoader(2);
+		List<Contact> related = c.getRelatedContacts();
+		assertEquals(1,related.size());
+		assertEquals(Contact.contactLoader(3),related.get(0));
+	}
 }

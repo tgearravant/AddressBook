@@ -76,5 +76,10 @@
 	#end
 	</div>
 </div>
+#foreach($relation in $contact.getRelatedContacts())
+<div class="details_container_div">
+  <span class="contact_text">Related to:<br>$relation.fullName()</span>
+</div>
+#end
 #end
 #end
