@@ -31,7 +31,7 @@ public class PhoneNumberController {
         model.put("number", "");
         model.put("type", "");
         model.put("locale", "");
-        model.put("preferred", false);
+        model.put("preferred", true);
         model.put("types", PhoneNumber.getAllowedTypes());
         model.put("locales", LocaleUtils.allowedLocalesList());
         model.put("header_link" , Path.Web.getContactPath(contact_id));
