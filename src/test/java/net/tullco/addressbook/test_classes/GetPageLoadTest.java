@@ -20,6 +20,7 @@ public class GetPageLoadTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		SystemUtils.setTesting(true);
+		SQLUtils.runMigrations();
 		SQLUtils.truncateAllTables();
 		TestUtils.seedTestDB();
 		App.main(new String[0]);

@@ -1,6 +1,6 @@
-INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email) VALUES (1,'John','Lost','Doe',508542315874,'jdoe@gmail.com');
-INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email) VALUES (2,'Luke',null,'Skywalker',408542315874,'luke@lightside.force');
-INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email) VALUES (3,'Leia',null,'Skywalker',408542315874,'leia@rebel.scum');
+INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email,nickname) VALUES (1,'John','Lost','Doe',508542315874,'jdoe@gmail.com','Joe');
+INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email,nickname) VALUES (2,'Luke',null,'Skywalker',408542315874,'luke@lightside.force','Lu');
+INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email,nickname) VALUES (3,'Leia',null,'Skywalker',408542315874,'leia@rebel.scum',null);
 INSERT INTO addresses (id,street,apartment,zip_code,city,state,country) VALUES (1,'600 Awesome Ave',null,'57842','Tull','AR','us');
 INSERT INTO addresses (id,street,apartment,zip_code,city,state,country) VALUES (2,'600 Nonsense Ave','775','17235','Beverly','ME','ca');
 INSERT INTO addresses (id,street,apartment,zip_code,city,state,country) VALUES (3,'911 Rebel Base',null,null,'Big Glacier','Hoth','ca');

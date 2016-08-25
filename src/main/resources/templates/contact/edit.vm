@@ -4,6 +4,8 @@
 	<form method="POST" action="$WebPath.getCONTACT_POST()">
 	<label for="first_name" class="form_label">First Name</label><br>
 	<input class="form_input" value="$first_name" name="first_name" id="first_name" /><br>
+	<label for="nickname" class="form_label">Nickname</label><br>
+	<input class="form_input" value="$nickname" name="nickname" id="nickname" /><br>
 	<label for = "middle_name" class="form_label">Middle Name</label><br>
 	<input class="form_input" value="$middle_name" name="middle_name" id="middle_name" /><br>
 	<label for = "last_name" class="form_label">Last Name</label><br>
