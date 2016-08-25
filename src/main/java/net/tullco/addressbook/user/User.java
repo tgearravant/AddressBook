@@ -141,7 +141,7 @@ public class User {
 	 * @param username The desired username for the admin user
 	 * @param password The desired password for the admin user
 	 */
-	protected static void createAdminUser(String username,String password){
+	public static void createAdminUser(String username,String password){
 		User u;
 		if((u=UserLoader(username))!=null){
 			u.changePassword(password);

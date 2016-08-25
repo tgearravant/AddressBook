@@ -19,7 +19,9 @@ public class AdminController {
 			halt(403,"Admin Only");*/
 		System.out.println("Loading Admin Post...");
 		Map<String,String> options = ViewUtils.postBodyDecoder(request.body());
+		System.out.println("LOL2");
 		if(options.get("mode").equals("edit_user")){
+			System.out.println("LOL");
 			User user=User.UserLoader(options.get("username"));
 			if (user==null)
 				user=User.newUser(options.get("username"), options.get("password"));
