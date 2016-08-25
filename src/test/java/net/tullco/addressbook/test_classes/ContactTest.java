@@ -37,6 +37,7 @@ public class ContactTest {
 		assertEquals("John",c.firstName());
 		assertEquals("Lost",c.middleName());
 		assertEquals("Doe",c.lastName());
+		assertEquals("Joe",c.nickname());
 		Calendar cal = Calendar.getInstance();
 		cal.set(1986, 1, 11, 0, 0, 0);
 		assertEquals(
@@ -51,6 +52,7 @@ public class ContactTest {
 		c.setFirstName("Jane");
 		c.setMiddleName("Found");
 		c.setLastName("Doette");
+		c.setNickname("Jan");
 		Calendar cal = Calendar.getInstance();
 		cal.set(1984, 7, 15, 0, 0, 0);
 		c.setBirthdate(cal.getTime());
@@ -60,6 +62,7 @@ public class ContactTest {
 		assertEquals("Jane",c.firstName());
 		assertEquals("Found",c.middleName());
 		assertEquals("Doette",c.lastName());
+		assertEquals("Jan",c.nickname());
 		assertEquals(
 				DisplayUtils.dateToString(cal.getTime())
 				,DisplayUtils.dateToString(c.birthdate())
@@ -72,6 +75,7 @@ public class ContactTest {
 		values.put("first_name", "Jane");
 		values.put("middle_name", "Found");
 		values.put("last_name", "Doette");
+		values.put("nickname", "Jan");
 		Calendar cal = Calendar.getInstance();
 		cal.set(1984, 7, 15, 0, 0, 0);
 		values.put("birthdate",new Long(cal.getTimeInMillis()).toString());
@@ -83,6 +87,7 @@ public class ContactTest {
 		assertEquals("Jane",c.firstName());
 		assertEquals("Found",c.middleName());
 		assertEquals("Doette",c.lastName());
+		assertEquals("Jan",c.nickname());
 		assertEquals(
 				DisplayUtils.dateToString(cal.getTime())
 				,DisplayUtils.dateToString(c.birthdate())

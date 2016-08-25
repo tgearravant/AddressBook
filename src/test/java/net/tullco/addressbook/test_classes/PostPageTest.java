@@ -28,6 +28,7 @@ public class PostPageTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		SystemUtils.setTesting(true);
+		SQLUtils.runMigrations();
 		App.main(new String[0]);
 	}
 	@Before
@@ -91,7 +92,7 @@ public class PostPageTest {
 	public void addContactPost() {
 		assertNull(Contact.contactLoader(4));
 		String postBody = "mode=add&first_name=Geralt&middle_name=of&last_name=Rivia"
-				+ "&birthday=23&birthmonth=3&birthyear=1800&email=geralt@witchersrus.com";
+				+ "&birthday=23&birthmonth=3&birthyear=1800&email=geralt@witchersrus.com&nickname=Wolf";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.CONTACT_POST, postBody);
 		Contact c=Contact.contactLoader(4);
 		assertNotNull(c);
@@ -99,6 +100,7 @@ public class PostPageTest {
 		assertEquals("of",c.middleName());
 		assertEquals("Rivia",c.lastName());
 		assertEquals("geralt@witchersrus.com",c.email());
+		assertEquals("Wolf",c.nickname());
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(1800, 2, 23);
@@ -107,7 +109,7 @@ public class PostPageTest {
 	@Test
 	public void editContactPost(){
 		String postBody = "mode=edit&contact_id=2&first_name=Geralt&middle_name=of&last_name=Rivia"
-				+ "&birthday=23&birthmonth=3&birthyear=1800&email=geralt@witchersrus.com";
+				+ "&birthday=23&birthmonth=3&birthyear=1800&email=geralt@witchersrus.com&nickname=Wolf";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.CONTACT_POST, postBody);
 		Contact c = Contact.contactLoader(2);
 		assertNotNull(c);
@@ -115,6 +117,7 @@ public class PostPageTest {
 		assertEquals("of",c.middleName());
 		assertEquals("Rivia",c.lastName());
 		assertEquals("geralt@witchersrus.com",c.email());
+		assertEquals("Wolf",c.nickname());
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		cal.set(1800, 2, 23);

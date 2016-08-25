@@ -82,7 +82,7 @@ public class SQLUtilTest {
 			String[] inserts=output.split("\n");
 			int i = 0;
 			for (String s: inserts)
-				if (s.equals("INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email) VALUES (2,'Luke',null,'Skywalker',408542315874,'luke@lightside.force');"))
+				if (s.equals("INSERT INTO contacts (id,first_name,middle_name,last_name,birthdate,email,nickname) VALUES (2,'Luke',null,'Skywalker',408542315874,'luke@lightside.force','Lu');"))
 					i++;
 			assertEquals(1,i);
 		}catch(SQLException e){

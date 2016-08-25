@@ -24,6 +24,7 @@ public class Contact {
 	private String lastName;
 	private Date birthdate;
 	private String email;
+	private String nickname;
 	private String imageLocation;
 	private List<Address> addresses;
 	private List<PhoneNumber> phoneNumbers;
@@ -31,11 +32,11 @@ public class Contact {
 	private static final String INDIVIDUAL_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE id=%d";
 	private static final String MULTIPLE_CONTACT_LOADER_SQL="SELECT * FROM contacts WHERE 1=1 %s ORDER BY last_name,first_name ASC LIMIT %d OFFSET %d";
 	private static final String SAVE_CONTACT_SQL="UPDATE contacts "
-			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s "
+			+ "SET first_name=%s,middle_name=%s,last_name=%s,birthdate=%d,email=%s,nickname=%s "
 			+ "WHERE id=%d";
 	private static final String CONTACT_INSERT_SQL="INSERT INTO contacts "
-			+ "(first_name,middle_name,last_name,birthdate,email) "
-			+ "VALUES (%s,%s,%s,%d,%s)";
+			+ "(first_name,middle_name,last_name,birthdate,email,nickname) "
+			+ "VALUES (%s,%s,%s,%d,%s,%s)";
 	private static final String CONTACT_DELETION_SQL="DELETE FROM contacts WHERE id=%d";
 
 	public Contact (Map<String,String> values){
@@ -51,7 +52,8 @@ public class Contact {
 					,this.lastName
 					,(this.birthdate==null?
 							null:(this.birthdate.getTime()))
-					,this.email);
+					,this.email
+					,this.nickname);
 			this.id=SQLUtils.executeInsert(statement);
 			return (this.id==0?false:true);
 		}
@@ -62,6 +64,7 @@ public class Contact {
 				,(this.birthdate==null?
 						null:(this.birthdate.getTime()))
 				,this.email
+				,this.nickname
 				,this.id);
 		return SQLUtils.executeUpdate(statement);
 	}
@@ -110,7 +113,7 @@ public class Contact {
 		return this.phoneNumbers;
 	}
  	public String fullName(){
-		return (this.firstName==null?"":this.firstName+" ")+(this.lastName==null?"":this.lastName);
+		return (this.firstName==null?"":this.firstName+" ")+(this.nickname()==null?"":"\""+this.nickname()+"\" ")+(this.lastName==null?"":this.lastName);
 	}
 	public String getImageLocation(){
 		if (this.imageLocation==null)
@@ -149,6 +152,12 @@ public class Contact {
 	}
 	public void setEmail(String email){
 		this.email=email;
+	}
+	public String nickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public static Contact contactLoader(int id){
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
@@ -191,7 +200,7 @@ public class Contact {
 		return contacts;
 	}
 	private static Map<String,String> convertResultSetToContactMap(ResultSet rs) throws SQLException{
-		String[] fields={"first_name","middle_name","last_name","email"};
+		String[] fields={"first_name","middle_name","last_name","email","nickname"};
 		HashMap<String,String> contact=new HashMap<String, String>();
 		for(String s:fields){
 			contact.put(s, rs.getString(s));
@@ -213,6 +222,8 @@ public class Contact {
 				this.id=Integer.parseInt(values.get(k));
 			if(k.equals("email"))
 				this.email=values.get(k);
+			if(k.equals("nickname"))
+				this.nickname=values.get(k);
 			if(k.equals("birthdate")){
 				if(values.get(k).equals("0"))
 					this.birthdate=null;

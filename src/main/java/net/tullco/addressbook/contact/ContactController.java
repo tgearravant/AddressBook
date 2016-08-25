@@ -43,7 +43,6 @@ public class ContactController {
 		String search="%"+request.params(":search")+"%";
 		String whereStatement="AND (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s))";
 		String safeWhereStatement=SQLUtils.sqlSafeFormat(whereStatement,search, search);
-		System.out.println(safeWhereStatement);
 		HashMap<String, Object> model = new HashMap<>();
 		ViewUtils.haltIfNoParameter(request, ":search", "string");
 		model.put("contacts",Contact.ContactsLoader(safeWhereStatement, 50, 0));
@@ -75,6 +74,7 @@ public class ContactController {
         model.put("first_name", (c.firstName()==null?"":c.firstName()));
         model.put("last_name", (c.lastName()==null?"":c.lastName()));
         model.put("middle_name",(c.middleName()==null?"":c.middleName()));
+        model.put("nickname",(c.nickname()==null?"":c.nickname()));
         model.put("email", (c.email()==null?"":c.email()));
         if (c.birthdate()!=null){
     		Calendar cal=Calendar.getInstance();
@@ -102,6 +102,7 @@ public class ContactController {
         model.put("last_name", "");
         model.put("middle_name","");
         model.put("email", "");
+        model.put("nickname","");
         model.put("birthday", "");
         model.put("birthmonth", "");
         model.put("birthyear", "");
