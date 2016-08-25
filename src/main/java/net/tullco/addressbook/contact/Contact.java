@@ -38,6 +38,7 @@ public class Contact {
 			+ "(first_name,middle_name,last_name,birthdate,email,nickname) "
 			+ "VALUES (%s,%s,%s,%d,%s,%s)";
 	private static final String CONTACT_DELETION_SQL="DELETE FROM contacts WHERE id=%d";
+	private static final String RELATED_CONTACT_SQL="SELECT c.* FROM contact_addresses ca INNER JOIN contacts c ON c.id=ca.contact_id WHERE address_id IN (SELECT address_id FROM contact_addresses WHERE contact_id=%d) AND contact_id <> %d";
 
 	public Contact (Map<String,String> values){
 		setValuesFromMap(values);
@@ -159,6 +160,16 @@ public class Contact {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	public List<Contact> getRelatedContacts(){
+		String statement = SQLUtils.sqlSafeFormat(RELATED_CONTACT_SQL,this.id,this.id);
+		ResultSet rs = SQLUtils.executeSelect(statement);
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		try {
+			while(rs.next())
+				contacts.add(new Contact(convertResultSetToContactMap(rs)));
+			} catch (SQLException e) {}
+		return contacts;
+	}
 	public static Contact contactLoader(int id){
 		String statement=String.format(INDIVIDUAL_CONTACT_LOADER_SQL,id);
 		ResultSet rs = SQLUtils.executeSelect(statement);
@@ -239,8 +250,17 @@ public class Contact {
 						,Integer.parseInt(values.get("birthmonth"))-1
 						,Integer.parseInt(values.get("birthday")));
 				this.birthdate=cal.getTime();
-				
 			}
 		}
+	}
+	@Override
+	public boolean equals(Object c){
+		if(c==null)
+			return false;
+		if(this==c)
+			return true;
+		if(c instanceof Contact)
+			return ((Contact) c).id==this.id;
+		return false;
 	}
 }

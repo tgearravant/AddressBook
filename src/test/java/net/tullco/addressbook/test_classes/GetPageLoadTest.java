@@ -114,12 +114,6 @@ public class GetPageLoadTest {
 		assertTrue(page.contains("Share Address"));
 	}
 	@Test
-	public void testSharedAddressSearch(){
-		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.getSearchResultsAddress("john"));
-		assertTrue(page.contains("John Doe"));
-		assertFalse(page.contains("Leia"));
-	}
-	@Test
 	public void testStylesheet(){
 		String page = TestUtils.getPage("http://127.0.0.1:4567/css/style.css");
 		assertTrue(page.contains("checkbox"));
@@ -127,7 +121,6 @@ public class GetPageLoadTest {
 	@Test
 	public void test404(){
 		String page = TestUtils.getPage("http://127.0.0.1:4567/beverlyisthegreatest");
-		System.out.println(page);
 		assertEquals("",page);
 	}
 	@Test
@@ -151,10 +144,16 @@ public class GetPageLoadTest {
 		assertTrue(page.contains("long_name"));
 	}
 	@Test
-	public void addChangePassword(){
+	public void changePasswordTest(){
 		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.CHANGE_PASSWORD);
 		assertTrue(page.contains("name=\"password\""));
 		assertTrue(page.contains("name=\"confirm_password\""));
+	}
+	@Test
+	public void sharedSearchTest(){
+		String page = TestUtils.getPage("http://127.0.0.1:4567"+Path.Web.getAddSharedAddress(1)+"?search=Luke");
+		assertTrue(page.contains("Luke"));
+		assertTrue(page.contains("Rebel"));
 	}
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {

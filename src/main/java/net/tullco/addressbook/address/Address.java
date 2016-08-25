@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.tullco.addressbook.contact.Contact;
 import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
@@ -235,6 +236,9 @@ public class Address {
 	public void setContactId(int contact_id){
 		this.contact_id=contact_id;
 	}
+	public Contact getContact(){
+		return Contact.contactLoader(this.contact_id);
+	}
 	/**
 	 * Creates an address map from the results of an address query.
 	 * @param rs The results set containing one row with the fields: 
@@ -322,5 +326,15 @@ public class Address {
 				return a;
 		}
 		return null;
+	}
+	@Override
+	public boolean equals(Object a){
+		if(a==null)
+			return false;
+		if(this==a)
+			return true;
+		if(a instanceof Address)
+			return ((Address) a).id==this.id;
+		return false;
 	}
 }
