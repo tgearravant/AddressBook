@@ -14,7 +14,6 @@ import ezvcard.property.StructuredName;
 import ezvcard.property.Uid;
 import net.tullco.addressbook.contact.Contact;
 import net.tullco.addressbook.phone_number.PhoneNumber;
-import net.tullco.addressbook.utils.Path;
 
 public class VCard {
 	public ezvcard.VCard ezVCard;

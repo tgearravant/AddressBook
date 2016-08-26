@@ -1,5 +1,7 @@
 package net.tullco.addressbook.contact;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -167,8 +169,15 @@ public class Contact {
 		return null;
 	}
 	public String getVCardPath(){
-		if(this.firstName!=null && this.lastName!=null)
-			return Path.Web.GET_VCARD.replace(":contact_id", Integer.toString(this.getId())).replace(":name", this.firstName()+"_"+this.lastName());
+		if(this.firstName!=null && this.lastName!=null){
+			String encodedName;
+			try {
+				encodedName = URLEncoder.encode(this.firstName(), "US-ASCII")+"_"+URLEncoder.encode(this.lastName(), "US-ASCII");
+			} catch (UnsupportedEncodingException e) {
+				return null;
+			}
+			return Path.Web.GET_VCARD.replace(":contact_id", Integer.toString(this.getId())).replace(":name", encodedName);
+		}
 		return null;
 	}
 	public List<Contact> getRelatedContacts(){
