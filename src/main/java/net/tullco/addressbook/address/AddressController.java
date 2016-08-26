@@ -110,7 +110,7 @@ public class AddressController {
 		model.put("contact_id", contact_id);
 		model.put("main_header", "Share Address");
 		if (request.queryParams().contains("search")){
-			model.put("addresses", Address.addressesLoaderByName(request.queryParams("search")));
+			model.put("addresses", Address.addressesLoaderByName(request.queryParams("search"),contact_id));
 			model.put("search", request.queryParams("search"));
 		}
 		else{

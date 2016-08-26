@@ -41,8 +41,8 @@ public class ContactController {
 
 	public static Route searchContacts = (Request request, Response response) -> {
 		String search="%"+request.params(":search")+"%";
-		String whereStatement="AND (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s))";
-		String safeWhereStatement=SQLUtils.sqlSafeFormat(whereStatement,search, search);
+		String whereStatement="AND (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s) OR lower(nickname) LIKE lower(%s))";
+		String safeWhereStatement=SQLUtils.sqlSafeFormat(whereStatement,search, search,search);
 		HashMap<String, Object> model = new HashMap<>();
 		ViewUtils.haltIfNoParameter(request, ":search", "string");
 		model.put("contacts",Contact.ContactsLoader(safeWhereStatement, 50, 0));

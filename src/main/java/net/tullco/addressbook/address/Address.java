@@ -47,7 +47,7 @@ public class Address {
 			+ "FROM addresses a "
 			+ "INNER JOIN contact_addresses ca ON ca.address_id=a.id "
 			+ "INNER JOIN contacts c ON c.id=ca.contact_id "
-			+ "WHERE (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s)) "
+			+ "WHERE (lower(first_name) LIKE lower(%s) OR lower(last_name) LIKE lower(%s) OR lower(nickname) LIKE lower(%s)) AND c.id <> %d "
 			+ "ORDER BY c.last_name,c.first_name "
 			+ "LIMIT 30";
 	private static final String ORPHAN_ADDRESS_FINDER_SQL="SELECT count(*) AS count_addresses FROM contact_addresses WHERE address_id=%d";
@@ -301,11 +301,16 @@ public class Address {
 	 * @return A list of all matching addresses.
 	 */
 	public static List<Address> addressesLoaderByName(String name){
+		return Address.addressesLoaderByName(name, 0);
+	}
+	public static List<Address> addressesLoaderByName(String name, int excluded_id){
 		ArrayList<Address> addresses = new ArrayList<Address>();
 		String search = "%"+name+"%";
-		String statement = SQLUtils.sqlSafeFormat(ADDRESS_NAME_SEARCH_SQL,search,search);
+		String statement = SQLUtils.sqlSafeFormat(ADDRESS_NAME_SEARCH_SQL,search,search,search,excluded_id);
 		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {
+			if(rs==null)
+				return addresses;
 			while(rs.next()){
 				addresses.add(new Address(convertResultSetToAddressMap(rs)));
 			}
