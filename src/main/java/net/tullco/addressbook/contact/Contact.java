@@ -1,5 +1,7 @@
 package net.tullco.addressbook.contact;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,12 +12,13 @@ import java.util.List;
 import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
-
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.phone_number.PhoneNumber;
 import net.tullco.addressbook.utils.DisplayUtils;
+import net.tullco.addressbook.utils.Path;
 //import net.tullco.addressbook.utils.Path;
 import net.tullco.addressbook.utils.SQLUtils;
+import net.tullco.addressbook.vcard.VCard;
 
 public class Contact {
 	private int id=0;
@@ -159,6 +162,23 @@ public class Contact {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getVcard(){
+		if(this.firstName!=null && this.lastName!=null)
+			return new VCard(this).getVCardAsString();
+		return null;
+	}
+	public String getVCardPath(){
+		if(this.firstName!=null && this.lastName!=null){
+			String encodedName;
+			try {
+				encodedName = URLEncoder.encode(this.firstName(), "US-ASCII")+"_"+URLEncoder.encode(this.lastName(), "US-ASCII");
+			} catch (UnsupportedEncodingException e) {
+				return null;
+			}
+			return Path.Web.GET_VCARD.replace(":contact_id", Integer.toString(this.getId())).replace(":name", encodedName);
+		}
+		return null;
 	}
 	public List<Contact> getRelatedContacts(){
 		String statement = SQLUtils.sqlSafeFormat(RELATED_CONTACT_SQL,this.id,this.id);

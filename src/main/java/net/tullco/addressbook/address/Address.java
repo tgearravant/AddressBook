@@ -218,6 +218,10 @@ public class Address {
 	public String getLocale(){
 		return this.country;
 	}
+	/**
+	 * Returns the country attached to the address. (Long Name)
+	 * @return The long name of the address locale.
+	 */
 	public String country(){
 		return LocaleUtils.getLongLocaleName(this.country);
 	}

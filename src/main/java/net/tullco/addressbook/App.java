@@ -8,6 +8,7 @@ import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
 import net.tullco.addressbook.user.UserController;
 import net.tullco.addressbook.utils.*;
+import net.tullco.addressbook.vcard.VCardController;
 import spark.servlet.SparkApplication;
 
 import static spark.debug.DebugScreen.*;
@@ -95,7 +96,7 @@ public class App implements SparkApplication
     	get(Path.Web.ADD_SHARED_ADDRESS,AddressController.addSharedAddress);
     	get(Path.Web.HANDLE_SHARED_ADDRESS,AddressController.sharedAddressHandler);
     	get(Path.Web.ADD_LOCALE,		AdminController.addLocale);
-    	
+    	get(Path.Web.GET_VCARD,			VCardController.downloadVCard);
     	//404 Routing
     	get("*",						ViewUtils.notFound);
     }

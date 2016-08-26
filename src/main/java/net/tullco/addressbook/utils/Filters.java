@@ -7,9 +7,18 @@ import spark.Response;
 
 
 public class Filters {
-
+	
+	/**
+	 * The suffixes that will not have a / added after them in URLS.
+	 */
+	public static final String[] ALLOWED_SUFFIXES = {".vcf"};
+	
     public static Filter addTrailingSlashes = (Request request, Response response) -> {
-        if (!request.pathInfo().endsWith("/")) {
+    	String path = request.pathInfo();
+        if (!path.endsWith("/")) {
+        	for(String suffix : ALLOWED_SUFFIXES)
+        		if(path.endsWith(suffix))
+        			return;
             response.redirect(request.pathInfo() + "/");
         }
     };

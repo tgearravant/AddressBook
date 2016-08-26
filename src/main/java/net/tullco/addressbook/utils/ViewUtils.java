@@ -49,10 +49,10 @@ public class ViewUtils {
     }
     
     /**
-     * This method will halt the execution with a 404 if a parameter with name param of type type is not found.
+     * This method will halt the execution with a 404 if a parameter with name param of the given type is not found.
      * @param request The request that has to contain the parameter
      * @param param The param you are checking for.
-     * @param type The expected type of the param. Allowed values are int.
+     * @param type The expected type of the param. Allowed values are id and string.
      */
     public static void haltIfNoParameter(Request request, String param,String type){
 		if (request.params().containsKey(param)){
