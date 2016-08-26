@@ -84,4 +84,11 @@
 	</div>
 </a>
 #end
+#if($contact.getVCardPath())
+<a href="$contact.getVCardPath()">
+	<div class="details_container_div">
+	  <span class="contact_text">Download VCard</span>
+	</div>
+</a>
+#end
 #end

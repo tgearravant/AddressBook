@@ -15,6 +15,7 @@ public class Path {
         public static final String EDIT_CONTACT="/contacts/edit/:contact_id/";
         public final static String SEARCH_POST = "/contacts/search/";
         public final static String SEARCH_RESULTS = "/contacts/search/:search/";
+        public final static String GET_VCARD="/contacts/:contact_id/:name.vcf";
         public final static String STYLESHEET = "/css/style.css";
         public final static String IMAGE_DIRECTORY = "/img/";
         public final static String EDIT_ADDRESS = "/contacts/:contact_id/address/:address_id/edit/";
