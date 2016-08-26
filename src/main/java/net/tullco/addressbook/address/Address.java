@@ -303,6 +303,12 @@ public class Address {
 	public static List<Address> addressesLoaderByName(String name){
 		return Address.addressesLoaderByName(name, 0);
 	}
+	/**
+	 * Loads all the addresses whose name matches the string.
+	 * @param name The name search string. case insensitive.
+	 * @param excluded_id This id will be excluded from the search results
+	 * @return A list of all matching addresses.
+	 */
 	public static List<Address> addressesLoaderByName(String name, int excluded_id){
 		ArrayList<Address> addresses = new ArrayList<Address>();
 		String search = "%"+name+"%";
