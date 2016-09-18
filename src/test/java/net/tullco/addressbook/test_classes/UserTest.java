@@ -16,6 +16,7 @@ public class UserTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		SystemUtils.setTesting(true);
+		SQLUtils.runMigrations();
 	}
 
 	@Before
@@ -91,5 +92,27 @@ public class UserTest {
 		u = User.UserLoader("palpatine");
 		assertTrue(u.checkPassword("GIVEINTOYOURANGER"));
 		u.isAdmin();
+	}
+	
+	@Test
+	public void testAPIKey() {
+		User u = User.UserLoader("admin");
+		assertNotNull(u);
+		assertEquals("blah",u.getAPIKey());
+		u = User.userLoaderAPI("blah");
+		assertNotNull(u);
+		assertEquals("blah",u.getAPIKey());
+		assertEquals("admin",u.getUsername());
+		u = User.userLoaderAPI("sdlkjf");
+		assertNull(u);
+		u = User.UserLoader("luke");
+		assertNotNull(u);
+		String apiKey = u.getAPIKey();
+		assertNotNull(apiKey);
+		assertEquals(100,apiKey.length());
+		u = User.userLoaderAPI(apiKey);
+		assertNotNull(u);
+		assertEquals("luke",u.getUsername());
+		assertEquals(apiKey,u.getAPIKey());
 	}
 }

@@ -1,5 +1,7 @@
 package net.tullco.addressbook.user;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -15,9 +17,11 @@ public class User {
 	private String hashedPassword;
 	private String salt;
 	private boolean admin=false;
+	private String apiKey;
 	
 	private final static String USER_LOADER_SQL="SELECT * FROM users WHERE username=%s";
-	private final static String USER_UPDATE_SQL="UPDATE users SET username=%s, password_hash=%s, password_salt=%s WHERE id=%d";
+	private final static String USER_LOADER_API_SQL="SELECT * FROM users WHERE api_key=%s";
+	private final static String USER_UPDATE_SQL="UPDATE users SET username=%s, password_hash=%s, password_salt=%s, api_key=%s WHERE id=%d";
 	private final static String USER_INSERT_SQL="INSERT INTO users (username,password_hash,password_salt) VALUES (%s,%s,%s)";
 	private final static String ADMIN_DELETE_SQL="DELETE FROM users WHERE admin=1 AND id <> %d";
 	private final static String ADMIN_SET_SQL="UPDATE users SET admin=1 WHERE id=%d";
@@ -37,10 +41,19 @@ public class User {
 				this.salt=dataMap.get(key);
 			if(key.equals("admin"))
 				this.admin=(dataMap.get(key).equals("1")?true:false);
+			if(key.equals("api_key"))
+				this.apiKey=dataMap.get(key);
 		}
 	}
 	public String getUsername(){
 		return this.username;
+	}
+	public String getAPIKey(){
+		if(this.apiKey==null){
+			this.apiKey=User.createNewAPIKey();
+			this.save();
+		}
+		return this.apiKey;
 	}
 	public boolean isAdmin(){
 		return this.admin;
@@ -67,8 +80,22 @@ public class User {
 			return null;
 		}
 	}
+	public static User userLoaderAPI(String apiKey){
+		String statement=SQLUtils.sqlSafeFormat(USER_LOADER_API_SQL, apiKey);
+		ResultSet rs = SQLUtils.executeSelect(statement);
+		try {
+			if(!rs.isBeforeFirst())
+				return null;
+			rs.next();
+			User u=new User(convertResultSetToUserMap(rs));
+			rs.close();
+			return u;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 	private static Map<String,String> convertResultSetToUserMap(ResultSet rs) throws SQLException{
-		String[] fields={"username","password_hash","password_salt"};
+		String[] fields={"username","password_hash","password_salt","api_key"};
 		HashMap<String,String> user=new HashMap<String, String>();
 		for(String s:fields){
 			user.put(s, rs.getString(s));
@@ -97,6 +124,7 @@ public class User {
 						,this.username
 						,this.hashedPassword
 						,this.salt
+						,this.apiKey
 						,this.id);
 				return SQLUtils.executeUpdate(statement);
 			}
@@ -151,5 +179,10 @@ public class User {
 		//System.out.println(u.username);
 		u.admin=true;
 		u.save();
+	}
+	private static String createNewAPIKey(){
+		  SecureRandom random = new SecureRandom();
+		  String s = new BigInteger(500, random).toString(32);
+		  return s.substring(0, Math.min(100,s.length()));
 	}
 }

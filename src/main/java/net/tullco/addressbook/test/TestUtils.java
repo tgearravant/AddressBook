@@ -59,7 +59,7 @@ public class TestUtils {
 			return "";
 		}
 	}
-	public static void postToPage(String url, String postBody){
+	public static String postToPage(String url, String postBody){
 		try{
 			HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 			con.setRequestMethod("POST");
@@ -70,7 +70,17 @@ public class TestUtils {
 			wr.writeBytes(postBody);
 			wr.close();
 			con.getResponseCode();
-		}catch(Exception e){}
+			BufferedReader reader=new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+			String line;
+			String page="";
+			while((line=reader.readLine())!=null){
+				page+=line;
+			}
+			reader.close();
+			return page;
+		}catch(Exception e){
+			return "";
+		}
 	}
 	public static void login(String username,String password){
 		CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
@@ -87,6 +97,7 @@ public class TestUtils {
 			wr.writeBytes(postBody);
 			wr.close();
 			con.getResponseCode();
+			
 		}catch(Exception e){}
 	}
 }

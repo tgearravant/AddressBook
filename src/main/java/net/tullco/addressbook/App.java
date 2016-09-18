@@ -3,6 +3,7 @@ package net.tullco.addressbook;
 import static spark.Spark.*;
 import net.tullco.addressbook.address.AddressController;
 import net.tullco.addressbook.admin.AdminController;
+import net.tullco.addressbook.api.APIController;
 import net.tullco.addressbook.contact.ContactController;
 import net.tullco.addressbook.login.LoginController;
 import net.tullco.addressbook.phone_number.PhoneNumberController;
@@ -111,7 +112,13 @@ public class App implements SparkApplication
     	post(Path.Web.CONTACT_POST,		ContactController.contactPost);
     	post(Path.Web.ADMIN_POST,		AdminController.adminPost);
     	
+    	//API Post Routing
+    	post(Path.Web.API_AUTH,			APIController.postAPIKey);
+    	
     	//404 Routing
     	post("*",						ViewUtils.notFound);
+    }
+    public static void exit(){
+    	stop();
     }
 }

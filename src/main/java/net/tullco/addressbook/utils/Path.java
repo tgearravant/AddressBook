@@ -34,6 +34,9 @@ public class Path {
         public final static String HANDLE_SHARED_ADDRESS="/addresses/add_shared/";
         public final static String ADD_LOCALE="/admin/locale_add/";
         
+        //API ENDPOINTS
+        public final static String API_AUTH="/api/auth/";
+        
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
         }
@@ -104,6 +107,7 @@ public class Path {
         	paths.add(LOGOUT);
         	paths.add(BACKUP);
         	paths.add(RESTORE);
+        	paths.add(API_AUTH);
         	return paths;
         }
     }
