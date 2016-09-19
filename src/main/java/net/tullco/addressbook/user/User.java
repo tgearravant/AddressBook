@@ -66,7 +66,7 @@ public class User {
 		this.salt=BCrypt.gensalt();
 		this.hashedPassword=BCrypt.hashpw(new_pw,this.salt);
 	}
-	public static User UserLoader(String username){
+	public static User userLoader(String username){
 		String statement=SQLUtils.sqlSafeFormat(USER_LOADER_SQL, username);
 		ResultSet rs = SQLUtils.executeSelect(statement);
 		try {
@@ -145,8 +145,8 @@ public class User {
 	 */
 	public static User newUser(String username,String password){
 		User u;
-		if((u=UserLoader(username)) != null){
-			u=UserLoader(username);
+		if((u=userLoader(username)) != null){
+			u=userLoader(username);
 			u.changePassword(password);
 			u.save();
 			return u;
@@ -171,7 +171,7 @@ public class User {
 	 */
 	public static void createAdminUser(String username,String password){
 		User u;
-		if((u=UserLoader(username))!=null){
+		if((u=userLoader(username))!=null){
 			u.changePassword(password);
 		}else
 			u = User.newUser(username, password);

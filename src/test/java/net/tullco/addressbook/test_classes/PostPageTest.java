@@ -141,29 +141,29 @@ public class PostPageTest {
 	}
 	@Test
 	public void editUserPost(){
-		assertNull(User.UserLoader("vader"));
+		assertNull(User.userLoader("vader"));
 		String postBody = "mode=edit_user&username=vader&password=darkside";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.ADMIN_POST, postBody);
-		User u = User.UserLoader("vader");
+		User u = User.userLoader("vader");
 		assertNotNull(u);
 		assertTrue(u.checkPassword("darkside"));
 		postBody = "mode=edit_user&username=vader&password=lightside";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.ADMIN_POST, postBody);
-		u = User.UserLoader("vader");
+		u = User.userLoader("vader");
 		assertNotNull(u);
 		assertTrue(u.checkPassword("lightside"));
 	}
 	@Test
 	public void changePasswordPost(){
-		User u = User.UserLoader("luke");
+		User u = User.userLoader("luke");
 		assertTrue(u.checkPassword("Luke124"));
 		String postBody = "mode=change_password&password=darkside&confirm_password=darksid";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.ADMIN_POST, postBody);
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertTrue(u.checkPassword("Luke124"));
 		postBody = "mode=change_password&password=darkside&confirm_password=darkside";
 		TestUtils.postToPage("http://127.0.0.1:4567"+Path.Web.ADMIN_POST, postBody);
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertFalse(u.checkPassword("Luke124"));
 		assertTrue(u.checkPassword("darkside"));
 	}

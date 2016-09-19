@@ -27,53 +27,53 @@ public class UserTest {
 
 	@Test
 	public void testIsAdmin() {
-		User u = User.UserLoader("admin");
+		User u = User.userLoader("admin");
 		assertTrue(u.isAdmin());
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertFalse(u.isAdmin());
 	}
 
 	@Test
 	public void testCheckPassword() {
-		User u = User.UserLoader("admin");
+		User u = User.userLoader("admin");
 		assertTrue(u.checkPassword("password"));
 		assertFalse(u.checkPassword("Password"));
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertTrue(u.checkPassword("Luke124"));
 		assertFalse(u.checkPassword("luke123"));
 	}
 
 	@Test
 	public void testChangePassword() {
-		User u = User.UserLoader("luke");
+		User u = User.userLoader("luke");
 		assertTrue(u.checkPassword("Luke124"));
 		assertFalse(u.checkPassword("DarkSideRulez"));
 		u.changePassword("DarkSideRulez");
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertTrue(u.checkPassword("Luke124"));
 		assertFalse(u.checkPassword("DarkSideRulez"));
 		u.changePassword("DarkSideRulez");
 		u.save();
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertFalse(u.checkPassword("Luke124"));
 		assertTrue(u.checkPassword("DarkSideRulez"));
 	}
 
 	@Test
 	public void testUserLoader() {
-		User u = User.UserLoader("luke");
+		User u = User.userLoader("luke");
 		assertEquals("luke",u.getUsername());
 	}
 
 	@Test
 	public void testNewUser() {
-		User u = User.UserLoader("vader");
+		User u = User.userLoader("vader");
 		assertEquals(null,u);
 		u = User.newUser("vader", "NOOOOOOO!!!");
 		assertEquals("vader",u.getUsername());
 		assertTrue(u.checkPassword("NOOOOOOO!!!"));
 		assertFalse(u.checkPassword("NOOOOO!!!"));
-		u = User.UserLoader("vader");
+		u = User.userLoader("vader");
 		assertEquals("vader",u.getUsername());
 		assertTrue(u.checkPassword("NOOOOOOO!!!"));
 		assertFalse(u.checkPassword("NOOOOO!!!"));
@@ -81,22 +81,22 @@ public class UserTest {
 
 	@Test
 	public void testCreateAdminUser() {
-		User u = User.UserLoader("admin");
+		User u = User.userLoader("admin");
 		assertTrue(u.checkPassword("password"));
 		u.changePassword("oops");
 		assertTrue(u.checkPassword("oops"));
 		assertTrue(u.isAdmin());
 		User.createAdminUser("palpatine", "GIVEINTOYOURANGER");
-		u = User.UserLoader("admin");
+		u = User.userLoader("admin");
 		assertEquals(null,u);
-		u = User.UserLoader("palpatine");
+		u = User.userLoader("palpatine");
 		assertTrue(u.checkPassword("GIVEINTOYOURANGER"));
 		u.isAdmin();
 	}
 	
 	@Test
 	public void testAPIKey() {
-		User u = User.UserLoader("admin");
+		User u = User.userLoader("admin");
 		assertNotNull(u);
 		assertEquals("blah",u.getAPIKey());
 		u = User.userLoaderAPI("blah");
@@ -105,7 +105,7 @@ public class UserTest {
 		assertEquals("admin",u.getUsername());
 		u = User.userLoaderAPI("sdlkjf");
 		assertNull(u);
-		u = User.UserLoader("luke");
+		u = User.userLoader("luke");
 		assertNotNull(u);
 		String apiKey = u.getAPIKey();
 		assertNotNull(apiKey);

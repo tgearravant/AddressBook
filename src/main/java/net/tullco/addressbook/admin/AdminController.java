@@ -14,7 +14,7 @@ import static spark.Spark.halt;
 
 public class AdminController {
 	public static Route adminPost = (Request request, Response response) -> {
-		User current_user = User.UserLoader(request.session().attribute("current_user"));
+		User current_user = User.userLoader(request.session().attribute("current_user"));
 		/*if(current_user == null || !current_user.isAdmin())
 			halt(403,"Admin Only");*/
 		System.out.println("Loading Admin Post...");
@@ -22,7 +22,7 @@ public class AdminController {
 		System.out.println("LOL2");
 		if(options.get("mode").equals("edit_user")){
 			System.out.println("LOL");
-			User user=User.UserLoader(options.get("username"));
+			User user=User.userLoader(options.get("username"));
 			if (user==null)
 				user=User.newUser(options.get("username"), options.get("password"));
 			else {
@@ -49,7 +49,7 @@ public class AdminController {
 		return ViewUtils.render(request, model, Path.Template.EDIT_USER);
 	};
 	public static Route addUser = (Request request, Response response) -> {
-		User current_user = User.UserLoader(request.session().attribute("current_user"));
+		User current_user = User.userLoader(request.session().attribute("current_user"));
 		if(current_user == null || !current_user.isAdmin())
 			halt(403,"Admin Only");
 		HashMap<String,Object> model=new HashMap<String,Object>();
@@ -64,7 +64,7 @@ public class AdminController {
 		return ViewUtils.render(request,model,Path.Template.CHANGE_PASSWORD);
 	};
 	public static Route addLocale = (Request request, Response response) -> {
-		User current_user = User.UserLoader(request.session().attribute("current_user"));
+		User current_user = User.userLoader(request.session().attribute("current_user"));
 		HashMap<String,Object> model=new HashMap<String,Object>();
 		if(current_user == null || !current_user.isAdmin())
 			halt(403,"Admin Only");

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import net.tullco.addressbook.contact.Contact;
 import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.Path;
@@ -351,5 +353,18 @@ public class Address {
 		if(a instanceof Address)
 			return ((Address) a).id==this.id;
 		return false;
+	}
+	
+	public JSONObject toJson(){
+		JSONObject json = new JSONObject();
+		json.put("id", this.id);
+		json.put("street", this.street);
+		json.put("apartment", this.apartment);
+		json.put("city", this.city);
+		json.put("state", this.state);
+		json.put("zip_code", this.zipCode);
+		json.put("country", this.country());
+		json.put("active", this.active);
+		return json;
 	}
 }

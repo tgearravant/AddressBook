@@ -36,6 +36,7 @@ public class Path {
         
         //API ENDPOINTS
         public final static String API_AUTH="/api/auth/";
+        public final static String API_DATA_SYNC="/api/data/";
         
         public static String getONE_CONTACT(){
         	return ONE_CONTACT_NO_ID;
@@ -108,6 +109,7 @@ public class Path {
         	paths.add(BACKUP);
         	paths.add(RESTORE);
         	paths.add(API_AUTH);
+        	paths.add(API_DATA_SYNC);
         	return paths;
         }
     }

@@ -10,7 +10,7 @@ public class UserController {
 	public static boolean authenticate(String username, String password){
 		if (username == null || password == null || username.isEmpty() || password.isEmpty())
 			return false;
-		User u = User.UserLoader(username);
+		User u = User.userLoader(username);
 		if (u==null)
 			return false;
 		return u.checkPassword(password);

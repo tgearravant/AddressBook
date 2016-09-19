@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 //import org.apache.commons.lang.StringEscapeUtils;
 
+import org.json.JSONObject;
+
 import net.tullco.addressbook.address.Address;
 import net.tullco.addressbook.phone_number.PhoneNumber;
 import net.tullco.addressbook.utils.DisplayUtils;
@@ -282,5 +284,22 @@ public class Contact {
 		if(c instanceof Contact)
 			return ((Contact) c).id==this.id;
 		return false;
+	}
+	public JSONObject toJSON(){
+		JSONObject json = new JSONObject();
+		json.put("id", this.id);
+		json.put("first_name", this.firstName);
+		json.put("middle_name", this.middleName);
+		json.put("last_name", this.lastName);
+		json.put("birthdate", DisplayUtils.dateToString(this.birthdate));
+		json.put("nickname", this.nickname);
+		json.put("email", this.email);
+		for(Address a : this.addresses){
+			json.append("addresses", a.toJson());
+		}
+		for(PhoneNumber pn: this.phoneNumbers){
+			json.append("phone_numbers", pn.toJson());
+		}
+		return json;
 	}
 }
