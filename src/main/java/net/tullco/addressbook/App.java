@@ -114,6 +114,7 @@ public class App implements SparkApplication
     	
     	//API Post Routing
     	post(Path.Web.API_AUTH,			APIController.postAPIKey);
+    	post(Path.Web.API_DATA_SYNC,	APIController.postAPIGetData);
     	
     	//404 Routing
     	post("*",						ViewUtils.notFound);

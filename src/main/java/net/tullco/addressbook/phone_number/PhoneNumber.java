@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
+import net.tullco.addressbook.utils.LocaleUtils;
 import net.tullco.addressbook.utils.SQLUtils;
 
 public class PhoneNumber {
@@ -192,5 +195,14 @@ public class PhoneNumber {
 		if(pn instanceof PhoneNumber)
 			return ((PhoneNumber) pn).id==this.id;
 		return false;
+	}
+	public JSONObject toJson(){
+		JSONObject json = new JSONObject();
+		json.put("id", this.id);
+		json.put("number",this.number);
+		json.put("type", this.getType());
+		json.put("country", LocaleUtils.getLongLocaleName(this.getLocale()));
+		json.put("preferred", this.preferred);
+		return json;
 	}
 }

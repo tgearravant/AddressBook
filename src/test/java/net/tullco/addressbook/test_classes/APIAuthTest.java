@@ -43,7 +43,7 @@ public class APIAuthTest {
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	App.exit();
+		App.exit();
 	}
 
 }

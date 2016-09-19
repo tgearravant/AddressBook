@@ -68,6 +68,7 @@ public class TestUtils {
 			//con.setDoInput(false);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postBody);
+			wr.flush();
 			wr.close();
 			con.getResponseCode();
 			BufferedReader reader=new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
