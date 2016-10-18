@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 public class LocaleUtils {
-	private static final String GET_LOCALES_SQL="SELECT locale,long_name FROM locales ORDER BY id";
+	private static final String GET_LOCALES_SQL="SELECT locale,long_name "
+			+ "FROM locales "
+			+ "ORDER BY CASE locale WHEN 'us' THEN 'AAAA' WHEN 'ca' THEN 'AAAB' ELSE long_name END ASC";
 	private static final String ADD_LOCALE_SQL="INSERT INTO locales (locale,long_name) VALUES (%s,%s)";
 	private static Map<String,String> cachedLocales=null;
+	private static List<String> cachedOrderedLocales=null;
 	
 	/**
 	 * This fetches the locales from the database, and returns them as a map, with the keys being two letter country codes,
@@ -23,12 +26,17 @@ public class LocaleUtils {
 			return cachedLocales;
 		ResultSet rs = SQLUtils.executeSelect(GET_LOCALES_SQL);
 		HashMap<String,String> locales = new HashMap<String,String>();
+		ArrayList<String> orderedLocales = new ArrayList<String>();
+		
 		try {
 			while(rs.next()){
+				orderedLocales.add(rs.getString("locale"));
 				locales.put(rs.getString("locale"), rs.getString("long_name"));
 			}
+			rs.close();
 		} catch (SQLException e) {}
 		cachedLocales=locales;
+		cachedOrderedLocales = orderedLocales;
 		return cachedLocales;
 	}
 	
@@ -40,7 +48,8 @@ public class LocaleUtils {
 	public static List<String[]> allowedLocalesList(){
 		Map<String,String> locales=allowedLocales();
 		ArrayList<String[]> localesArray = new ArrayList<String[]>();
-		for(String locale:locales.keySet()){
+		
+		for(String locale: cachedOrderedLocales){
 			String[] l = new String[2];
 			l[0]=locale;
 			l[1]=locales.get(locale);
@@ -67,6 +76,7 @@ public class LocaleUtils {
 	 */
 	public static void expireLocaleCache(){
 		cachedLocales=null;
+		cachedOrderedLocales=null;
 	}
 	
 	/**
