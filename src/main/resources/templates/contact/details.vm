@@ -12,9 +12,9 @@
 </div>
 #end
 #if ($contact.hasAddress())
-<a href="$contact.currentAddress().getEditURL()">
+
 <div class="details_container_div">
-  <span class="contact_text">Current Address</span>
+  <a href="$contact.currentAddress().getEditURL()"><span class="contact_text">Current Address</span></a>
   <div class="contact_address_div">
     <span class="address_text">
     #if($contact.currentAddress().street())$contact.currentAddress().street()<br>#end
@@ -24,10 +24,10 @@
     #if ($contact.currentAddress().city())$contact.currentAddress().city(), #end
     #if ($contact.currentAddress().state())$contact.currentAddress().state() #end
 	#if ($contact.currentAddress().zipCode())$contact.currentAddress().zipCode()<br>#end
-    $contact.currentAddress().country()</span>
+    $contact.currentAddress().country()<br />
+    <a href="$contact.currentAddress().getGoogleMapsLink()">Google Maps</a></span>
   </div>
 </div>
-</a>
 #end
 #if ($contact.hasPreferredPhoneNumbers())
 <div class="details_container_div">

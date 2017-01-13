@@ -93,7 +93,8 @@ public class Address {
 	/**
 	 * Saves the address to the DB.
 	 * 
-	 * If the address does not already exist, it will be created. If it does exist, it will be updated. If this address is active, it will, upon saving,
+	 * If the address does not already exist, it will be created.
+	 * If it does exist, it will be updated. If this address is active, it will, upon saving,
 	 * inactivate all other addresses for the contact in question.
 	 * @return True. May return false if the save fails, but not currently implemented.
 	 */
@@ -244,6 +245,20 @@ public class Address {
 	}
 	public Contact getContact(){
 		return Contact.contactLoader(this.contact_id);
+	}
+	/**
+	 * This function gets a link to a Google Maps for the address
+	 * @return A String containing the link
+	 */
+	public String getGoogleMapsLink(){
+		String base = "https://www.google.com/maps/place/";
+		base+=this.street;
+		base+=" "+this.city;
+		base+=" "+this.state;
+		base+=" "+this.zipCode;
+		base+=" "+this.country();
+		base=base.replace(' ', '+');
+		return base;
 	}
 	/**
 	 * Creates an address map from the results of an address query.
