@@ -123,4 +123,14 @@ public class AddressTest {
 		assertEquals(3,addresses.get(0).id());
 		assertEquals(3,addresses.get(1).id());
 	}
+	@Test
+	public void testGoogleMapsLink() {
+		Address a = Address.addressLoader(1, 1);
+		String mapsLink = a.getGoogleMapsLink();
+		assertTrue(mapsLink.contains(a.street().replace(' ', '+')));
+		assertTrue(mapsLink.contains(a.city().replace(' ', '+')));
+		assertTrue(mapsLink.contains(a.state().replace(' ', '+')));
+		assertTrue(mapsLink.contains(a.zipCode().replace(' ', '+')));
+		assertTrue(mapsLink.contains(a.country().replace(' ', '+')));
+	}
 }
