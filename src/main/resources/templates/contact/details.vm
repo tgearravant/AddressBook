@@ -44,9 +44,10 @@
 #end
 #foreach($address in $contact.addresses())
   #if ($address != $contact.currentAddress())
-	<a href="$address.getEditURL()">
     <div class="details_container_div">
-    <span class="contact_text">Previous Address</span><br>
+    <a href="$address.getEditURL()">
+    	<span class="contact_text">Previous Address</span><br>
+    </a>
     <div class="contact_address_div">
     <span class="address_text">
 	    #if($address.street())$address.street()<br>#end
@@ -55,11 +56,12 @@
 	    #end
 	    #if ($address.city())$address.city(), #end
 	    #if ($address.state())$address.state() #end
-		#if ($address.zipCode())$address.zipCode()<br>#end
-	    $address.country()</span>
+		#if ($address.zipCode())$address.zipCode()<br />#end
+	    $address.country()<br />
+	    <a href="$contact.currentAddress().getGoogleMapsLink()">Google Maps</a>
+	    </span>
       </div>
     </div>
-    </a>
   #end
 #end
 #if($contact.phoneNumbers().size() > $contact.getPreferredPhoneNumbers().size())
