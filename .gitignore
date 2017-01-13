@@ -6,3 +6,4 @@
 /*.log
 /src/main/resources/config/config.properties
 /tests.db
+/tests.db-journal
