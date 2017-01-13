@@ -25,7 +25,7 @@
     #if ($contact.currentAddress().state())$contact.currentAddress().state() #end
 	#if ($contact.currentAddress().zipCode())$contact.currentAddress().zipCode()<br>#end
     $contact.currentAddress().country()<br />
-    <a href="$contact.currentAddress().getGoogleMapsLink()">Google Maps</a></span>
+    <a href="$contact.currentAddress().getGoogleMapsLink()" target="_blank">Google Maps</a></span>
   </div>
 </div>
 #end
@@ -58,7 +58,7 @@
 	    #if ($address.state())$address.state() #end
 		#if ($address.zipCode())$address.zipCode()<br />#end
 	    $address.country()<br />
-	    <a href="$contact.currentAddress().getGoogleMapsLink()">Google Maps</a>
+	    <a href="$address.getGoogleMapsLink()" target="_blank">Google Maps</a>
 	    </span>
       </div>
     </div>
