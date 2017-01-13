@@ -58,7 +58,7 @@
 	    #if ($address.state())$address.state() #end
 		#if ($address.zipCode())$address.zipCode()<br />#end
 	    $address.country()<br />
-	    <a href="$contact.currentAddress().getGoogleMapsLink()">Google Maps</a>
+	    <a href="$address.getGoogleMapsLink()">Google Maps</a>
 	    </span>
       </div>
     </div>
